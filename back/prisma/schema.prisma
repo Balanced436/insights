@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+}
+
+model Source {
+  id            Int             @id @default(autoincrement())
+  title         String
+  description   String?
+  video         Bytes
+  audio         Bytes
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  transcriptions Transcription[] 
+}
+
+model Transcription {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sourceId  Int
+  source    Source   @relation(fields: [sourceId], references: [id])
+  summaries Summary[]
+}
+
+model Summary {
+  id              Int            @id @default(autoincrement())
+  content         String
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  transcriptionId Int
+  transcription   Transcription  @relation(fields: [transcriptionId], references: [id])
+}

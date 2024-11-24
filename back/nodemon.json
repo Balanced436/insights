@@ -1,0 +1,7 @@
+{
+    "watch": ["src"],
+    "ext": "ts",
+    "ignore": ["dist", "node_modules"],
+    "exec": "node --inspect=0.0.0.0:9229 --require ts-node/register src/index.ts"
+  }
+  
