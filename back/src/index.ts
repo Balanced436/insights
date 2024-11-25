@@ -14,9 +14,23 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express");
 });
 
-app.get("/source", async (req: Request, res: Response) => {
-  const sources = await prisma.source.findMany()
-  res.status(200).json(sources);
+app.get("/source/:id?", async (req: Request, res: Response): Promise<any> => {
+  const id = req.params.id ? parseInt(req.params.id) : undefined;
+  try {
+    if (id === undefined || isNaN(id)) {
+      const sources = await prisma.source.findMany();
+      return res.status(200).json(sources);
+    } else {
+      const source = await prisma.source.findUnique({ where: { id: id } });
+      if (source) {
+        return res.status(200).json(source);
+      } else {
+        return res.status(404).json({ message: "Source not found" });
+      }
+    }
+  } catch (error: any) {
+    return res.status(500).json({ message: "Internal Server Error", detail: error.message });
+  }
 });
 
 
