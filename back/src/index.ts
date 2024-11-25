@@ -88,6 +88,22 @@ app.put("/source/:id", upload.fields([{ name: 'video', maxCount: 1 }, { name: 'a
   }
 })
 
+app.delete("/source/:id", async (req: Request, res: Response): Promise<any> => {
+  try {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ message: "Invalid ID" });
+    }
+
+    await prisma.source.delete({ where: { id: id } });
+
+    return res.status(200).json({ message: "Source deleted successfully" });
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error", detail: error.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`[server]: Server is  at http://localhost:${port}`);
 });
