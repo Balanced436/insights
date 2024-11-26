@@ -1,3 +1,4 @@
+# watch: https://docs.docker.com/compose/how-tos/file-watch/#action
 services:
   frontend:
     image: node:16
@@ -19,6 +20,11 @@ services:
           target: /app/src
           ignore:
             - .back/node_modules/
+        - action: sync
+          path: ./back/__tests__
+          target: /app/__tests__
+        - action: rebuild
+          path: ./back/package.json
     ports:
       - "4000:4000"
       - "5555:5555"
@@ -62,3 +68,4 @@ secrets:
 
 volumes:
   postgres-data:
+  backend-logs:
