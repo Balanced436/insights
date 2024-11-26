@@ -18,6 +18,7 @@ if [ "$NODE_ENV" = "development" ]; then
     echo "Lancement de prisma"
     npx prisma studio &
     echo "Lancement en mode dev"
+    npm run test &
     npm run dev
 else
     echo "Lancement en mode prod"
