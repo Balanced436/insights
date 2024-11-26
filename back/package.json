@@ -6,6 +6,7 @@
     "build": "npx tsc",
     "start": "node dist/index.js",
     "test": "jest --watchAll",
+    "resetdb" : "npx prisma db push --accept-data-loss",
     "dev": "npx nodemon"
   },
   "keywords": [],

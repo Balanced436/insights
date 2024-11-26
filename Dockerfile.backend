@@ -9,6 +9,8 @@ RUN npm run build
 COPY back/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
+RUN mkdir -p source/audio source/video
+
 EXPOSE 4000
 EXPOSE 9229
 CMD ["/app/entrypoint.sh"]

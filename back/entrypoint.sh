@@ -8,14 +8,10 @@ DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST
 ## Write the databse_url string in .env file
 echo "DATABASE_URL=$DATABASE_URL" >> .env
 
-npx prisma db push
-
-# Générer le client Prisma
-npx prisma generate
-
 # Vérifier si l'application est en mode développement
 if [ "$NODE_ENV" = "development" ]; then
     echo "Lancement de prisma"
+    npm run resetdb &
     npx prisma studio &
     echo "Lancement en mode dev"
     npm run test &
