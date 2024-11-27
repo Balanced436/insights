@@ -63,7 +63,7 @@ sourceRouter.get("/source/:id?", async (req: Request, res: Response): Promise<an
         }
       });
   
-      return res.status(201).json({ message: 'Source created successfully', source });
+      return res.status(201).json({ message: 'Source created successfully', data : source });
     } catch (error: any) {
       return res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
