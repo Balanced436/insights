@@ -8,23 +8,25 @@ const prisma = new PrismaClient();
 
 
 sourceRouter.get("/source/:id?", async (req: Request, res: Response): Promise<any> => {
-    const id = req.params.id ? parseInt(req.params.id) : undefined;
-    try {
-      if (id === undefined || isNaN(id)) {
-        const sources = await prisma.source.findMany();
-        return res.status(200).json(sources);
+  const id = req.params.id ? parseInt(req.params.id) : undefined;
+  try {
+    if (id === undefined) {
+      const sources = await prisma.source.findMany();
+      return res.status(200).json(sources);
+    } else if (isNaN(id)) {
+      return res.status(400).json({ message: "Invalid ID" });
+    } else {
+      const source = await prisma.source.findUnique({ where: { id: id } });
+      if (source) {
+        return res.status(200).json(source);
       } else {
-        const source = await prisma.source.findUnique({ where: { id: id } });
-        if (source) {
-          return res.status(200).json(source);
-        } else {
-          return res.status(404).json({ message: "Source not found" });
-        }
+        return res.status(404).json({ message: "Source not found" });
       }
-    } catch (error: any) {
-      return res.status(500).json({ message: "Internal Server Error", detail: error.message });
     }
-  });
+  } catch (error: any) {
+    return res.status(500).json({ message: "Internal Server Error", detail: error.message });
+  }
+});
   
   
   const storage = multer.diskStorage({
