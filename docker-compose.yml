@@ -23,8 +23,13 @@ services:
         - action: sync
           path: ./back/__tests__
           target: /app/__tests__
+        - action: sync
+          path: ./back/prisma
+          target: /app/prisma
         - action: rebuild
           path: ./back/package.json
+        - action: rebuild
+          path: ./back/entrypoint.sh
     ports:
       - "4000:4000"
       - "5555:5555"

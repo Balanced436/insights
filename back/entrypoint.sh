@@ -11,10 +11,11 @@ echo "DATABASE_URL=$DATABASE_URL" >> .env
 # Vérifier si l'application est en mode développement
 if [ "$NODE_ENV" = "development" ]; then
     echo "Lancement de prisma"
-    npm run resetdb &
+    npm run reset &
+    npm run push &
+    npm run seed &
     npx prisma studio &
     echo "Lancement en mode dev"
-    npm run test &
     npm run dev
 else
     echo "Lancement en mode prod"
