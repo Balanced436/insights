@@ -7,6 +7,11 @@ export const sourceRouter = Router();
 const prisma = new PrismaClient();
 
 
+/**
+ * Retrieves source or source from the database based on the provided ID.
+ *
+ * @param {number | undefined} id - The unique identifier of the source to be retrieved.
+ */
 sourceRouter.get("/source/:id?", async (req: Request, res: Response): Promise<any> => {
   const id = req.params.id ? parseInt(req.params.id) : undefined;
   try {
