@@ -17,14 +17,12 @@ if [ "$NODE_ENV" = "development" ]; then
     npm run reset
     npm run push
     npm run seed
-    npm run dev
-    npx prisma studio &
 
     echo "Lancement de prisma en mode test"
     npm run reset:test
     npm run push:test
-    npm run seed:test
 
+    npm run dev
 else
     echo "Lancement en mode prod"
     npm start
