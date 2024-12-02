@@ -177,6 +177,8 @@ sourceRouter.delete(
       }
 
       const deletedSource = await prisma.source.delete({ where: { id: id } });
+      fs.unlinkSync(deletedSource.videoUrl);
+      fs.unlinkSync(deletedSource.audioUrl);
 
       return res
         .status(200)

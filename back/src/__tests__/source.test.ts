@@ -61,7 +61,15 @@ describe("CRUD operations for Source", () => {
     expect(true);
   });
 
-  it("should delete a source", async () => {
-    expect(true);
+  it("should delete a source by id ", async () => {
+    const response = await request(app).delete(`/source/${sourceId}`);
+    expect(response.body).toHaveProperty('data')
+    expect(response.body.data).toHaveProperty('id',sourceId)
+
+    // check if audio still exists
+    expect(fs.existsSync(response.body.data.audioUrl)).toBe(false);
+
+    // check if video still exists
+    expect(fs.existsSync(response.body.data.videoUrl)).toBe(false);
   });
 });
