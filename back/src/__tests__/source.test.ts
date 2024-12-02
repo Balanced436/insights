@@ -20,56 +20,64 @@ describe("CRUD operations for Source", () => {
     await prisma.source.deleteMany();
   });
 
-  it(`should create a new source ${JSON.stringify(newSource)}`, async () => {
-    const response = await request(app)
-      .post("/source")
-      .field("title", newSource.title)
-      .field("description", newSource.description)
-      .attach("video", newSource.audio)
-      .attach("audio", newSource.video);
+  describe("POST /source", () => {
+    it(`should create a new source ${JSON.stringify(newSource)}`, async () => {
+      const response = await request(app)
+        .post("/source")
+        .field("title", newSource.title)
+        .field("description", newSource.description)
+        .attach("video", newSource.audio)
+        .attach("audio", newSource.video);
 
-    expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty("message");
-    expect(response.body.message).toBe("Source created successfully");
-    expect(response.body.data.title).toBe(newSource.title);
-    expect(response.body.data.description).toBe(newSource.description);
-    expect(response.body.data.audioUrl).toBeDefined();
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Source created successfully");
+      expect(response.body.data.title).toBe(newSource.title);
+      expect(response.body.data.description).toBe(newSource.description);
+      expect(response.body.data.audioUrl).toBeDefined();
 
-    // check if audio file exists
-    expect(fs.existsSync(response.body.data.audioUrl)).toBe(true);
-    expect(fs.existsSync(response.body.data.videoUrl)).toBe(true);
+      // check if audio file exists
+      expect(fs.existsSync(response.body.data.audioUrl)).toBe(true);
+      expect(fs.existsSync(response.body.data.videoUrl)).toBe(true);
 
-    // Assign the created source ID
-    sourceId = response.body.data.id;
-  }, 10000);
-
-  it(`should get all sources`, async () => {
-    const response = await request(app).get("/source");
-    const allSources = prisma.source.findMany();
-    expect(response.body.length).toBe((await allSources).length);
+      // Assign the created source ID
+      sourceId = response.body.data.id;
+    }, 10000);
   });
 
-  it("should get a single source by ID", async () => {
-    const response = await request(app).get(`/source/${sourceId}`);
-    expect(response.status).toBe(200); 
-    expect(response.body).toHaveProperty("id", sourceId);
-    expect(response.body.title).toBe(newSource.title);
-    expect(response.body.description).toBe(newSource.description);
+  describe("GET /source", () => {
+    it(`should get all sources`, async () => {
+      const response = await request(app).get("/source");
+      const allSources = prisma.source.findMany();
+      expect(response.body.length).toBe((await allSources).length);
+    });
+
+    it("should get a single source by ID", async () => {
+      const response = await request(app).get(`/source/${sourceId}`);
+      expect(response.status).toBe(200); 
+      expect(response.body).toHaveProperty("id", sourceId);
+      expect(response.body.title).toBe(newSource.title);
+      expect(response.body.description).toBe(newSource.description);
+    });
   });
 
-  it("should update a source", async () => {
-    expect(true);
+  describe("PUT /source", () => {
+    it("should update a source", async () => {
+      expect(true);
+    });
   });
 
-  it("should delete a source by id ", async () => {
-    const response = await request(app).delete(`/source/${sourceId}`);
-    expect(response.body).toHaveProperty('data')
-    expect(response.body.data).toHaveProperty('id',sourceId)
+  describe("DELETE /source", () => {
+    it("should delete a source by id", async () => {
+      const response = await request(app).delete(`/source/${sourceId}`);
+      expect(response.body).toHaveProperty('data')
+      expect(response.body.data).toHaveProperty('id',sourceId)
 
-    // check if audio still exists
-    expect(fs.existsSync(response.body.data.audioUrl)).toBe(false);
+      // check if audio still exists
+      expect(fs.existsSync(response.body.data.audioUrl)).toBe(false);
 
-    // check if video still exists
-    expect(fs.existsSync(response.body.data.videoUrl)).toBe(false);
+      // check if video still exists
+      expect(fs.existsSync(response.body.data.videoUrl)).toBe(false);
+    });
   });
 });
