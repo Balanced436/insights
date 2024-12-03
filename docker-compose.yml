@@ -62,6 +62,16 @@ services:
       - postgres_user
       - postgres_password
       - postgres_db
+  
+  whisper:
+    image: litongjava/whisper-cpp-server:1.0.0
+    container_name: whisper-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./models:/app/models
+    command: /app/whisper_http_server_base_httplib -m /app/models/whisper-large-v3-french-distil-dec8/ggml-model-q5_0.bin
+
 
 secrets:
   postgres_user:
