@@ -14,9 +14,9 @@ echo "DATABASE_URL=$DATABASE_URL_TEST" >> .env.test
 
 if [ "$NODE_ENV" = "development" ]; then
     echo "Lancement de prisma en mode dev"
-    npm run reset
-    npm run push
-    npm run seed
+    npm run reset:dev
+    npm run push:dev
+    npm run seed:dev
 
     echo "Lancement de prisma en mode test"
     npm run reset:test
