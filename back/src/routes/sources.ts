@@ -37,6 +37,23 @@ sourceRouter.get(
   },
 );
 
+/**
+ * Configures the storage engine for multer to store uploaded files on disk.
+ * 
+ * The storage engine determines the destination and filename for the uploaded files.
+ * 
+ * - For files with the fieldname "video", the destination is set to "/app/source/video".
+ * - For all other files, the destination is set to "/app/source/audio".
+ * 
+ * The filename is generated using the current timestamp and a random number, 
+ * followed by the file's original extension.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} file - The file object containing information about the uploaded file.
+ * @param {Function} cb - The callback function to specify the destination or filename.
+ * 
+ * @returns {void}
+ */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const path =
