@@ -1,13 +1,20 @@
 # watch: https://docs.docker.com/compose/how-tos/file-watch/#action
 services:
   frontend:
-    image: node:16
-    working_dir: /app
-    ports:
-      - "3000:3000"
-    command: npm start
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
     depends_on:
       - backend
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./front/src
+          target: /app/src
+          ignore:
+            - .front/node_modules/
 
   backend:
     build:
