@@ -3,7 +3,7 @@ import type {Config} from 'jest';
 const config: Config = {
   preset: 'ts-jest', //for typescript
   testEnvironment: 'jsdom', //instead of node
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/','__tests__/fixtures/'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 }
 export default config;
