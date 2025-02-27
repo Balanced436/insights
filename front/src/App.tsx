@@ -16,10 +16,10 @@ function App() {
       .then(data => {
       const formattedSources = _.map(data, (source: Source) => 
         new Source(
-        source.audioUrl,
-        source.videoUrl,
         source.title,
         source.description,
+        source.audioUrl,
+        source.videoUrl,
         source.createdAt,
         source.updatedAt
         )
