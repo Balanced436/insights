@@ -8,9 +8,10 @@ enum SourceContext {
 
 export default function Sources({ sources }: { sources: Source[] }) {
     const [context, setContext] = useState<SourceContext>(SourceContext.VIEW);
-    const [newSource, setNewSource] = useState<{ title: string; description: string }>({
+    const [newSource, setNewSource] = useState<{ title: string; description: string, sourceFile: File | null }>({
         title: "",
         description: "",
+        sourceFile: null
     });
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -18,10 +19,17 @@ export default function Sources({ sources }: { sources: Source[] }) {
         setNewSource((prev) => ({ ...prev, [name]: value }));
     }
 
+    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0] || null;
+        setNewSource((prev) => ({ ...prev, sourceFile: file }));
+    }
+
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        console.info("not implemented")
-        setNewSource({ title: "", description: "" });
+        console.info("not implemented");
+
+        // clean form after
+        setNewSource({ title: "", description: "", sourceFile: null });
         setContext(SourceContext.VIEW);
     }
 
@@ -38,10 +46,32 @@ export default function Sources({ sources }: { sources: Source[] }) {
 
     const addSourceForm = (
         <form onSubmit={handleSubmit}>
-            <input type="text" name="title" placeholder="Title" value={newSource.title} onChange={handleInputChange} required />
-            <input type="text" name="description" placeholder="Description" value={newSource.description} onChange={handleInputChange} required />
+            <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={newSource.title}
+                onChange={handleInputChange}
+                required
+            />
+            <input
+                type="text"
+                name="description"
+                placeholder="Description"
+                value={newSource.description}
+                onChange={handleInputChange}
+                required
+            />
+            <input
+                type="file"
+                name="sourcefile"
+                required
+                onChange={handleFileChange}
+            />
             <button type="submit">Add Source</button>
-            <button type="button" onClick={() => setContext(SourceContext.VIEW)}>Cancel</button>
+            <button type="button" onClick={() => setContext(SourceContext.VIEW)}>
+                Cancel
+            </button>
         </form>
     );
 
@@ -60,19 +90,28 @@ export default function Sources({ sources }: { sources: Source[] }) {
     }
 
     const tableRows = sources.map(getRowFromSource);
+
+    function renderContent() {
+        switch (context) {
+            case SourceContext.ADD:
+                return addSourceForm;
+            case SourceContext.VIEW:
+            default:
+                return sources.length === 0 ? (
+                    <p>No sources</p>
+                ) : (
+                    <table>
+                        <thead>{tableHeader}</thead>
+                        <tbody>{tableRows}</tbody>
+                    </table>
+                );
+        }
+    }
+
     return (
         <div>
             <button onClick={() => setContext(SourceContext.ADD)}>Add New Source</button>
-            {context === SourceContext.ADD ? (
-                addSourceForm
-            ) : sources.length === 0 ? (
-                <p>No sources</p>
-            ) : (
-                <table>
-                    <thead>{tableHeader}</thead>
-                    <tbody>{tableRows}</tbody>
-                </table>
-            )}
+            {renderContent()}
         </div>
     );
 }
