@@ -8,10 +8,10 @@ enum SourceContext {
 
 export default function Sources({ sources }: { sources: Source[] }) {
     const [context, setContext] = useState<SourceContext>(SourceContext.VIEW);
-    const [newSource, setNewSource] = useState<{ title: string; description: string, sourceFile: File | null }>({
+    const [newSource, setNewSource] = useState<{ title: string; description: string, file: File | null }>({
         title: "",
         description: "",
-        sourceFile: null
+        file: null
     });
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -21,15 +21,35 @@ export default function Sources({ sources }: { sources: Source[] }) {
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0] || null;
-        setNewSource((prev) => ({ ...prev, sourceFile: file }));
+        setNewSource((prev) => ({ ...prev, video: file }));
     }
 
-    function handleSubmit(e: React.FormEvent) {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
         console.info("not implemented");
+        //const formData: FormData = new FormData(e.target as HTMLFormElement)
+        const formData: FormData = new FormData()
+        formData.append("title",newSource.title)
+        formData.append("description",newSource.description)
+
+
+        try {
+            fetch("http://localhost:4000/source",{method:"POST", body:formData})
+                .then(response =>{
+                    if (!response.ok){ 
+                        return Promise
+                    }
+                    return response.json() 
+                }).then(data=>{
+                    console.info(data)
+                })
+        } catch (error) {
+            
+        }
 
         // clean form after
-        setNewSource({ title: "", description: "", sourceFile: null });
+        //setNewSource({ title: "", description: "", video: null });
+
         setContext(SourceContext.VIEW);
     }
 
@@ -65,7 +85,6 @@ export default function Sources({ sources }: { sources: Source[] }) {
             <input
                 type="file"
                 name="sourcefile"
-                required
                 onChange={handleFileChange}
             />
             <button type="submit">Add Source</button>
