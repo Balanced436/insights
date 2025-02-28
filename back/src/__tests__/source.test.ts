@@ -21,7 +21,7 @@ describe("CRUD operations for Source", () => {
   });
 
   describe("POST /source", () => {
-    it(`should create a new source ${JSON.stringify(newSource)}`, async () => {
+    it(`should create a new source`, async () => {
       const response = await request(app)
         .post("/source")
         .field("title", newSource.title)
@@ -43,7 +43,63 @@ describe("CRUD operations for Source", () => {
       // Assign the created source ID
       sourceId = response.body.data.id;
     }, 10000);
+
+    it(`should create a new source witheout video`, async () => {
+      const response = await request(app)
+        .post("/source")
+        .field("title", newSource.title)
+        .field("description", newSource.description)
+        .attach("audio", newSource.video);
+
+
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Source created successfully");
+      expect(response.body.data.title).toBe(newSource.title);
+      expect(response.body.data.description).toBe(newSource.description);
+      expect(response.body.data.audioUrl).toBeDefined();
+      expect(response.body.data.videoUrl).toBeNull();
+
+      // check if audio file exists
+      expect(fs.existsSync(response.body.data.videoUrl)).toBe(false);
+
+    }, 10000);
+
+    it(`should create a new source witheout audio`, async () => {
+      const response = await request(app)
+        .post("/source")
+        .field("title", newSource.title)
+        .field("description", newSource.description)
+        .attach("video", newSource.video);
+
+
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Source created successfully");
+      expect(response.body.data.title).toBe(newSource.title);
+      expect(response.body.data.description).toBe(newSource.description);
+      expect(response.body.data.audioUrl).toBeNull();
+      expect(response.body.data.videoUrl).toBeDefined();
+
+      // check if audio file exists
+      expect(fs.existsSync(response.body.data.videoUrl)).toBe(true);
+
+    }, 10000);
+
+    it(`should return an error if audio and video are not provided by the user`, async () => {
+      const response = await request(app)
+        .post("/source")
+        .field("title", newSource.title)
+        .field("description", newSource.description)
+
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("video or audio files are required");
+    }, 10000);
+
   });
+
+  
 
   describe("GET /source", () => {
     it(`should get all sources`, async () => {

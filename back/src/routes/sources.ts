@@ -79,11 +79,11 @@ sourceRouter.post(
       const files =
         (req.files as { [fieldname: string]: Express.Multer.File[] }) || {};
       const { title, description } = req.body as Source;
-
-      if (!files["video"] || !files["audio"]) {
+      console.info(files)
+      if ((!files["video"]) && (!files["audio"])) {
         return res
           .status(400)
-          .json({ message: "Video and audio files are required" });
+          .json({ message: "video or audio files are required" });
       }
 
       if (!title || !description) {
@@ -96,8 +96,8 @@ sourceRouter.post(
         data: {
           title: title,
           description: description,
-          videoUrl: files["video"][0].path,
-          audioUrl: files["audio"][0].path,
+          videoUrl: files["video"] ? files["video"][0].path : null,
+          audioUrl: files["audio"] ? files["audio"][0].path : null,
         },
       });
 
@@ -163,11 +163,11 @@ sourceRouter.put(
         data: updatedData,
       });
 
-      if (audioUrl) {
+      if (audioUrl && oldSourceAudioUrl) {
         console.debug(`${new Date()}: Remove ${oldSourceAudioUrl}`);
         fs.unlinkSync(oldSourceAudioUrl);
       }
-      if (videoUrl) {
+      if (videoUrl && oldSourceVideoUrl) {
         console.debug(`${new Date()}: Remove ${oldSourceVideoUrl}`);
         fs.unlinkSync(oldSourceVideoUrl);
       }
@@ -194,8 +194,8 @@ sourceRouter.delete(
       }
 
       const deletedSource = await prisma.source.delete({ where: { id: id } });
-      fs.unlinkSync(deletedSource.videoUrl);
-      fs.unlinkSync(deletedSource.audioUrl);
+      if (deletedSource.videoUrl) fs.unlinkSync(deletedSource.videoUrl);
+      if (deletedSource.audioUrl) fs.unlinkSync(deletedSource.audioUrl);
 
       return res
         .status(200)
