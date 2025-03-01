@@ -1,4 +1,5 @@
 export default class Source {
+    id: number;
     title:string;
     description:string;
     videoUrl:string;
@@ -6,7 +7,8 @@ export default class Source {
     createdAt:Date;
     updatedAt:Date;
 
-    constructor(title: string, description: string, videoUrl: string, audioUrl: string, createdAt: Date, updatedAt: Date) {
+    constructor(id:number, title: string, description: string, videoUrl: string, audioUrl: string, createdAt: Date, updatedAt: Date) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.videoUrl = videoUrl;

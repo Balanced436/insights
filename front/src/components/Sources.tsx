@@ -8,10 +8,11 @@ enum SourceContext {
 
 export default function Sources({ sources }: { sources: Source[] }) {
     const [context, setContext] = useState<SourceContext>(SourceContext.VIEW);
-    const [newSource, setNewSource] = useState<{ title: string; description: string, file: File | null }>({
+    const [newSource, setNewSource] = useState<{ title: string; description: string, video: File|null, audio:File|null}>({
         title: "",
         description: "",
-        file: null
+        audio: null,
+        video:null
     });
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -20,17 +21,14 @@ export default function Sources({ sources }: { sources: Source[] }) {
     }
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const { name } = e.target
         const file = e.target.files?.[0] || null;
-        setNewSource((prev) => ({ ...prev, video: file }));
+        setNewSource((prev) => ({ ...prev, [name]: file }));
     }
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        console.info("not implemented");
-        //const formData: FormData = new FormData(e.target as HTMLFormElement)
-        const formData: FormData = new FormData()
-        formData.append("title",newSource.title)
-        formData.append("description",newSource.description)
+        const formData: FormData = new FormData(e.target as HTMLFormElement)
 
 
         try {
@@ -84,9 +82,15 @@ export default function Sources({ sources }: { sources: Source[] }) {
             />
             <input
                 type="file"
-                name="sourcefile"
+                name="audio"
                 onChange={handleFileChange}
             />
+            <input
+                type="file"
+                name="video"
+                onChange={handleFileChange}
+            />
+            
             <button type="submit">Add Source</button>
             <button type="button" onClick={() => setContext(SourceContext.VIEW)}>
                 Cancel
@@ -95,9 +99,9 @@ export default function Sources({ sources }: { sources: Source[] }) {
     );
 
     function getRowFromSource(source: Source) {
-        const { title, description, videoUrl, audioUrl, createdAt, updatedAt } = source;
+        const {id, title, description, videoUrl, audioUrl, createdAt, updatedAt } = source;
         return (
-            <tr key={title}>
+            <tr key={id}>
                 <td>{title}</td>
                 <td>{description}</td>
                 <td>{audioUrl}</td>
