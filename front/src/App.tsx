@@ -36,7 +36,7 @@ function App() {
       });
 
   },[])
-  return <Sources sources={sources}/>
+  return <Sources sources={sources} onSourceClick={(source:Source) =>console.info(source)}/>
 } 
 
 export default App
