@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useContext } from 'react'
 import './App.css'
 import Sources from './components/Sources'
 import Source from './models/source'
 import _ from 'lodash'
+import {  SourceContext } from './contexts/SourceContext';
+
 function App() {
-  const [sources, setSources] = useState<Source[]>([])
+  const { sources, setSources } = useContext(SourceContext);
+
   useEffect(()=>{
     fetch('http://localhost:4000/source')
       .then(response => {
@@ -26,6 +29,7 @@ function App() {
         )
       );
       setSources(formattedSources);
+      console.info(sources)
       })
       .catch(error => {
       console.error('Error fetching sources:', error);
@@ -36,4 +40,3 @@ function App() {
 } 
 
 export default App
- 
