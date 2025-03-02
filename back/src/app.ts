@@ -1,6 +1,7 @@
 import express, { Express, Request } from "express";
 import morgan from 'morgan';
 import sourceRouter from "./routes/sources";
+import TranscriptionRouter from "./routes/transcription";
 const app: Express = express();
 import cors from 'cors';
 
@@ -14,5 +15,6 @@ morgan.token('body', (req: Request) => {
 app.use(morgan(':method :url :body'))
 app.use(express.urlencoded({ extended: true }));
 app.use('/',sourceRouter)
+app.use('/',TranscriptionRouter)
 
 export default app;
