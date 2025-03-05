@@ -79,7 +79,6 @@ sourceRouter.post(
       const files =
         (req.files as { [fieldname: string]: Express.Multer.File[] }) || {};
       const { title, description } = req.body as Source;
-      console.info(files)
       if ((!files["video"]) && (!files["audio"])) {
         return res
           .status(400)
