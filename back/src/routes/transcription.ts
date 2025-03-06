@@ -1,6 +1,7 @@
-import { PrismaClient, Transcription } from "@prisma/client";
+import { PrismaClient, Source, Transcription } from "@prisma/client";
 import { Request, Response, Router } from "express";
 import { uniqueId } from "lodash";
+import fs from "fs"
 
 const TranscriptionRouter = Router()
 const prisma = new PrismaClient()
@@ -35,6 +36,31 @@ TranscriptionRouter.post("/transcription", async (req: Request, res: Response): 
             throw new Error("sourceId is required")
         }
 
+        // get source waw file
+        const source: Source | null = await prisma.source.findUnique({ where: { id: sourceId } })
+        if (!source) {
+            throw Error("Source not found")
+        }
+
+        const audioFile: string | null = source.audioUrl
+        if (!audioFile) {
+            throw Error("Audio file not found")
+        }
+
+        console.log("audiofile", audioFile)
+
+
+        const formData = new FormData();
+        const file = await fs.openAsBlob(audioFile)
+
+        formData.append("file", file, "file.wav");
+        fetch("http://whisper-server:8080/inference", {
+            method: "POST",
+            body: formData
+        })
+            .then(resp => resp.ok ? resp.json() : Promise.reject(resp))
+
+
         const transcription: Transcription = await prisma.transcription.create({
             data: {
                 sourceId: sourceId,
@@ -62,8 +88,13 @@ TranscriptionRouter.delete("/transcription/:id?", async (req: Request, res: Resp
             const deletedTranscription = await prisma.transcription.delete({ where: { id: id } })
             return res.status(201).json({ data: deletedTranscription });
         }
-    } catch (error:any) {
+    } catch (error: any) {
         return res.status(400).json({ error: "Internal Server Error", details: error.message });
     }
 })
 export default TranscriptionRouter;
+
+const createTranscription = (filename: String) => {
+
+
+}

@@ -27,8 +27,8 @@ async function main() {
         .post('/source')
         .field('title', element.title)
         .field('description', element.description)
-        .attach('video', element.audio)
-        .attach('audio', element.video);
+        .attach('video', element.video)
+        .attach('audio', element.audio);
       }
     }
 
