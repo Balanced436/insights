@@ -86,10 +86,28 @@ describe("CRUD operations for Transcriptions", () => {
             expect(response.body.data.id).toBe(transcriptionId);
         })
 
-        it("should return error 500 if id is not a number", async () => {
+        it("should return error 400 if id is not a number", async () => {
             const transcriptionId = "fake"
             const response = await request(app).get(`/transcription/${transcriptionId}`);
-            expect(response.status).toBe(500);
+            expect(response.status).toBe(400);
+            expect(response.body.error).toBe("Internal Server Error");
+            expect(response.body.details).toBeDefined();
+        })
+    })
+
+    describe("GET /transcription", () => {
+        it("should delete a transcription by id", async () => {
+            const transcriptions = await prisma.transcription.findMany();
+            const transcriptionId = transcriptions[0].id;
+            const response = await request(app).delete(`/transcription/${transcriptionId}`);
+            expect(response.status).toBe(201);
+            expect(response.body.data.id).toBe(transcriptionId);
+        })
+
+        it("should return an error 400 if transcription id is invalid", async () => {
+            const invalidTranscriptionId = "fake";
+            const response = await request(app).delete(`/transcription/${invalidTranscriptionId}`);
+            expect(response.status).toBe(400);
             expect(response.body.error).toBe("Internal Server Error");
             expect(response.body.details).toBeDefined();
         })

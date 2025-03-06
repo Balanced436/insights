@@ -1,7 +1,6 @@
 import { PrismaClient, Transcription } from "@prisma/client";
 import { Request, Response, Router } from "express";
 import { uniqueId } from "lodash";
-import { parse } from "node:path";
 
 const TranscriptionRouter = Router()
 const prisma = new PrismaClient()
@@ -22,8 +21,8 @@ TranscriptionRouter.get("/transcription/:id?", async (req: Request, res: Respons
             })
             return res.status(200).json({ data: transcription });
         }
-    } catch (error:any) {
-        return res.status(500).json({ error: "Internal Server Error", details: error.message });
+    } catch (error: any) {
+        return res.status(400).json({ error: "Internal Server Error", details: error.message });
     }
 })
 
@@ -54,7 +53,17 @@ TranscriptionRouter.put("/transcription", async (req: Request, res: Response): P
     return res.status(501).json({});
 })
 
-TranscriptionRouter.delete("/transcription", async (req: Request, res: Response): Promise<any> => {
-    return res.status(501).json({});
+TranscriptionRouter.delete("/transcription/:id?", async (req: Request, res: Response): Promise<any> => {
+    const id = req.params.id ? parseInt(req.params.id) : undefined;
+    try {
+        if (id === undefined || isNaN(id)) {
+            throw new Error("Invalid ID")
+        } else {
+            const deletedTranscription = await prisma.transcription.delete({ where: { id: id } })
+            return res.status(201).json({ data: deletedTranscription });
+        }
+    } catch (error:any) {
+        return res.status(400).json({ error: "Internal Server Error", details: error.message });
+    }
 })
 export default TranscriptionRouter;
