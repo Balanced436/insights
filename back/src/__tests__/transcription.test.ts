@@ -67,7 +67,7 @@ describe("CRUD operations for Transcriptions", () => {
             expect(response.body.details).toBe("sourceId is required");
             expect(response.status).toBe(400);
         })
-        
+
     })
 
     describe("GET /transcription", () => {
@@ -84,6 +84,14 @@ describe("CRUD operations for Transcriptions", () => {
             const response = await request(app).get(`/transcription/${transcriptionId}`);
             expect(response.status).toBe(200);
             expect(response.body.data.id).toBe(transcriptionId);
+        })
+
+        it("should return error 500 if id is not a number", async () => {
+            const transcriptionId = "fake"
+            const response = await request(app).get(`/transcription/${transcriptionId}`);
+            expect(response.status).toBe(500);
+            expect(response.body.error).toBe("Internal Server Error");
+            expect(response.body.details).toBeDefined();
         })
     })
 })
