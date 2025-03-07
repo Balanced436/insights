@@ -41,6 +41,7 @@ services:
           path: ./back/entrypoint.sh
     ports:
       - "4000:4000"
+      - "4001:4001"
       - "5555:5555"
       - "9229:9229"
       
