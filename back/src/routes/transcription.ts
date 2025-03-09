@@ -47,6 +47,11 @@ const TranscriptionRouter = (io: Server) => {
       if (!audioFile) {
         throw Error("Audio file not found");
       }
+      const transcription: Transcription = await prisma.transcription.create({
+        data: {
+          sourceId: sourceId,
+        }
+      });
 
       // open audio file associated with the source and call whisper to restranscript it
       fs.openAsBlob(audioFile).then((audioFile:Blob)=>{
@@ -57,18 +62,19 @@ const TranscriptionRouter = (io: Server) => {
           body: formData
         })
           .then(resp => resp.ok ? resp.json() : Promise.reject(resp))
-          .then(res => console.info(res))
+          .then(res => {
+            // use the response to update this transcription
+            console.log("res",res)
+            console.log("res",typeof(res))
+            fetch(`http://localhost:4000/transcription/${transcription.id}`, { method: "PUT",'headers': {
+    'Content-Type': 'application/json'
+  }, body: JSON.stringify({content:JSON.stringify(res)}) }).then((resp=>resp.ok ? resp.json() : Promise.reject(resp))).then(res=>console.log("transcription ended")).catch(error =>console.error(error))
+          })
           .catch(error => {
             console.error("Fetch error:", error);
             throw error;
           })
       })
-
-      const transcription: Transcription = await prisma.transcription.create({
-        data: {
-          sourceId: sourceId,
-        }
-      });
       const taskId = uniqueId();
       return res.status(201).json({ data: { sourceId: transcription.sourceId, taskId: taskId } });
 
