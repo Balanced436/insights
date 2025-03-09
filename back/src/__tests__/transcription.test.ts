@@ -112,4 +112,24 @@ describe("CRUD operations for Transcriptions", () => {
             expect(response.body.details).toBeDefined();
         })
     })
+
+    describe("PUT /transcriptipn",()=>{
+        it("should return an error 400 if id is not provided",async()=>{
+            const response = await request(app).put(`/transcription`);
+
+            expect(response.status).toBe(400)
+            expect(response.body.error).toBe("Internal Server Error");
+            expect(response.body.details).toBe("transcription id must be provide")
+        })
+
+        it("should return a status 201 and updated transcription",async()=>{
+            const transcriptions = await prisma.transcription.findMany();
+            const transcriptionId = transcriptions[0].id;
+            const transcriptionContent = "pseudo transcrption"
+            const response = await request(app).put(`/transcription/${transcriptionId}`).send({content:transcriptionContent})
+            console.log(response.body)
+            expect(response.body.data.content).toBe(transcriptionContent);
+            expect(response.body.data.id).toBe(transcriptionId);
+        })
+    })
 })
