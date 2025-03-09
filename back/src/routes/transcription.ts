@@ -1,4 +1,4 @@
-import { PrismaClient, Source, Transcription } from "@prisma/client";
+import { PrismaClient, Source, TaskType, Transcription } from "@prisma/client";
 import { Request, Response, Router } from "express";
 import { uniqueId } from "lodash";
 import fs from "fs";
@@ -84,7 +84,9 @@ const TranscriptionRouter = (io: Server) => {
             }).then((resp => resp.ok ? resp.json() : Promise.reject(resp))).then(res => res).catch(error => error)
           }
       })
-      const taskId = uniqueId();
+      const task  = {type : TaskType.TRANSCRIPTION, transcriptionId : transcription.id}
+      const taskId = await prisma.task.create({data : task})
+      
       return res.status(201).json({ data: { sourceId: transcription.sourceId, taskId: taskId } });
 
     } catch (error: any) {

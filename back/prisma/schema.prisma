@@ -32,6 +32,29 @@ model Transcription {
   sourceId  Int
   source    Source   @relation(fields: [sourceId], references: [id])
   summaries Summary[]
+  tasks Task[]
+}
+
+
+model Task{
+    id        Int      @id @default(autoincrement())
+    type TaskType 
+    createdAt DateTime @default(now())
+    finishedAt DateTime?
+    status Status @default(PENDING)
+    transcriptionId Int
+    transcription Transcription  @relation(fields: [transcriptionId], references: [id])
+}
+
+enum TaskType {
+  TRANSCRIPTION
+
+}
+
+enum Status{
+  PENDING
+  COMPLETED
+  ERROR
 }
 
 model Summary {
