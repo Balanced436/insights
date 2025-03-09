@@ -49,7 +49,7 @@ describe("CRUD operations for Transcriptions", () => {
 
     describe("POST /transcription", () => {
         it("should return a unique task id and sourceid", async () => {
-            const response = await request(app).post("/transcription").send({ sourceId: sourceId })
+            const response = await request(app).post("/transcription").send({ sourceId: sourceId, skipTranscription : true })
             expect(response.body.data.taskId).toBeDefined();
             expect(response.body.data.sourceId).toBe(sourceId);
             expect(response.status).toBe(201);
@@ -125,9 +125,8 @@ describe("CRUD operations for Transcriptions", () => {
         it("should return a status 201 and updated transcription",async()=>{
             const transcriptions = await prisma.transcription.findMany();
             const transcriptionId = transcriptions[0].id;
-            const transcriptionContent = "pseudo transcrption"
+            const transcriptionContent = "Fake transcription content"
             const response = await request(app).put(`/transcription/${transcriptionId}`).send({content:transcriptionContent})
-            console.log(response.body)
             expect(response.body.data.content).toBe(transcriptionContent);
             expect(response.body.data.id).toBe(transcriptionId);
         })

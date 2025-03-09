@@ -33,6 +33,8 @@ const TranscriptionRouter = (io: Server) => {
   router.post("/transcription", async (req: Request, res: Response): Promise<any> => {
     const sourceId = req.body.sourceId;
 
+    const skipTranscription: boolean | undefined = req.body.skipTranscription
+
     try {
       if (!sourceId) {
         throw new Error("sourceId is required");
@@ -54,9 +56,10 @@ const TranscriptionRouter = (io: Server) => {
       });
 
       // open audio file associated with the source and call whisper to restranscript it
-      fs.openAsBlob(audioFile).then((audioFile:Blob)=>{
+      fs.openAsBlob(audioFile).then((audioFile: Blob) => {
         const formData = new FormData();
         formData.append("file", audioFile, "file.wav");
+        if(!skipTranscription){
         fetch("http://whisper:8080/inference", {
           method: "POST",
           body: formData
@@ -64,16 +67,22 @@ const TranscriptionRouter = (io: Server) => {
           .then(resp => resp.ok ? resp.json() : Promise.reject(resp))
           .then(res => {
             // use the response to update this transcription
-            console.log("res",res)
-            console.log("res",typeof(res))
-            fetch(`http://localhost:4000/transcription/${transcription.id}`, { method: "PUT",'headers': {
-    'Content-Type': 'application/json'
-  }, body: JSON.stringify({content:JSON.stringify(res)}) }).then((resp=>resp.ok ? resp.json() : Promise.reject(resp))).then(res=>console.log("transcription ended")).catch(error =>console.error(error))
+            fetch(`http://localhost:4000/transcription/${transcription.id}`, {
+              method: "PUT", 'headers': {
+                'Content-Type': 'application/json'
+              }, body: JSON.stringify({ content: JSON.stringify(res) })
+            }).then((resp => resp.ok ? resp.json() : Promise.reject(resp))).then(res => console.log("transcription ended")).catch(error => error)
           })
           .catch(error => {
             console.error("Fetch error:", error);
             throw error;
-          })
+          })}else{
+            fetch(`http://localhost:4000/transcription/${transcription.id}`, {
+              method: "PUT", 'headers': {
+                'Content-Type': 'application/json'
+              }, body: JSON.stringify({ content: "The flag skip transcription is set to true" })
+            }).then((resp => resp.ok ? resp.json() : Promise.reject(resp))).then(res => res).catch(error => error)
+          }
       })
       const taskId = uniqueId();
       return res.status(201).json({ data: { sourceId: transcription.sourceId, taskId: taskId } });
@@ -86,21 +95,21 @@ const TranscriptionRouter = (io: Server) => {
   router.put("/transcription/:id?", async (req: Request, res: Response): Promise<any> => {
     const id = req.params.id ? parseInt(req.params.id) : undefined;
     try {
-      if (id === undefined){
+      if (id === undefined) {
         throw Error("transcription id must be provide")
       }
       const { content } = req.body as Transcription
-  
-      if (!content){
+
+      if (!content) {
         throw Error("content must be provide")
       }
-      const transcription = await prisma.transcription.update({where : {id:id},data:{content:content}})
-      return res.status(201).json({data:transcription})
-      
-    } catch (error:any) {
-      return res.status(400).json({error: "Internal Server Error",details: error.message});
+      const transcription = await prisma.transcription.update({ where: { id: id }, data: { content: content } })
+      return res.status(201).json({ data: transcription })
+
+    } catch (error: any) {
+      return res.status(400).json({ error: "Internal Server Error", details: error.message });
     }
-   
+
 
   });
 
