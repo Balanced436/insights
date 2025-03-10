@@ -42,6 +42,8 @@ describe("CRUD operations for Transcriptions", () => {
 
     afterAll(async () => {
         await prisma.$disconnect();
+        // order of deletion matters
+        await prisma.task.deleteMany();
         await prisma.transcription.deleteMany();
         await prisma.source.deleteMany();
     })
