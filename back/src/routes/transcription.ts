@@ -56,6 +56,7 @@ const TranscriptionRouter = (io: Server) => {
       });
 
       const task: Task = await prisma.task.create({ data: { transcriptionId: transcription.id, type: TaskType.TRANSCRIPTION } });
+      io.emit("task", task);
 
       if (!skipTranscription) {
         const processTranscription = async () => {
@@ -94,12 +95,11 @@ const TranscriptionRouter = (io: Server) => {
             2025-03-11 11:22:56 backend-1       |   }
             2025-03-11 11:22:56 backend-1       | } */
             console.error("Fetch error:", error);
-            await prisma.task.update({
+            const taskstatus = await prisma.task.update({
               where: { id: task.id },
               data: { status: Status.ERROR, finishedAt: new Date() }
             });
-            
-
+            io.emit("task", taskstatus);
             throw error;
           }
         };
@@ -113,10 +113,11 @@ const TranscriptionRouter = (io: Server) => {
             where: { id: transcription.id },
             data: { content: "The flag skip transcription is set to true" }
           });
-          await prisma.task.update({
+          const taskstatus = await prisma.task.update({
             where: { id: task.id },
             data: { status: Status.COMPLETED, finishedAt: new Date() }
           });
+          io.emit("task", taskstatus);
         };
         fakeTranscription();
       }
