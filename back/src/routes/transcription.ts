@@ -14,7 +14,7 @@ const TranscriptionRouter = (io: Server) => {
     try {
       if (id === undefined) {
         const transcriptions = await prisma.transcription.findMany();
-        return res.status(200).json({ data: transcriptions });
+        return res.status(200).json(transcriptions);
       } else if (isNaN(id)) {
         throw new Error("Invalid ID");
       } else {
