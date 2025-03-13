@@ -74,7 +74,7 @@ describe("CRUD operations for Transcriptions", () => {
             const response = await request(app).get("/transcription");
             const transcriptions = await prisma.transcription.findMany();
             expect(response.status).toBe(200);
-            expect(transcriptions.length).toBe(response.body.data.length);
+            expect(transcriptions.length).toBe(response.body.length);
         });
 
         it("should return a transcription by ID", async () => {
