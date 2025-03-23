@@ -45,7 +45,7 @@ describe("CRUD operations from summary", () => {
     })
 
     describe("POST /summary/:transcriptionid?", () => {
-        it("should post a new summary and return 201 if id is provided and return the summary", () => {
+        it("should post a new summary and return 201 if id is provided and return the summary", async () => {
             const response = await request(app).post("/summary").then()
             expect(true).toBe(false)
         })
