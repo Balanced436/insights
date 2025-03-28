@@ -3,7 +3,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: Dockerfile.frontend
+      dockerfile: dockerfile.frontend
     depends_on:
       - backend
     ports:
@@ -21,7 +21,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: dockerfile.backend
     develop:
       watch:
         - action: sync
@@ -52,10 +52,12 @@ services:
       POSTGRES_USER_FILE: /run/secrets/postgres_user 
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_DB_FILE: /run/secrets/postgres_db
+      OPEN_ROUTER_API_KEY: /run/secrets/open_router_api_key
     secrets:
       - postgres_user
       - postgres_password
       - postgres_db
+      - open_router_api_key
     depends_on:
       - db
     
@@ -90,6 +92,8 @@ secrets:
     file: ./secrets/postgres_password.txt
   postgres_db:
     file: ./secrets/postgres_db.txt
+  open_router_api_key:
+    file: ./secrets/open_router_api_key.txt
 
 volumes:
   postgres-data:
