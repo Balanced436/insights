@@ -15,11 +15,12 @@ morgan.token('body', (req: Request) => {
   return JSON.stringify(req.body)
 })
 
-app.use(morgan(':method :url :body'))
+/* app.use(morgan(':method :url :body')) */
 app.use(express.urlencoded({ extended: true }));
 app.use('/',sourceRouter)
 app.use('/',TranscriptionRouter(io))
 app.use('/',TaskRouter(io))
 app.use('/',summaryRouter(io))
+
 
 export default app;
