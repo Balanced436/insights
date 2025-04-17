@@ -1,4 +1,4 @@
-import { PrismaClient, Summary, TaskType, Task, Status } from "@prisma/client";
+import { PrismaClient, Summary, TaskType, Task, Status, Transcription } from "@prisma/client";
 import { error } from "console";
 import { Router, Request, Response } from "express";
 import { Server } from "socket.io";
@@ -35,6 +35,11 @@ const summaryRouter = (io: Server) => {
             const summary: Summary = await prisma.summary.create({ data: { transcriptionId: transcriptionId, sourceId: sourceId } })
             if (!content) {
                 // call external service
+                const transcription = await prisma.transcription.findUnique({ where: { id: transcriptionId } });
+                if (!transcription) {
+                    throw new Error("Transcription not found");
+                }
+                transcription.content
                 const myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/json");
                 myHeaders.append("Authorization", `Bearer ${OPEN_ROUTER_API_KEY}`);
@@ -44,7 +49,7 @@ const summaryRouter = (io: Server) => {
                     "messages": [
                         {
                         "role": "user",
-                        "content": "Quel est le sens de la vie ?"
+                        "content": `Résume ce texte: ${transcription.content}`
                         }
                     ]
                 });
