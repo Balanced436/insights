@@ -102,6 +102,15 @@ const summaryRouter = (io: Server) => {
 
         }
     })
+
+    router.put('/summary/:id?', async (req: Request, res: Response): Promise<any> => {
+        return res.status(501).json({ error: "not implemented yet"});
+    })
+
+    router.delete('/summary/:id?', async (req: Request, res: Response): Promise<any> => {
+        return res.status(501).json({ error: "not implemented yet"});
+    })
+
     return router;
 }
 
