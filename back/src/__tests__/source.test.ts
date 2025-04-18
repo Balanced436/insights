@@ -24,7 +24,7 @@ describe("CRUD operations for Source", () => {
     await prisma.source.deleteMany();
   });
 
-  describe("POST /source", () => {
+  describe("POST source", () => {
     it(`should create a new source`, async () => {
       const response = await request(app)
         .post("/source")
@@ -105,7 +105,7 @@ describe("CRUD operations for Source", () => {
 
   
 
-  describe("GET /source", () => {
+  describe("GET source (id?)", () => {
     it(`should get all sources`, async () => {
       const response = await request(app).get("/source");
       const allSources = prisma.source.findMany();
@@ -121,13 +121,13 @@ describe("CRUD operations for Source", () => {
     });
   });
 
-  describe("PUT /source", () => {
+  describe("PUT source (id)", () => {
     it("should update a source", async () => {
       expect(true);
     });
   });
 
-  describe("DELETE /source", () => {
+  describe("DELETE source (id)", () => {
     it("should delete a source by id", async () => {
       const response = await request(app).delete(`/source/${sourceId}`);
       expect(response.body).toHaveProperty('data')

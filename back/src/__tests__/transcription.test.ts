@@ -46,7 +46,7 @@ describe("CRUD operations for Transcriptions", () => {
         await prisma.source.deleteMany();
     });
 
-    describe("POST /transcription", () => {
+    describe("POST transcription", () => {
         it("should create a new transcription task and return its ID and status", async () => {
             const response = await request(app).post("/transcription").send({ sourceId: sourceId, skipTranscription: true });
             expect(response.body.task.id).toBeDefined();
@@ -69,7 +69,7 @@ describe("CRUD operations for Transcriptions", () => {
         });
     });
 
-    describe("GET /transcription", () => {
+    describe("GET (id?)", () => {
         it("should return all transcriptions", async () => {
             const response = await request(app).get("/transcription");
             const transcriptions = await prisma.transcription.findMany();
@@ -95,7 +95,7 @@ describe("CRUD operations for Transcriptions", () => {
         });
     });
 
-    describe("DELETE /transcription", () => {
+    describe("DELETE (id)", () => {
         it("should delete a transcription by ID", async () => {
             const transcriptions = await prisma.transcription.findMany();
             const transcriptionId = transcriptions[0].id;
@@ -113,7 +113,7 @@ describe("CRUD operations for Transcriptions", () => {
         });
     });
 
-    describe("PUT /transcription", () => {
+    describe("PUT (id)", () => {
         it("should return error 400 if the ID is not provided", async () => {
             const response = await request(app).put(`/transcription`);
             expect(response.status).toBe(400);
