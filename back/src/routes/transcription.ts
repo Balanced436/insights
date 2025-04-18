@@ -106,9 +106,9 @@ const TranscriptionRouter = (io: Server) => {
         processTranscription();
       } else {
         const fakeTranscription = async () => {
-          console.info("skipTranscription is set to true");
+          /* console.info("skipTranscription is set to true");
           console.info("transcription.id", transcription.id);
-          console.info("task.id", task.id);
+          console.info("task.id", task.id); */
           await prisma.transcription.update({
             where: { id: transcription.id },
             data: { content: "The flag skip transcription is set to true" }
