@@ -2,19 +2,11 @@ import { PrismaClient, Summary, TaskType, Task, Status, Transcription } from "@p
 import { error } from "console";
 import { Router, Request, Response } from "express";
 import { Server } from "socket.io";
+import { OR_COMPLETION_ENDPOINT, OR_DEFAULT_MODEL, OR_DEFAULT_SUMMARIZATION_PROMPT, OpenRouterResponse } from "../models/openrouter";
 const prisma = new PrismaClient
-const MODEL = "google/gemini-2.0-flash-001"
 
 const OPEN_ROUTER_API_KEY = process.env.OPEN_ROUTER_API_KEY || "";
 
-interface OpenRouterResponse { 
-    choices: Array<{ 
-        message: { 
-            role: string; 
-            content: string; 
-        }; 
-    }>; 
-}
 
 const summaryRouter = (io: Server) => {
     const router = Router()
@@ -72,11 +64,11 @@ const summaryRouter = (io: Server) => {
                 myHeaders.append("Authorization", `Bearer ${OPEN_ROUTER_API_KEY}`);
 
                 const raw = JSON.stringify({
-                    "model": `${MODEL}`,
+                    "model": `${OR_DEFAULT_MODEL}`,
                     "messages": [
                         {
                         "role": "user",
-                        "content": `Résume ce texte: ${transcription.content}`
+                        "content": `${OR_DEFAULT_SUMMARIZATION_PROMPT}: ${transcription.content}`
                         }
                     ]
                 });
@@ -88,7 +80,7 @@ const summaryRouter = (io: Server) => {
                     redirect: "follow"
                 };
 
-                fetch("https://openrouter.ai/api/v1/chat/completions", requestOptions)
+                fetch(OR_COMPLETION_ENDPOINT, requestOptions)
                 .then(async (response) => {
                     if (response.ok) {
                         return await response.json();
