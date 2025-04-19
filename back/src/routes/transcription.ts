@@ -3,6 +3,8 @@ import { Request, Response, Router } from "express";
 import { uniqueId } from "lodash";
 import fs from "fs";
 import { Server } from "socket.io";
+import { WHISPER_INFERENCE_ENDPOINT, WhisperResponse } from "../models/whisper.model";
+import { WhisperResponseText } from "../utils/whisper.utils";
 
 const prisma = new PrismaClient();
 
@@ -65,17 +67,17 @@ const TranscriptionRouter = (io: Server) => {
             const formData = new FormData();
             formData.append("file", new Blob([audioFileBlob]), "file.wav");
 
-            const response = await fetch("http://whisper:8080/inference", {
+            const response = await fetch(WHISPER_INFERENCE_ENDPOINT, {
               method: "POST",
               body: formData
             });
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const res = await response.json();
+            const res: WhisperResponse = await response.json();
             await prisma.transcription.update({
               where: { id: transcription.id },
-              data: { content: JSON.stringify(res) }
+              data: { content: WhisperResponseText(res) }
             });
             await prisma.task.update({
               where: { id: task.id },

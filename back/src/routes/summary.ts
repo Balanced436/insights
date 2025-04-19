@@ -2,7 +2,7 @@ import { PrismaClient, Summary, TaskType, Task, Status, Transcription } from "@p
 import { error } from "console";
 import { Router, Request, Response } from "express";
 import { Server } from "socket.io";
-import { OR_COMPLETION_ENDPOINT, OR_DEFAULT_MODEL, OR_DEFAULT_SUMMARIZATION_PROMPT, OpenRouterResponse } from "../models/openrouter";
+import { OR_COMPLETION_ENDPOINT, OR_DEFAULT_MODEL, OR_DEFAULT_SUMMARIZATION_PROMPT, OpenRouterResponse } from "../models/openrouter.model";
 const prisma = new PrismaClient
 
 const OPEN_ROUTER_API_KEY = process.env.OPEN_ROUTER_API_KEY || "";
