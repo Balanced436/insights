@@ -83,20 +83,16 @@ const TranscriptionRouter = (io: Server) => {
               where: { id: task.id },
               data: { status: Status.COMPLETED, finishedAt: new Date() }
             });
+
+            // set task status to success
+            const taskstatus = await prisma.task.update({
+              where: { id: task.id },
+              data: { status: Status.COMPLETED, finishedAt: new Date() }
+            });
+            io.emit("task", taskstatus);
           } catch (error) {
-            // TODO catch this 
-                        /* 2025-03-11 11:21:59 backend-1       | GET /task {}
-            2025-03-11 11:22:56 backend-1       | Fetch error: TypeError: fetch failed
-            2025-03-11 11:22:56 backend-1       |     at Object.fetch (node:internal/deps/undici/undici:11457:11) {
-            2025-03-11 11:22:56 backend-1       |   cause: HeadersTimeoutError: Headers Timeout Error
-            2025-03-11 11:22:56 backend-1       |       at Timeout.onParserTimeout [as callback] (node:internal/deps/undici/undici:9647:32)
-            2025-03-11 11:22:56 backend-1       |       at Timeout.onTimeout [as _onTimeout] (node:internal/deps/undici/undici:7948:17)
-            2025-03-11 11:22:56 backend-1       |       at listOnTimeout (node:internal/timers:573:17)
-            2025-03-11 11:22:56 backend-1       |       at processTimers (node:internal/timers:514:7) {
-            2025-03-11 11:22:56 backend-1       |     code: 'UND_ERR_HEADERS_TIMEOUT'
-            2025-03-11 11:22:56 backend-1       |   }
-            2025-03-11 11:22:56 backend-1       | } */
             console.error("Fetch error:", error);
+            // set task status to error
             const taskstatus = await prisma.task.update({
               where: { id: task.id },
               data: { status: Status.ERROR, finishedAt: new Date() }
