@@ -22,7 +22,6 @@ model Source {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   transcriptions Transcription[] 
-  summaries       Summary[]
 }
 
 model Transcription {
@@ -66,6 +65,4 @@ model Summary {
   updatedAt       DateTime       @updatedAt
   transcriptionId Int
   transcription   Transcription  @relation(fields: [transcriptionId], references: [id])
-  sourceId        Int
-  source          Source         @relation(fields: [sourceId], references: [id])
 }

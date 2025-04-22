@@ -51,7 +51,7 @@ const summaryRouter = (io: Server) => {
             
 
             const task: Task = await prisma.task.create({ data: { transcriptionId: transcriptionId, type: TaskType.SUMMARIZATION } });
-            const summary: Summary = await prisma.summary.create({ data: { transcriptionId: transcriptionId, sourceId: transcription.sourceId } })
+            const summary: Summary = await prisma.summary.create({ data: { transcriptionId: transcriptionId } })
             if (!content) {
                 // call external service
                 const transcription = await prisma.transcription.findUnique({ where: { id: transcriptionId } });
