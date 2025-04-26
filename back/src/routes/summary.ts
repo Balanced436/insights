@@ -132,7 +132,23 @@ const summaryRouter = (io: Server) => {
     })
 
     router.delete('/summary/:id?', async (req: Request, res: Response): Promise<any> => {
-        return res.status(501).json({ error: "not implemented yet"});
+        const id = req.params.id ? parseInt(req.params.id) : undefined;
+        try {
+            if (id){
+                // delete this shit
+                const deleteSummary = await prisma.summary.delete({where : {id:id}})
+                    return res.status(201).json(deleteSummary);
+                
+            }else{
+                // throw this shit
+                throw Error("summary id must be provided")
+            }
+        } catch (error:any) {
+            return res.status(500).json({ error: "Internal Server Error", details: error.message });
+            
+        }
+
+
     })
 
     return router;

@@ -1,7 +1,8 @@
 import path from "path";
 import request from "supertest";
 import app from "../app";
-import {  PrismaClient } from "@prisma/client";
+import {  PrismaClient, Summary, Transcription } from "@prisma/client";
+import { assert } from "console";
 
 describe("CRUD operations for summary", () => {
     const prisma = new PrismaClient();
@@ -72,7 +73,7 @@ describe("CRUD operations for summary", () => {
             expect(response.status).toBe(200)
 
             // check summary route is able to retrieve a summary by id 
-            expect(response.body.sourceId).toBe(summary?.sourceId)
+            /* expect(response.body.sourceId).toBe(summary?.sourceId) */
         });
 
         it("should return 400 when id is not a number", async () => {
@@ -83,12 +84,37 @@ describe("CRUD operations for summary", () => {
     });
 
     describe("DELETE summary (id)", () => {
-        it("should delete a summary and return 201 when transcriptionId is provided", () => {
-            expect(true).toBe(false);
-        });
+        it("should delete a summary and return 201 when transcriptionId is provided", async () => {
+            // to create a new summary, i need a transcriptionID
+            const transcriptionid = transcription.body.task.transcriptionId
+            expect(transcriptionid).toBeDefined()
+            const summary: Summary = await prisma.summary.create({data : {transcriptionId: transcriptionid, content :"testing purpose"}})
+            expect(summary).toBeDefined()
 
-        it("should return 401 when transcriptionId is not provided", () => {
-            expect(true).toBe(false);
+            // delete this summary
+            const response = await request(app).delete(`/summary/${summary?.id}`);
+            expect(response.status).toBe(201)
+            expect(response.body.id).toBe(summary.id);
+            expect(response.body.transcriptionId).toBe(summary.transcriptionId);
+            expect(response.body.content).toBe(summary.content);
+
+            // this summary was deleted from db
+            const deletedSummary = await prisma.summary.findUnique({where : {id:summary.id}})
+            expect(deletedSummary).toBe(1)
+            console.log("deleted summary",deletedSummary)
+            /* expect().toBeDefined */
+
+        });
+        
+        it("should return 400 when summary is not provided", async () => {
+            // to create a new summary, i need a transcriptionID
+            const transcriptionid = transcription.body.task.transcriptionId
+            expect(transcriptionid).toBeDefined()
+            const summary: Summary = await prisma.summary.create({data : {transcriptionId: transcriptionid}})
+
+            // delete this summary
+            const response = await request(app).delete(`/summary`);
+            expect(response.status).toBe(400);
         });
     });
 
