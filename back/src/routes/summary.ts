@@ -144,7 +144,7 @@ const summaryRouter = (io: Server) => {
                 throw Error("summary id must be provided")
             }
         } catch (error:any) {
-            return res.status(500).json({ error: "Internal Server Error", details: error.message });
+            return res.status(400).json({ error: "Internal Server Error", details: error.message });
             
         }
 

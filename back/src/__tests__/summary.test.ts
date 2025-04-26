@@ -100,7 +100,7 @@ describe("CRUD operations for summary", () => {
 
             // this summary was deleted from db
             const deletedSummary = await prisma.summary.findUnique({where : {id:summary.id}})
-            expect(deletedSummary).toBe(1)
+            expect(deletedSummary).toBe(null)
             console.log("deleted summary",deletedSummary)
             /* expect().toBeDefined */
 
