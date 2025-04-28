@@ -123,8 +123,37 @@ describe("CRUD operations for summary", () => {
             expect(true).toBe(false);
         });
 
-        it("should return 401 when transcriptionId is not provided", () => {
-            expect(true).toBe(false);
+        it("should return 400 when transcriptionId is not provided", async () => {
+
+            const response = await request(app).put(`/summary`);
+
+            expect(response.status).toBe(400)
+            expect(response.body.error).toBeDefined()
+            expect(response.body.error).toBe("Internal Server Error")
+        });
+
+        it(`should fail and return 400 when transcriptionId is NaN.
+            The body should contain a field "error" with value "Internal Server Error"
+            and a details field with "id must be a number" as value.`, async () => {
+
+            const response = await request(app).put(`/summary/NaN`);
+
+            expect(response.status).toBe(400)
+            expect(response.body.error).toBeDefined()
+            expect(response.body.error).toBe("Internal Server Error")
+        });
+
+        it(`should faill and return status 400 when summary does not exists.
+            The body should contains a field "error" with value "Internal Server Error" and a field 
+            details with "no summary found with this id" as value.`, async () => {
+
+            const response = await request(app).put(`/summary/99`);
+
+            expect(response.status).toBe(400)
+            expect(response.body.error).toBeDefined()
+            expect(response.body.details).toBeDefined()
+            expect(response.body.error).toBe("Internal Server Error")
+            expect(response.body.details).toBe("no summary found with this id")
         });
     });
 });

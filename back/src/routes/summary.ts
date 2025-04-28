@@ -128,7 +128,25 @@ const summaryRouter = (io: Server) => {
     })
 
     router.put('/summary/:id?', async (req: Request, res: Response): Promise<any> => {
-        return res.status(501).json({ error: "not implemented yet"});
+        const id = req.params.id ? parseInt(req.params.id) : undefined;
+        try {
+            if (!id){
+                throw Error("id must be provided")
+            }
+            if (isNaN(id)){
+                throw Error("id must be a number")
+            }
+
+            const summary: Summary | null = await prisma.summary.findUnique({where : {id : id}})
+            if (!summary){
+                throw Error("no summary found with this id")
+            }
+            
+        } catch (error: any) {
+            return res.status(400).json({ error: "Internal Server Error", details: error.message });  
+            
+        }
+        return res.status(500).json({ error: "not implemented yet"});
     })
 
     router.delete('/summary/:id?', async (req: Request, res: Response): Promise<any> => {
