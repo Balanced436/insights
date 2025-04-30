@@ -7,6 +7,7 @@ import cors from 'cors';
 import { io } from "./socket";
 import TaskRouter from "./routes/task";
 import summaryRouter from "./routes/summary";
+import loginRouter  from "./routes/login";
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use('/',sourceRouter)
 app.use('/',TranscriptionRouter(io))
 app.use('/',TaskRouter(io))
 app.use('/',summaryRouter(io))
+app.use('/',loginRouter)
 
 
 export default app;
