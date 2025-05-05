@@ -39,6 +39,8 @@ async function main() {
       for (var transcription of transcriptions){
         await request(app).post('/transcription').send({"sourceId": transcription.sourceId, "skipTranscription":transcription.skipTranscription})
       }
-    }
+
+    await request(app).post('/user').send({ "email": "admin@insights.com", "password": "azerty", "name": "admin", "nickname":"admin" })
+  }
 
 main()
