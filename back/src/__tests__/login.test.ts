@@ -1,6 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import request from "supertest";
 import app from "../app";
+import {
+    ReasonPhrases,
+	StatusCodes,
+} from 'http-status-codes';
 
 const prisma = new PrismaClient();
 describe("CRUD operations for User", () => {
@@ -11,12 +15,17 @@ describe("CRUD operations for User", () => {
         await prisma.task.deleteMany()
         await prisma.transcription.deleteMany();
         await prisma.source.deleteMany();
+        await prisma.user.deleteMany();
     });
 
 
     describe("POST user", () => {
 
-        it(`it should create a user when all informations are provided`, async () => {
+        it(`it should create a user when all the information is supplied,
+             after which it should returns to the user the information he enters: i.e.
+            - email 
+            - name
+            - nickname`, async () => {
             const response = await request(app).post('/user/').send({
                 'email': 'useruser@insights.fr',
                 'password': 'azerty',
@@ -24,8 +33,11 @@ describe("CRUD operations for User", () => {
                 'nickname': 'user'}
             )
 
-            expect(response.status).toBe(201)
+            expect(response.status).toBe(StatusCodes.CREATED)
             expect(response.body).toBeDefined()
+            expect(response.body.email).toBe("useruser@insights.fr")
+            expect(response.body.name).toBe("user")
+            expect(response.body.nickname).toBe("user")
 
 
         })
@@ -38,14 +50,11 @@ describe("CRUD operations for User", () => {
                 'nickname': 'user'}
             )
 
-            expect(response.status).toBe(201)
+            expect(response.status).toBe(StatusCodes.BAD_REQUEST)
+            expect(response.body.details).toBe("this email is not available")
             expect(response.body).toBeDefined()
-
-            expect(true).toBe(false)
-
         })
 
 
     })
-
 })
