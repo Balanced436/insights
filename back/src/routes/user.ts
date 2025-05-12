@@ -43,4 +43,18 @@ userRouter.post("/user",async (req: Request, res: Response): Promise<any> => {
     }
 })
 
+userRouter.delete("/user",async (req: Request, res: Response): Promise<any> => {
+    return res.status(StatusCodes.NOT_IMPLEMENTED).json({error: ReasonPhrases.NOT_IMPLEMENTED, details: ""})
+})
+
+userRouter.get("/user",async (req: Request, res: Response): Promise<any> => {
+    return res.status(StatusCodes.NOT_IMPLEMENTED).json({error: ReasonPhrases.NOT_IMPLEMENTED, details: ""})
+})
+
+userRouter.put("/user",async (req: Request, res: Response): Promise<any> => {
+    return res.status(StatusCodes.NOT_IMPLEMENTED).json({error: ReasonPhrases.NOT_IMPLEMENTED, details: ""})
+})
+
+
+
 export default userRouter
