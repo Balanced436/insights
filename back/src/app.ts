@@ -9,6 +9,7 @@ import TaskRouter from "./routes/task";
 import summaryRouter from "./routes/summary";
 import loginRouter  from "./routes/login";
 import userRouter from "./routes/user";
+import corpusRouter from "./routes/corpus";
 
 app.use(cors());
 app.use(express.json());
@@ -25,5 +26,6 @@ app.use('/',TaskRouter(io))
 app.use('/',summaryRouter(io))
 app.use('/',loginRouter)
 app.use('/',userRouter)
+app.use('/',corpusRouter)
 
 export default app;

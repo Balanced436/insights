@@ -78,17 +78,17 @@ sourceRouter.post(
     try {
       const files =
         (req.files as { [fieldname: string]: Express.Multer.File[] }) || {};
-      const { title, description } = req.body as Source;
+      const { title, description, corpusID } = req.body as Source;
       if ((!files["video"]) && (!files["audio"])) {
         return res
           .status(400)
           .json({ message: "video or audio files are required" });
       }
 
-      if (!title || !description) {
+      if (!title || !description || !corpusID) {
         return res
           .status(400)
-          .json({ message: "Title and description are required" });
+          .json({ message: "Title description and corpusID are required" });
       }
 
       const source = await prisma.source.create({
@@ -97,6 +97,7 @@ sourceRouter.post(
           description: description,
           videoUrl: files["video"] ? files["video"][0].path : null,
           audioUrl: files["audio"] ? files["audio"][0].path : null,
+          corpusID: Number(corpusID)
         },
       });
 
