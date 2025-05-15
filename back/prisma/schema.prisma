@@ -8,65 +8,73 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
-  nickname String
-  password String
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  nickname  String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Source {
-  id            Int             @id @default(autoincrement())
-  title         String
-  description   String
-  videoUrl      String?
-  audioUrl      String?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  transcriptions Transcription[] 
+  id             Int             @id @default(autoincrement())
+  title          String
+  description    String
+  videoUrl       String?
+  audioUrl       String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  transcriptions Transcription[]
+  corpusID       Int
+  corpus         Corpus          @relation(fields: [corpusID], references: [id])
 }
 
 model Transcription {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   content   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   sourceId  Int
-  source    Source   @relation(fields: [sourceId], references: [id])
+  source    Source    @relation(fields: [sourceId], references: [id])
   summaries Summary[]
-  tasks Task[]
+  tasks     Task[]
 }
 
-
-model Task{
-    id        Int      @id @default(autoincrement())
-    type TaskType 
-    createdAt DateTime @default(now())
-    finishedAt DateTime? 
-    status Status @default(PENDING)
-    transcriptionId Int
-    transcription Transcription  @relation(fields: [transcriptionId], references: [id])
+model Task {
+  id              Int           @id @default(autoincrement())
+  type            TaskType
+  createdAt       DateTime      @default(now())
+  finishedAt      DateTime?
+  status          Status        @default(PENDING)
+  transcriptionId Int
+  transcription   Transcription @relation(fields: [transcriptionId], references: [id])
 }
 
 enum TaskType {
   TRANSCRIPTION
   SUMMARIZATION
-
 }
 
-enum Status{
+enum Status {
   PENDING
   COMPLETED
   ERROR
 }
 
 model Summary {
-  id              Int            @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   content         String?
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   transcriptionId Int
-  transcription   Transcription  @relation(fields: [transcriptionId], references: [id])
+  transcription   Transcription @relation(fields: [transcriptionId], references: [id])
+}
+
+model Corpus {
+  id          Int      @id @default(autoincrement())
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Source      Source[]
 }
