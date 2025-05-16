@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Corpus, PrismaClient } from "@prisma/client";
 import { Router } from "express";
 import {Request, Response} from "express"
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
@@ -28,7 +28,17 @@ corpusRouter.get('/corpus/:id?', async (req: Request, res: Response) : Promise<a
 })
 
 corpusRouter.post('/corpus', async (req: Request, res: Response) : Promise<any> => {
-    return res.status(StatusCodes.NOT_IMPLEMENTED).json({error: ReasonPhrases.NOT_IMPLEMENTED, details: ""})
+    const {description, title} = req.body
+    if (!title){
+        return res.status(StatusCodes.BAD_REQUEST).json({error: ReasonPhrases.BAD_REQUEST, details: "corpus title is required"}) 
+    }
+    try {
+        const corpus: Corpus = await prisma.corpus.create({data : {description : description, title: title}})
+        return res.status(StatusCodes.CREATED).json({corpus})
+        
+    } catch (error:any) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: ReasonPhrases.NOT_IMPLEMENTED, details: error.message})
+    }
 })
 
 corpusRouter.delete('/corpus', async (req: Request, res: Response) : Promise<any> => {

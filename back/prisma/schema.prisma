@@ -74,6 +74,7 @@ model Summary {
 model Corpus {
   id          Int      @id @default(autoincrement())
   description String?
+  title String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Source      Source[]
