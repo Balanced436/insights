@@ -4,6 +4,7 @@ import app from "../app";
 import {
     StatusCodes,
 } from 'http-status-codes';
+import { response } from "express";
 
 const prisma = new PrismaClient();
 describe("CRUD operations for corpus",()=>{
@@ -42,7 +43,39 @@ describe("CRUD operations for corpus",()=>{
             expect(response.status).toBe(StatusCodes.BAD_REQUEST)
         })
     })
-    describe("GET corpus", ()=>{})
+    describe("GET corpus (id)", ()=>{
+        it(`should return 200 and get all corpuses`, async ()=>{
+            await request(app).post("/corpus").send({
+                description : "This is my first corpus",
+                title : "First corpus"
+            })
+            await request(app).post("/corpus").send({
+                description : "This is my second corpus",
+                title : "Second corpus"
+            })
+            
+            const response = await request(app).get("/corpus")
+
+            expect(response.status).toBe(StatusCodes.OK)
+            expect(response.body.length).toBe(2)
+        })
+
+        it(`should return 200 and get `, async ()=>{
+            await request(app).post("/corpus").send({
+                description : "This is my first corpus",
+                title : "First corpus"
+            })
+            await request(app).post("/corpus").send({
+                description : "This is my second corpus",
+                title : "Second corpus"
+            })
+            
+            const response = await request(app).get("/corpus")
+
+            expect(response.status).toBe(StatusCodes.OK)
+            expect(response.body.length).toBe(2)
+        })
+    })
     describe("PUT corpus", ()=>{})
     describe("DELETE corpus", ()=>{})
     
