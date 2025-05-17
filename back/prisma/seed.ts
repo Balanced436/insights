@@ -3,22 +3,27 @@ import app from '../src/app'
 import path from 'path';
 
 async function main() {
+    // add a new basic corpus
+    const corpusRequest = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
     // add some sources
     const sources = [{
         title: 'SEED1 title JT 5-11-2024-19h',
         description: 'SEED description JT 5-11-2024-19h',
         video: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.mp4'),
-        audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav')
+        audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav'),
+        corpusID: corpusRequest.body.corpus.id
       },{
         title: 'SEED2 title JT 5-11-2024-19h',
         description: 'SEED description JT 5-11-2024-19h',
         video: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.mp4'),
-        audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav')
+        audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav'),
+        corpusID:corpusRequest.body.corpus.id
       },{
         title: 'SEED3 title JT 5-11-2024-19h',
         description: 'SEED description JT 5-11-2024-19h',
         video: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.mp4'),
-        audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav')
+        audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav'),
+        corpusID:corpusRequest.body.corpus.id
       }];
 
       // add some transcriptions
@@ -33,7 +38,8 @@ async function main() {
         .field('title', element.title)
         .field('description', element.description)
         .attach('video', element.video)
-        .attach('audio', element.audio);
+        .attach('audio', element.audio)
+        .attach('corpusID', element.corpusID)
       }
 
       for (var transcription of transcriptions){
