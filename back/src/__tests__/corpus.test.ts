@@ -60,20 +60,23 @@ describe("CRUD operations for corpus",()=>{
             expect(response.body.length).toBe(2)
         })
 
-        it(`should return 200 and get `, async ()=>{
-            await request(app).post("/corpus").send({
+        it(`should return 200 and get a corpus by id`, async ()=>{
+            const firstRequest = await request(app).post("/corpus").send({
                 description : "This is my first corpus",
                 title : "First corpus"
             })
-            await request(app).post("/corpus").send({
+            const secondRequest = await request(app).post("/corpus").send({
                 description : "This is my second corpus",
                 title : "Second corpus"
             })
+            const firstResponse = await request(app).get(`/corpus/${firstRequest.body.corpus.id}`)
+            expect(firstResponse.body.description).toBe("This is my first corpus")
+            expect(firstResponse.body.title).toBe("First corpus")
             
-            const response = await request(app).get("/corpus")
-
+            const secondResponse = await request(app).get(`/corpus/${secondRequest.body.corpus.id}`)
+            expect(secondResponse.body.description).toBe("This is my second corpus")
+            expect(secondResponse.body.title).toBe("Second corpus")
             expect(response.status).toBe(StatusCodes.OK)
-            expect(response.body.length).toBe(2)
         })
     })
     describe("PUT corpus", ()=>{})
