@@ -18,6 +18,9 @@ corpusRouter.get('/corpus/:id?', async (req: Request, res: Response) : Promise<a
             return res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid ID" });
         }else {
             const corpus = await prisma.corpus.findUnique({where : {id : id}})
+            if (!corpus){
+                return res.status(StatusCodes.NOT_FOUND).json({message:ReasonPhrases.NOT_FOUND})
+            }
             return res.status(StatusCodes.OK).json(corpus)
         }
         
