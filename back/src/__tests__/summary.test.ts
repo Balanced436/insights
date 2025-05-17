@@ -7,14 +7,17 @@ import { assert } from "console";
 describe("CRUD operations for summary", () => {
     const prisma = new PrismaClient();
 
-    let source: request.Response, transcription: request.Response;
+    let source: request.Response, transcription: request.Response, corpus;
 
     beforeAll(async () => {
+        corpus = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
+
         source = await request(app).post('/source').
         field('title', "Title").
         field('description', "Description").
         attach('video', path.resolve(__dirname, "fixtures/5-11-2024-19h.mp4")).
-        attach('audio', path.resolve(__dirname, "fixtures/5-11-2024-19h.wav"));
+        attach('audio', path.resolve(__dirname, "fixtures/5-11-2024-19h.wav")).
+        attach("corpusID", corpus.body.corpus.id);
 
         transcription = await request(app).post('/transcription')
         .send({'sourceId': source.body.data.id})

@@ -14,6 +14,7 @@ describe("CRUD operations for Source", () => {
     audio: path.resolve(__dirname, "fixtures/5-11-2024-19h.wav"),
   };
   let sourceId: number;
+  let corpusID: number;
 
   afterAll(async () => {
     await prisma.$disconnect();
@@ -24,14 +25,24 @@ describe("CRUD operations for Source", () => {
     await prisma.source.deleteMany();
   });
 
+  beforeAll(async () => {
+    const corpusRequest = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
+    corpusID = corpusRequest.body.corpus.id
+
+  });
+
   describe("POST source", () => {
+    
     it(`should create a new source`, async () => {
+      
+
       const response = await request(app)
         .post("/source")
         .field("title", newSource.title)
         .field("description", newSource.description)
         .attach("video", newSource.audio)
-        .attach("audio", newSource.video);
+        .attach("audio", newSource.video)
+        .attach("corpusID", corpusID)
 
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty("message");
@@ -53,7 +64,8 @@ describe("CRUD operations for Source", () => {
         .post("/source")
         .field("title", newSource.title)
         .field("description", newSource.description)
-        .attach("audio", newSource.video);
+        .attach("audio", newSource.video)
+        .attach("corpusID", corpusID);
 
 
       expect(response.status).toBe(201);
@@ -74,7 +86,9 @@ describe("CRUD operations for Source", () => {
         .post("/source")
         .field("title", newSource.title)
         .field("description", newSource.description)
-        .attach("video", newSource.video);
+        .attach("video", newSource.video)
+        .attach("corpusID", corpusID);
+
 
 
       expect(response.status).toBe(201);
@@ -95,6 +109,8 @@ describe("CRUD operations for Source", () => {
         .post("/source")
         .field("title", newSource.title)
         .field("description", newSource.description)
+        .attach("corpusID", corpusID);
+
 
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("message");

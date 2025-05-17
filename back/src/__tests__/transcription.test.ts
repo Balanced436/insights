@@ -13,14 +13,21 @@ describe("CRUD operations for Transcriptions", () => {
     };
 
     let sourceId: number;
+    let corpusID: number;
 
     beforeAll(async () => {
+        const corpusRequest = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
+        corpusID = corpusRequest.body.corpus.id
+
         const response = await request(app)
             .post("/source")
             .field("title", newSource.title)
             .field("description", newSource.description)
-            .attach("audio", newSource.audio);
+            .attach("audio", newSource.audio)
+            .attach("corpusID", corpusID)
         sourceId = response.body.data?.id;
+
+
 
         // Create initial transcriptions for the source
         await prisma.transcription.create({
