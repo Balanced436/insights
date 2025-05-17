@@ -72,11 +72,18 @@ describe("CRUD operations for corpus",()=>{
             const firstResponse = await request(app).get(`/corpus/${firstRequest.body.corpus.id}`)
             expect(firstResponse.body.description).toBe("This is my first corpus")
             expect(firstResponse.body.title).toBe("First corpus")
+            expect(firstResponse.status).toBe(StatusCodes.OK)
+
             
             const secondResponse = await request(app).get(`/corpus/${secondRequest.body.corpus.id}`)
             expect(secondResponse.body.description).toBe("This is my second corpus")
             expect(secondResponse.body.title).toBe("Second corpus")
-            expect(response.status).toBe(StatusCodes.OK)
+            expect(secondResponse.status).toBe(StatusCodes.OK)
+        })
+
+        it(`should return 404 when corpus id does not exists`, async ()=>{
+            const secondResponse = await request(app).get(`/corpus/0`)
+            expect(secondResponse.status).toBe(StatusCodes.NOT_FOUND)
         })
     })
     describe("PUT corpus", ()=>{})
