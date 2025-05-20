@@ -3,7 +3,7 @@ import Login from "../components/Login";
 import { fn } from "@storybook/test";
 
 const meta = {
-    title: "UI/Login",
+    title: "Form/Login",
     component: Login,
     tags: ['autodocs'],
     args: { onSubmit: fn() },
