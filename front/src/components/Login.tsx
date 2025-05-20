@@ -31,6 +31,7 @@ export default function Login({ onSubmit, variant }: LoginProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3} width={500}>
         <TextField
+          required
           {...register("email")}
           label="Email"
           type="email"
@@ -41,6 +42,7 @@ export default function Login({ onSubmit, variant }: LoginProps) {
           helperText={errors.email?.message}
         />
         <TextField
+          required
           {...register("password")}
           label="Mot de passe"
           id="password"

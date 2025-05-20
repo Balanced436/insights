@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/react";
-import Login from "../components/login/Login";
+import Login from "../components/Login";
 import { fn } from "@storybook/test";
 
 const meta = {
