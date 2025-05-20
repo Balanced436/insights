@@ -2,10 +2,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Button, Stack, TextField } from "@mui/material";
+import CorpusType from "../models/Corpus";
 
 
 type CorpusProps = {
-    onSubmit: (event: any) => void;
+    onSubmit: (event: Partial<CorpusType>) => void;
 };
 
 /**
