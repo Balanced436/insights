@@ -25,20 +25,19 @@ function Source({ onSubmit }: sourceProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema) })
 
-    return <form onSubmit={handle}>
+    return <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={3} width={500}>
-            <TextField {...register('title')} label={"Tile"} size="small" error={!!errors.title} />
-            <TextField {...register('description')} label={"Description"} size="small" error={!!errors.description} multiline rows={5} />
-            <Button
-                variant="contained"
-                component="label"
-            >
-                Upload Video
-                <input
-                    type="file"
-                    hidden
-                />
-            </Button>
+            <TextField {...register('title')}
+                       label={"Tile"} size="small"
+                       error={!!errors.title}
+                       helperText={errors.title? errors.title.message : " "} />
+            <TextField {...register('description')}
+                       label={"Description"}
+                       size="small"
+                       error={!!errors.description}
+                       multiline
+                       rows={5}
+                       helperText={errors.description? errors.description.message : " "} />
             <Button type="submit" variant="contained">
                 Soumettre
             </Button>

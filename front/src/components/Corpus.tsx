@@ -35,15 +35,16 @@ function Corpus({ onSubmit }: CorpusProps) {
             title='Title'
             size="small"
             error={!!errors.title}
-            helperText={errors.title?.message} />
+            helperText={errors.title ? errors.title.message : " "} />
 
             <TextField {...register('description')}
             rows={5}
             multiline
             label="Description"
             title="Description"
-            size="small" />
-            <Button type="submit" variant="contained">
+            size="small"
+            helperText={errors.description ? errors.description.message : " "} />
+          <Button type="submit" variant="contained">
           Soumettre
         </Button>
         </Stack>
