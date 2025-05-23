@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Button, Stack, TextField } from "@mui/material";
-import CorpusType from "../models/Corpus";
+import CorpusType from "../../models/corpus.ts";
 
 
 type CorpusProps = {
@@ -13,7 +13,7 @@ type CorpusProps = {
  * Composant permettant de créer un corpus
  * @param {function} props.onSubmit - Fonction appelée lors de la soumission du formulaire
  */
-function Corpus({ onSubmit }: CorpusProps) {
+function CorpusForm({ onSubmit }: CorpusProps) {
 
     const schema = z.object({
         title: z.string().min(1, { message: "Title is required" }),
@@ -56,4 +56,4 @@ function Corpus({ onSubmit }: CorpusProps) {
 
 }
 
-export default Corpus
+export default CorpusForm

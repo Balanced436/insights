@@ -1,17 +1,17 @@
 import { StoryFn } from "@storybook/react";
-import Login from "../components/Login";
+import LoginForm from "../components/forms/LoginForm.tsx";
 import { fn } from "@storybook/test";
 
 const meta = {
-    title: "Form/Login",
-    component: Login,
+    title: "Form/LoginForm",
+    component: LoginForm,
     tags: ['autodocs'],
     args: { onSubmit: fn() },
 };
 
 export default meta;
 
-const Template: StoryFn<typeof Login> = (args) => <Login {...args} />;
+const Template: StoryFn<typeof LoginForm> = (args) => <LoginForm {...args} />;
 
 export const Standard = Template.bind({})
 Standard.args = {variant : "standard"}

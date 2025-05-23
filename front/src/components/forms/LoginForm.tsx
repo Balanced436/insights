@@ -9,13 +9,13 @@ type LoginProps = {
 };
 
 /**
- * Composant Login permettant d'afficher un formulaire de connexion.
+ * Composant LoginForm permettant d'afficher un formulaire de connexion.
  *
  * @param {LoginProps} props - Les propriétés du composant
  * @param {function} props.onSubmit - Fonction de gestion de la soumission du formulaire
  * @param {string} props.variant
  */
-export default function Login({ onSubmit, variant }: LoginProps) {
+export default function LoginForm({ onSubmit, variant }: LoginProps) {
   const schema = z.object({
     email: z.string().min(1, { message: "Email requis" }).email({ message: "Format d'email invalide" }),
     password: z.string().min(1, { message: "Mot de passe requis" }),

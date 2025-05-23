@@ -1,16 +1,16 @@
 import { StoryFn } from "@storybook/react";
-import Source from "../components/Source";
+import SourceForm from "../components/forms/SourceForm.tsx";
 import { fn } from "@storybook/test";
 
 const meta = {
-    title: "Form/Source",
-    component: Source,
+    title: "Form/SourceForm",
+    component: SourceForm,
     tags: ['autodocs'],
     args: { onSubmit: fn() },
 };
 
 export default meta;
 
-const Template: StoryFn<typeof Source> = (args) => <Source {...args} />;
+const Template: StoryFn<typeof SourceForm> = (args) => <SourceForm {...args} />;
 
 export const Standard = Template.bind({})
