@@ -1,24 +1,29 @@
-import { useState, useEffect } from 'react';
-import _ from 'lodash';
-import Transcription from '../models/transcription';
+import {useQuery} from '@tanstack/react-query'
+import * as _ from 'lodash'
+import Transcription from '../models/transcription'
 
-const useTranscriptions = () => {
-    const [transcriptions, setTranscriptions] = useState<Transcription[]>([]);
+const fetchTranscriptions = async () => {
+    const response = await fetch('http://localhost:4000/transcription')
+    if (!response.ok) {
+        throw new Error(`Error fetching transcriptions: ${response.status}`)
+    }
+    return response.json()
+}
 
-    useEffect(() => {
-        fetch('http://localhost:4000/transcription')
-            .then(response => response.ok ? response.json() : Promise.reject(response))
-            .then(data => {
-                const formattedTranscriptions = _.map(data, transcription => new Transcription(
-                    transcription.id, transcription.content, transcription.createdAt,
-                    transcription.updatedAt, transcription.sourceId
-                ));
-                setTranscriptions(formattedTranscriptions);
-            })
-            .catch(error => console.error('Error fetching transcriptions:', error));
-    }, []);
-
-    return transcriptions;
-};
-
-export default useTranscriptions;
+export const useTranscriptions = () => {
+    return useQuery({
+        queryKey: ['transcriptions'],
+        queryFn: fetchTranscriptions,
+        select: (data) => {
+            return _.map(data, (transcription) =>
+                new Transcription(
+                    transcription.id,
+                    transcription.content,
+                    transcription.createdAt,
+                    transcription.updatedAt,
+                    transcription.sourceId,
+                )
+            )
+        }
+    })
+}
