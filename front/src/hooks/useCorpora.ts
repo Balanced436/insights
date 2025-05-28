@@ -9,12 +9,10 @@ const fetchCorpuses = async () => {
     return response.json()
 }
 
-export const useCorpuses = () => {
+export const useCorpora = () => {
     return useQuery({
         queryKey: ['corpuses'],
         queryFn: fetchCorpuses,
-        select: (data: CorpusType[]) => {
-            data
-        }
+        select: (data: CorpusType[]) => data
     })
 }
