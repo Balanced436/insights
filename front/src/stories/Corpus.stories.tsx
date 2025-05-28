@@ -15,8 +15,8 @@ const Template: StoryFn<typeof Corpus> = (args) => <Corpus {...args} />;
 
 
 const testCorpus: CorpusType = {
-    title : 'test',
-    description: 'description',
+    title : 'Journal Antenne Réunion',
+    description: `Ce corpus contient les diffusions JT de 19h`,
     createdAt: new Date(),
     updatedAt: new Date(),
     corpusID : 99
