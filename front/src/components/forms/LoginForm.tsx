@@ -17,7 +17,10 @@ type LoginProps = {
  */
 export default function LoginForm({ onSubmit, variant }: LoginProps) {
   const schema = z.object({
-    email: z.string().min(1, { message: "Email requis" }).email({ message: "Format d'email invalide" }),
+    email: z
+      .string()
+      .min(1, { message: "Email requis" })
+      .email({ message: "Format d'email invalide" }),
     password: z.string().min(1, { message: "Mot de passe requis" }),
   });
 
