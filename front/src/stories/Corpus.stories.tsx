@@ -1,16 +1,25 @@
 import { StoryFn } from "@storybook/react";
-import { fn } from "@storybook/test";
-import CorpusForm from "../components/forms/CorpusForm.tsx";
+import Corpus from "../components/Corpus.tsx";
+import CorpusType from "../models/corpus.ts";
+
 
 const meta = {
-    title: "Form/CorpusForm",
-    component: CorpusForm,
-    tags: ['autodocs'],
-    args: { onSubmit: fn() },
+    title: "UI/CorpusUI",
+    component: Corpus,
+    tags: ['autodocs']
 };
 
 export default meta;
 
-const Template: StoryFn<typeof CorpusForm> = (args) => <CorpusForm {...args} />;
+const Template: StoryFn<typeof Corpus> = (args) => <Corpus {...args} />;
 
-export const Standard = Template.bind({})
+
+const testCorpus: CorpusType = {
+    title : 'test',
+    description: 'description',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    corpusID : 99
+}
+export const Standard = Template.bind({});
+Standard.args = {corpus : testCorpus};
