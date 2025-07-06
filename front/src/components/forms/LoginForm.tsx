@@ -1,4 +1,4 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Box, Button, Stack, TextField } from "@mui/material";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -53,9 +53,11 @@ export default function LoginForm({ onSubmit, variant }: LoginProps) {
           error={!!errors.password}
           helperText={errors.password ? errors.password.message : " "}
         />
-        <Button type="submit" variant="contained">
-          Se connecter
-        </Button>
+        <Stack direction={"row"} justifyContent={"center"}>
+          <Button type="submit" variant="contained">
+            Se connecter
+          </Button>
+        </Stack>
       </Stack>
     </form>
   );
