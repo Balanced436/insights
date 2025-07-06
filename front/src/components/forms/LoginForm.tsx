@@ -32,7 +32,7 @@ export default function LoginForm({ onSubmit, variant }: LoginProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3} width={500}>
+      <Stack spacing={3}>
         <TextField
           {...register("email")}
           label="Email"
