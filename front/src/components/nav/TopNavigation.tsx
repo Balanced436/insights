@@ -16,6 +16,9 @@ const TopNavigation = () => {
           <Button color="inherit" component={Link} to="/login">
             Login
           </Button>
+          <Button color="inherit" component={Link} to="/corpora">
+            Corpora
+          </Button>
           <Button color="inherit">
             {user ? user.email : "Guest"} 
           </Button>

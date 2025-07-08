@@ -7,9 +7,10 @@ import loginRoute from "./routes/login";
 import rootRoute from "./routes/root";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const routeTree = rootRoute.addChildren([indexRoute, loginRoute]);
+const routeTree = rootRoute.addChildren([indexRoute, loginRoute, corporaRoute]);
 const queryClient = new QueryClient();
 import  UserProvider  from "./contexts/UserContext"; 
+import corporaRoute from "./routes/corpora";
 
 export const router = createRouter({ routeTree, context: queryClient });
 
