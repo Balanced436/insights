@@ -1,4 +1,4 @@
-import CorpusType from "../../models/corpus.ts";
+import CorpusType, { CorpusProps } from "../../models/corpus.ts";
 import {
   Button,
   Card,
@@ -15,7 +15,11 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
  * @param {CorpusType} corpus - The corpus to display
  *
  */
-export default function CorpusCard({ corpus }: { corpus: CorpusType }) {
+export default function CorpusCard({ corpus, onCorpusSelect }: CorpusProps) {
+  const handleClick = (corpus: CorpusType) => {
+    onCorpusSelect(corpus.id);
+  };
+
   return (
     <Card
       sx={{
@@ -35,7 +39,9 @@ export default function CorpusCard({ corpus }: { corpus: CorpusType }) {
         }
       />
       <CardActions>
-        <Button size="small">Access</Button>
+        <Button size="small" onClick={() => handleClick(corpus)}>
+          Access
+        </Button>
       </CardActions>
     </Card>
   );

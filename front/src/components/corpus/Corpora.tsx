@@ -3,17 +3,24 @@ import { CorporaCards } from "./CorporaCardsList";
 import CorporaGrid from "./CorporaGrid";
 
 interface CorporaProps {
-  corpora: CorpusType[]
-  display?: "GRID" | "CARDS"
+  corpora: CorpusType[];
+  display?: "GRID" | "CARDS";
 }
 
 const Corpora = ({ corpora, display = "GRID" }: CorporaProps) => {
+  const handleCorpusSelection = (corpusid: number) => console.info(corpusid);
   return (
     <div>
       {display === "GRID" ? (
-        <CorporaGrid corpora={corpora}/>
+        <CorporaGrid
+          corpora={corpora}
+          onCorpusSelect={(corpusid) => handleCorpusSelection(corpusid)}
+        />
       ) : (
-        <CorporaCards corpora={corpora}/>
+        <CorporaCards
+          corpora={corpora}
+          onCorpusSelect={(corpusid) => handleCorpusSelection(corpusid)}
+        />
       )}
     </div>
   );

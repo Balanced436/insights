@@ -1,8 +1,18 @@
 type CorpusType = {
+  id: number;
   title: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;
-  corpusID: number;
 };
 export default CorpusType;
+
+export type CorporaProps = {
+  corpora: CorpusType[];
+  onCorpusSelect: (corpusid: number) => void;
+};
+
+export type CorpusProps = {
+  corpus: CorpusType;
+  onCorpusSelect: (corpusid: number) => void;
+};
