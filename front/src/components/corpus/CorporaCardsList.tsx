@@ -7,7 +7,7 @@ import CorpusCard from "./CorpusCard.tsx";
  * @param corpora
  * @constructor
  */
-export function CorpusCardsList({ corpora }: { corpora: CorpusType[] }) {
+export function CorporaCards({ corpora }: { corpora: CorpusType[] }) {
   return (
     <Stack direction={"row"} spacing={3} useFlexGap sx={{ flexWrap: "wrap" }}>
       {corpora.map((corpus: CorpusType) => (

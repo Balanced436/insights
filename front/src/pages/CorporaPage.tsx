@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
-import CorpusGrid from "../components/corpus/CorpusGrid";
 import { useCorpora } from "../hooks/useCorpora";
 import { useEffect } from "react";
+import Corpora from "../components/corpus/Corpora";
 
 const CorporaPage = () => {
   const { status, data, error, isFetching } = useCorpora()
@@ -10,11 +10,7 @@ const CorporaPage = () => {
     console.info(data)
   },[])
   return (
-    <Stack
-      sx={{ justifyContent: "center", alignItems: "center", height: "100%" }}
-    >
-     <CorpusGrid corpora={data ? data : []}/>
-    </Stack>
+     <Corpora corpora={data ? data : []} display="GRID"/>
   );
 };
 

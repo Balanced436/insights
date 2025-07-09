@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { DataGrid,GridColDef } from '@mui/x-data-grid';
 import CorpusType from '../../models/corpus';
 
-const CorpusGrid = ({ corpora }: { corpora: CorpusType[] })=>{
+const CorporaGrid = ({ corpora }: { corpora: CorpusType[] })=>{
     const columns: GridColDef<(typeof corpora)[number]>[] = [
   { field: 'id', headerName: 'ID', width: 90 },
   {
@@ -52,4 +52,4 @@ const CorpusGrid = ({ corpora }: { corpora: CorpusType[] })=>{
   );
 }
 
-export default CorpusGrid;
+export default CorporaGrid;
