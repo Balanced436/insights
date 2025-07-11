@@ -5,7 +5,7 @@ import { UserContext } from "../../contexts/UserContext";
 
 const TopNavigation = () => {
   const { user } = useContext(UserContext);
-  
+
   return (
     <Box>
       <AppBar position="fixed">
@@ -19,9 +19,7 @@ const TopNavigation = () => {
           <Button color="inherit" component={Link} to="/corpora">
             Corpora
           </Button>
-          <Button color="inherit">
-            {user ? user.email : "Guest"} 
-          </Button>
+          <Button color="inherit">{user ? user.email : "Guest"}</Button>
         </Toolbar>
       </AppBar>
       <Toolbar />

@@ -15,15 +15,11 @@ export const UserContext = createContext<UserContext>({
   setUser: () => {},
 });
 
-export const UserProvider = ({
-  children,
-}: UserProviderProps) => {
+export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
 
   return (
-    <UserContext.Provider
-      value={{ user, setUser }}
-    >
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );

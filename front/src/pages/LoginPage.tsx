@@ -10,19 +10,16 @@ interface Credentials {
 }
 
 const LoginPage = () => {
-  const { mutate: login, isPending, error, data } = useAuthentification();
+  const { mutate: login } = useAuthentification();
   const { setUser } = useContext(UserContext);
 
-  const handleLogin = (userCredentials:Credentials) => {
-    login(
-      userCredentials,
-      {
-        onSuccess: (response) => {
-          localStorage.setItem("user", JSON.stringify(response))
-          setUser(response)
-        },
-      }
-    );
+  const handleLogin = (userCredentials: Credentials) => {
+    login(userCredentials, {
+      onSuccess: (response) => {
+        localStorage.setItem("user", JSON.stringify(response));
+        setUser(response);
+      },
+    });
   };
 
   return (

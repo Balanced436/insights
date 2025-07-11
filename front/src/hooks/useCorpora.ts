@@ -13,6 +13,8 @@ export const useCorpora = () => {
   return useQuery({
     queryKey: ["corpuses"],
     queryFn: fetchCorpuses,
+    staleTime: 1000 * 60 * 5, // 5 minutes sans refetch
+    gcTime: 1000 * 60 * 10, // garde en mémoire pendant 10 min
     select: (data: CorpusType[]) => data,
   });
 };
