@@ -5,21 +5,22 @@ import CorporaGrid from "./CorporaGrid";
 interface CorporaProps {
   corpora: CorpusType[];
   display?: "GRID" | "CARDS";
+  onCorpusSelection : (corpusid:number) => void
 }
 
-const Corpora = ({ corpora, display = "GRID" }: CorporaProps) => {
-  const handleCorpusSelection = (corpusid: number) => console.info(corpusid);
+const Corpora = ({ corpora, display = "GRID", onCorpusSelection }: CorporaProps) => {
+  const handleCorpusSelection = (corpusid: number) => onCorpusSelection(corpusid);
   return (
     <div>
       {display === "GRID" ? (
         <CorporaGrid
           corpora={corpora}
-          onCorpusSelect={(corpusid) => handleCorpusSelection(corpusid)}
+          onCorpusSelectSelection={handleCorpusSelection}
         />
       ) : (
         <CorporaCards
           corpora={corpora}
-          onCorpusSelect={(corpusid) => handleCorpusSelection(corpusid)}
+          onCorpusSelectSelection={handleCorpusSelection}
         />
       )}
     </div>

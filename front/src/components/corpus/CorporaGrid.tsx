@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import CorpusType, { CorporaProps } from "../../models/corpus";
+import { CorporaProps } from "../../models/corpus";
 
-const CorporaGrid = ({ corpora, onCorpusSelect }: CorporaProps) => {
+const CorporaGrid = ({ corpora, onCorpusSelectSelection }: CorporaProps) => {
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
-    onCorpusSelect(params.row.id);
+    onCorpusSelectSelection(params.row.id);
   };
 
   const columns: GridColDef<(typeof corpora)[number]>[] = [
@@ -13,20 +13,20 @@ const CorporaGrid = ({ corpora, onCorpusSelect }: CorporaProps) => {
       field: "title",
       headerName: "Title",
       width: 150,
-      editable: true,
+      editable: false,
     },
     {
       field: "description",
       headerName: "Description",
       width: 150,
-      editable: true,
+      editable: false,
     },
     {
       field: "createdAt",
       headerName: "Date de création",
       type: "number",
       width: 110,
-      editable: true,
+      editable: false,
     },
     {
       field: "updatedAt",

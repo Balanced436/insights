@@ -9,10 +9,10 @@ export default CorpusType;
 
 export type CorporaProps = {
   corpora: CorpusType[];
-  onCorpusSelect: (corpusid: number) => void;
+  onCorpusSelectSelection: (corpusid: number) => void;
 };
 
 export type CorpusProps = {
   corpus: CorpusType;
-  onCorpusSelect: (corpusid: number) => void;
+  onCorpusSelectSelection: (corpusid: number) => void;
 };

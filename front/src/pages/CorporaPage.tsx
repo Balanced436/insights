@@ -5,8 +5,9 @@ import { CorporaContext } from "../contexts/CorporaContext";
 
 const CorporaPage = () => {
   const { data, isLoading } = useCorpora();
-
   const { corpora, setCorpora } = useContext(CorporaContext);
+  const handleCorpusSection = (corpusid: number) => console.info(`selected corpus id ${corpusid}`)
+
   useEffect(() => {
     if (data) {
       setCorpora(data ? data : []);
@@ -14,8 +15,8 @@ const CorporaPage = () => {
     }
   }, [data]);
 
-
-  return (<div>{!isLoading ? <Corpora corpora={corpora} display="GRID" /> : <p>loading</p>}</div>)
+  if (isLoading) return <p>corpora loading</p>
+  if (data) return <Corpora corpora={corpora} display="GRID" onCorpusSelection={(corpusid)=>handleCorpusSection(corpusid)} />
 };
 
 export default CorporaPage;
