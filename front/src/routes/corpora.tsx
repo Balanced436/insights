@@ -8,31 +8,34 @@ export const corporaRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/corpora",
   component: () => {
-    return <CorporaProvider> <Outlet /> </CorporaProvider>
+    return (
+      <CorporaProvider>
+        {" "}
+        <Outlet />{" "}
+      </CorporaProvider>
+    );
   },
-
 });
 
 // route /corpora displays corpora
 export const corporaIndexRoute = createRoute({
   getParentRoute: () => corporaRoute,
-  path: '/',
+  path: "/",
   component: CorporaPage,
 });
 
 // route /corpora/:id displays a specific corpus
 export const corpusDetailRoute = createRoute({
   getParentRoute: () => corporaRoute,
-  path: '$id',
+  path: "$id",
   component: CorpusPage,
 });
 
-// route /corpora/:id/edit 
+// route /corpora/:id/edit
 export const corpusEditRoute = createRoute({
   getParentRoute: () => corporaRoute,
-  path: '$id/edit',
+  path: "$id/edit",
   component: () => <p>edit a specific corpus</p>,
 });
-
 
 export default corporaRoute;

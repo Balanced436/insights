@@ -1,34 +1,40 @@
-import { useContext } from "react"
-import { CorporaContext } from "../contexts/CorporaContext"
-import { useParams } from "@tanstack/react-router"
-import CorpusType from "../models/corpus"
-import { Stack } from "@mui/material"
-
+import { useParams } from "@tanstack/react-router";
+import CorpusType from "../models/corpus";
+import { Stack } from "@mui/material";
+import { useCorpus } from "../hooks/useCorpora";
 
 const CorpusPage = () => {
-    const { corpora } = useContext(CorporaContext)
-    const id = Number(useParams({ from: '/corpora/$id' }).id)
-    if (isNaN(id) || id < 0 || id > corpora.length) {
-        // TODO: use zod to validate params inside createRoute option
-        throw Error('ID ERROR')
-    }
-    const selectedCorpus: CorpusType = corpora[id]
-    return <Corpus corpus={selectedCorpus} />
-}
+  const idParam = useParams({ from: "/corpora/$id" }).id;
+  const id = Number(idParam);
 
-export default CorpusPage
+  if (isNaN(id)) {
+    throw new Error("ID ERROR");
+  }
 
+  const { data: corpus, isLoading, isError, error } = useCorpus(id);
+
+  if (isLoading) {
+    return <p>corpus is loading</p>;
+  }
+
+  if (isError) {
+    return <p>{error?.message}</p>;
+  }
+
+  if (corpus) {
+    return <Corpus corpus={corpus} />;
+  }
+  return <p>no corpus found</p>;
+};
+
+export default CorpusPage;
 
 export const Corpus = ({ corpus }: { corpus: CorpusType }) => {
-    return <Stack direction={'column'}>
-        <span>
-            Corpus title: {corpus.title}
-        </span>
-        <span>
-            Corpus ID {corpus.id}
-        </span>
-        <span>
-            Created at {corpus.createdAt.toString()}
-        </span>
+  return (
+    <Stack direction={"column"}>
+      <span>Corpus title: {corpus.title}</span>
+      <span>Corpus ID {corpus.id}</span>
+      <span>Created at {corpus.createdAt.toString()}</span>
     </Stack>
-}
+  );
+};
