@@ -14,10 +14,20 @@ const prisma = new PrismaClient();
 sourceRouter.get(
   "/source/:id?",
   async (req: Request, res: Response): Promise<any> => {
+    const corpusid = parseInt(req.query.corpusid as string)
     const id = req.params.id ? parseInt(req.params.id) : undefined;
+
+    /**
+     * getSources returns sources according to filters
+     * @param corpusid 
+     * @returns 
+     */
+    const getSources = async (corpusid: number) : Promise<Source[]> =>{
+      return corpusid ? await prisma.source.findMany({where : {corpusID : corpusid}}) : await prisma.source.findMany()
+    }
     try {
       if (id === undefined) {
-        const sources = await prisma.source.findMany();
+        const sources:Source[] = await getSources(corpusid)
         return res.status(200).json(sources);
       } else if (isNaN(id)) {
         return res.status(400).json({ message: "Invalid ID" });
