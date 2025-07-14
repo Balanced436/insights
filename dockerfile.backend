@@ -1,7 +1,5 @@
 FROM node:19
 WORKDIR /app
-COPY front/package*.json ./
-RUN npm install
 COPY back/ .
 RUN npx prisma generate
 RUN npx dotenv -e .env.test prisma generate
@@ -11,6 +9,7 @@ COPY back/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
 RUN mkdir -p source/audio source/video
+RUN mkdir -p var/log
 
 EXPOSE 4000
 EXPOSE 9229
