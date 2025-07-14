@@ -15,6 +15,7 @@ describe("CRUD operations for Source", () => {
   };
   let sourceId: number;
   let corpusID: number;
+  let corpusID2: number;
 
   afterAll(async () => {
     await prisma.$disconnect();
@@ -27,7 +28,12 @@ describe("CRUD operations for Source", () => {
 
   beforeAll(async () => {
     const corpusRequest = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
+    const corpusRequest2 = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
+
     corpusID = corpusRequest.body.corpus.id
+    corpusID2 = corpusRequest2.body.corpus.id
+
+
 
   });
 
@@ -128,10 +134,39 @@ describe("CRUD operations for Source", () => {
       expect(response.body.length).toBe((await allSources).length);
     });
 
-    it(`should get all source according to query`, async () => {
-      expect(true).toBe(false)
-    });
+    it(`should get all source according to query (corpusid)`, async () => {
+      // add a source inside the corpus 
+       const corpusResponse = await request(app)
+        .post("/source")
+        .field("title", newSource.title)
+        .field("description", newSource.description)
+        .attach("corpusID", corpusID2);
 
+      const response = await request(app).get(`/source?corpusid=${10}`)
+      expect(response.status).toBe(200)
+    });
+    it(`should get all source according if query is NaN (corpusid)`, async () => {
+      // add a source inside the corpus 
+       const corpusResponse = await request(app)
+        .post("/source")
+        .field("title", newSource.title)
+        .field("description", newSource.description)
+        .attach("corpusID", corpusID2);
+
+      const response = await request(app).get('/source?corpusid=x')
+      expect(response.status).toBe(200)
+    });
+    it(`should get an empty array [] if there is no source with corpusid`, async () => {
+      // add a source inside the corpus 
+       const corpusResponse = await request(app)
+        .post("/source")
+        .field("title", newSource.title)
+        .field("description", newSource.description)
+        .attach("corpusID", corpusID2);
+
+      const response = await request(app).get(`/source?corpusid=${99}`)
+      expect(response.status).toBe(200)
+    });
     it("should get a single source by ID", async () => {
       const response = await request(app).get(`/source/${sourceId}`);
       expect(response.status).toBe(200); 
