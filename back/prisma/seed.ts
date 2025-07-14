@@ -4,27 +4,36 @@ import path from 'path';
 
 async function main() {
     // add a new basic corpus
-    const corpusRequest = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
+    const corpusRequest1 = await request(app).post('/corpus').send({ "title": "My first corpus", "description": "This is my first corpus"})
+    const corpusRequest2 = await request(app).post('/corpus').send({ "title": "My second corpus", "description": "This is my second corpus"})
+
     // add some sources
     const sources = [{
         title: 'SEED1 title JT 5-11-2024-19h',
         description: 'SEED description JT 5-11-2024-19h',
         video: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.mp4'),
         audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav'),
-        corpusID: corpusRequest.body.corpus.id
+        corpusID: corpusRequest1.body.corpus.id
       },{
         title: 'SEED2 title JT 5-11-2024-19h',
         description: 'SEED description JT 5-11-2024-19h',
         video: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.mp4'),
         audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav'),
-        corpusID:corpusRequest.body.corpus.id
+        corpusID:corpusRequest1.body.corpus.id
       },{
         title: 'SEED3 title JT 5-11-2024-19h',
         description: 'SEED description JT 5-11-2024-19h',
         video: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.mp4'),
         audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav'),
-        corpusID:corpusRequest.body.corpus.id
-      }];
+        corpusID:corpusRequest1.body.corpus.id
+      },{
+        title: 'SEED3 title JT 5-11-2024-19h',
+        description: 'SEED description JT 5-11-2024-19h',
+        video: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.mp4'),
+        audio: path.resolve(__dirname, '../src/__tests__/fixtures/5-11-2024-19h.wav'),
+        corpusID:corpusRequest2.body.corpus.id
+      }
+    ];
 
       // add some transcriptions
       const transcriptions = [
