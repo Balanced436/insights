@@ -7,21 +7,18 @@ import CorpusPage from "../pages/CorpusPage";
 export const corporaRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/corpora",
-  component: () => {
-    return (
-      <CorporaProvider>
-        {" "}
-        <Outlet />{" "}
-      </CorporaProvider>
-    );
-  },
+  component: () => (
+    <CorporaProvider>
+      <CorporaPage />
+    </CorporaProvider>
+  ),
 });
 
 // route /corpora displays corpora
 export const corporaIndexRoute = createRoute({
   getParentRoute: () => corporaRoute,
   path: "/",
-  component: CorporaPage,
+  component: () => <p>Corpora index</p>,
 });
 
 // route /corpora/:id displays a specific corpus

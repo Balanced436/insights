@@ -1,12 +1,13 @@
 import { useCorpora } from "../hooks/useCorpora";
 import { useContext, useEffect } from "react";
-import Corpora from "../components/corpus/Corpora";
 import { CorporaContext } from "../contexts/CorporaContext";
-import { useNavigate } from "@tanstack/react-router";
+import { Outlet, useNavigate } from "@tanstack/react-router";
+import LeftCorporaNavigation from "../components/nav/LeftNavigation";
+import { Box } from "@mui/material";
 
 const CorporaPage = () => {
   const { data, isLoading } = useCorpora();
-  const { corpora, setCorpora } = useContext(CorporaContext);
+  const { setCorpora } = useContext(CorporaContext);
   const navigate = useNavigate();
 
   /**
@@ -29,11 +30,15 @@ const CorporaPage = () => {
   if (isLoading) return <p>corpora is loading</p>;
   if (data)
     return (
-      <Corpora
-        corpora={data}
-        display="GRID"
-        onCorpusSelection={(corpusid) => handleCorpusSection(corpusid)}
-      />
+      <Box sx={{ display: "flex" }}>
+        <LeftCorporaNavigation
+          corpora={data}
+          onCorpusSelectSelection={handleCorpusSection}
+        />
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Outlet />
+        </Box>
+      </Box>
     );
   return <p>no corpora found</p>;
 };

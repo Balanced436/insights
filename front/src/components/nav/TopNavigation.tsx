@@ -7,7 +7,8 @@ const TopNavigation = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <Box>
+    <Box sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      {/* Make it one step above the drawer */}
       <AppBar position="fixed">
         <Toolbar>
           <Button color="inherit" component={Link} to="/">
