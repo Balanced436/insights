@@ -3,8 +3,8 @@ import CorpusType from "../models/corpus";
 import { Stack } from "@mui/material";
 import { useCorpus } from "../hooks/useCorpora";
 
-const CorpusPage = () => {
-  const idParam = useParams({ from: "/corpora/$id" }).id;
+const CorpusInfosPage = () => {
+  const idParam = useParams({ from: "/corpora/$id/infos" }).id;
   const id = Number(idParam);
 
   if (isNaN(id)) {
@@ -27,7 +27,7 @@ const CorpusPage = () => {
   return <p>no corpus found</p>;
 };
 
-export default CorpusPage;
+export default CorpusInfosPage;
 
 export const Corpus = ({ corpus }: { corpus: CorpusType }) => {
   return (

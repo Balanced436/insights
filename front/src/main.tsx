@@ -8,8 +8,9 @@ import rootRoute from "./routes/root";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import corporaRoute, {
   corporaIndexRoute,
-  corpusDetailRoute,
+  corpusInfosRoute,
   corpusEditRoute,
+  corpusSourcesRoute,
 } from "./routes/corpora";
 
 const routeTree = rootRoute.addChildren([
@@ -17,8 +18,9 @@ const routeTree = rootRoute.addChildren([
   loginRoute,
   corporaRoute.addChildren([
     corporaIndexRoute,
-    corpusDetailRoute,
+    corpusInfosRoute,
     corpusEditRoute,
+    corpusSourcesRoute,
   ]),
 ]);
 

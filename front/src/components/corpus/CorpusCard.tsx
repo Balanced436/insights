@@ -15,7 +15,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
  * @param {CorpusType} corpus - The corpus to display
  *
  */
-export default function CorpusCard({ corpus, onCorpusSelectSelection }: CorpusProps) {
+export default function CorpusCard({
+  corpus,
+  onCorpusSelectSelection,
+}: CorpusProps) {
   const handleClick = (corpus: CorpusType) => {
     onCorpusSelectSelection(corpus.id);
   };

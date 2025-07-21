@@ -1,8 +1,9 @@
-import { createRoute, Outlet } from "@tanstack/react-router";
+import { createRoute } from "@tanstack/react-router";
 import rootRoute from "./root";
 import CorporaPage from "../pages/CorporaPage";
 import { CorporaProvider } from "../contexts/CorporaContext";
-import CorpusPage from "../pages/CorpusPage";
+import CorpusInfosPage from "../pages/CorpusPage";
+import SourcePage from "../pages/SourcePage";
 
 export const corporaRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -22,10 +23,17 @@ export const corporaIndexRoute = createRoute({
 });
 
 // route /corpora/:id displays a specific corpus
-export const corpusDetailRoute = createRoute({
+export const corpusInfosRoute = createRoute({
   getParentRoute: () => corporaRoute,
-  path: "$id",
-  component: CorpusPage,
+  path: "$id/infos",
+  component: CorpusInfosPage,
+});
+
+// route /corpora/:id displays a specific corpus
+export const corpusSourcesRoute = createRoute({
+  getParentRoute: () => corporaRoute,
+  path: "$id/sources",
+  component: SourcePage,
 });
 
 // route /corpora/:id/edit
