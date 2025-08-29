@@ -1,9 +1,16 @@
 import { Box } from "@mui/material";
-import {DataGrid, GridColDef, GridEventListener, GridRowParams} from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridEventListener,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import { CorporaProps } from "../../models/corpus";
 
 const CorporaGrid = ({ corpora, onCorpusSelectSelection }: CorporaProps) => {
-  const handleRowClick: GridEventListener<"rowClick"> = (params: GridRowParams) => {
+  const handleRowClick: GridEventListener<"rowClick"> = (
+    params: GridRowParams,
+  ) => {
     onCorpusSelectSelection(params.row.id);
   };
 

@@ -35,7 +35,10 @@ const CorporaPage = () => {
           corpora={data}
           onCorpusSelectSelection={handleCorpusSection}
         />
-        <Box component="main" sx={{ flexGrow: 1, p: 3, minWidth: '300px', height: '100%' }}>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: 3, minWidth: "300px", height: "100%" }}
+        >
           <Outlet />
         </Box>
       </Box>

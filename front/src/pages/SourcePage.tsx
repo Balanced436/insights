@@ -1,7 +1,7 @@
 import { useParams } from "@tanstack/react-router";
 import Sources from "../components/Sources";
 import { useSources } from "../hooks/useSources";
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 
 const SourcePage = () => {
   const idParam = useParams({ from: "/corpora/$id/sources" }).id;
@@ -18,8 +18,11 @@ const SourcePage = () => {
   }
 
   if (sources) {
-    return <div>
-        <Sources sources={sources} onSourceSelection={console.info} /> </div>;
+    return (
+      <div>
+        <Sources sources={sources} onSourceSelection={console.info} />{" "}
+      </div>
+    );
   }
 
   return <p>no source found</p>;

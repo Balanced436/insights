@@ -1,8 +1,8 @@
 import Source from "../models/source";
-import {GridColDef, GridRowParams} from "@mui/x-data-grid";
+import { GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-import {DataGrid} from "@mui/x-data-grid";
-import {GridEventListener} from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
+import { GridEventListener } from "@mui/x-data-grid";
 
 /**
  * Component for displaying and managing sources.
@@ -18,33 +18,32 @@ export default function Sources({
   sources: Source[];
   onSourceSelection: (sourceid: number) => void;
 }) {
-    const handleRowClick: GridEventListener<"rowClick"> = (params: GridRowParams) => {
-        onSourceSelection(params.row.id);
-    };
+  const handleRowClick: GridEventListener<"rowClick"> = (
+    params: GridRowParams,
+  ) => {
+    onSourceSelection(params.row.id);
+  };
 
-    const columns: GridColDef<(typeof sources)[number]>[] = [
-        { field: 'id', headerName: 'ID', width: 10 },
-        { field: 'title', headerName: 'title', flex: 1 },
-        { field: 'description', headerName: 'description', flex: 1 },
-        { field: 'videoUrl', headerName: 'video url', flex: 1 },
-        { field: 'audioUrl', headerName: 'audio url', flex: 1 },
-        { field: 'createdAt', headerName: 'created at', flex: 1 },
-        { field: 'updatedAt', headerName: 'created at', flex: 1 },
-    ];
+  const columns: GridColDef<(typeof sources)[number]>[] = [
+    { field: "id", headerName: "ID", width: 10 },
+    { field: "title", headerName: "title", flex: 1 },
+    { field: "description", headerName: "description", flex: 1 },
+    { field: "videoUrl", headerName: "video url", flex: 1 },
+    { field: "audioUrl", headerName: "audio url", flex: 1 },
+    { field: "createdAt", headerName: "created at", flex: 1 },
+    { field: "updatedAt", headerName: "created at", flex: 1 },
+  ];
 
-
-
-    return (
-        <Box sx={{ height: "100%"
-        }}>
-            <DataGrid
-                rows={sources}
-                columns={columns}
-                pageSizeOptions={[5]}
-                checkboxSelection={false}
-                disableRowSelectionOnClick
-                onRowClick={handleRowClick}
-            />
-        </Box>
-    );
+  return (
+    <Box sx={{ height: "100%" }}>
+      <DataGrid
+        rows={sources}
+        columns={columns}
+        pageSizeOptions={[5]}
+        checkboxSelection={false}
+        disableRowSelectionOnClick
+        onRowClick={handleRowClick}
+      />
+    </Box>
+  );
 }
