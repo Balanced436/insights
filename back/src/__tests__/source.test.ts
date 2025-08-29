@@ -21,34 +21,32 @@ describe("CRUD operations for Source", () => {
     await prisma.$disconnect();
 
     // order of deletion matters
-    await prisma.task.deleteMany()
+    await prisma.task.deleteMany();
     await prisma.transcription.deleteMany();
     await prisma.source.deleteMany();
   });
 
   beforeAll(async () => {
-    const corpusRequest = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
-    const corpusRequest2 = await request(app).post('/corpus').send({ "title": "Basic corpus", "description": "This is a generic corpus"})
+    const corpusRequest = await request(app)
+      .post("/corpus")
+      .send({ title: "Basic corpus", description: "This is a generic corpus" });
+    const corpusRequest2 = await request(app)
+      .post("/corpus")
+      .send({ title: "Basic corpus", description: "This is a generic corpus" });
 
-    corpusID = corpusRequest.body.corpus.id
-    corpusID2 = corpusRequest2.body.corpus.id
-
-
-
+    corpusID = corpusRequest.body.corpus.id;
+    corpusID2 = corpusRequest2.body.corpus.id;
   });
 
   describe("POST source", () => {
-    
     it(`should create a new source`, async () => {
-      
-
       const response = await request(app)
         .post("/source")
         .field("title", newSource.title)
         .field("description", newSource.description)
         .attach("video", newSource.audio)
         .attach("audio", newSource.video)
-        .attach("corpusID", corpusID)
+        .attach("corpusID", corpusID);
 
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty("message");
@@ -73,7 +71,6 @@ describe("CRUD operations for Source", () => {
         .attach("audio", newSource.video)
         .attach("corpusID", corpusID);
 
-
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty("message");
       expect(response.body.message).toBe("Source created successfully");
@@ -84,7 +81,6 @@ describe("CRUD operations for Source", () => {
 
       // check if audio file exists
       expect(fs.existsSync(response.body.data.videoUrl)).toBe(false);
-
     }, 10000);
 
     it(`should create a new source witheout audio`, async () => {
@@ -94,8 +90,6 @@ describe("CRUD operations for Source", () => {
         .field("description", newSource.description)
         .attach("video", newSource.video)
         .attach("corpusID", corpusID);
-
-
 
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty("message");
@@ -107,7 +101,6 @@ describe("CRUD operations for Source", () => {
 
       // check if audio file exists
       expect(fs.existsSync(response.body.data.videoUrl)).toBe(true);
-
     }, 10000);
 
     it(`should return an error if audio and video are not provided by the user`, async () => {
@@ -117,15 +110,11 @@ describe("CRUD operations for Source", () => {
         .field("description", newSource.description)
         .attach("corpusID", corpusID);
 
-
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("message");
       expect(response.body.message).toBe("video or audio files are required");
     }, 10000);
-
   });
-
-  
 
   describe("GET source (id?)", () => {
     it(`should get all sources`, async () => {
@@ -135,41 +124,41 @@ describe("CRUD operations for Source", () => {
     });
 
     it(`should get all source according to query (corpusid)`, async () => {
-      // add a source inside the corpus 
-       const corpusResponse = await request(app)
+      // add a source inside the corpus
+      const corpusResponse = await request(app)
         .post("/source")
         .field("title", newSource.title)
         .field("description", newSource.description)
         .attach("corpusID", corpusID2);
 
-      const response = await request(app).get(`/source?corpusid=${10}`)
-      expect(response.status).toBe(200)
+      const response = await request(app).get(`/source?corpusid=${10}`);
+      expect(response.status).toBe(200);
     });
     it(`should get all source according if query is NaN (corpusid)`, async () => {
-      // add a source inside the corpus 
-       const corpusResponse = await request(app)
+      // add a source inside the corpus
+      const corpusResponse = await request(app)
         .post("/source")
         .field("title", newSource.title)
         .field("description", newSource.description)
         .attach("corpusID", corpusID2);
 
-      const response = await request(app).get('/source?corpusid=x')
-      expect(response.status).toBe(200)
+      const response = await request(app).get("/source?corpusid=x");
+      expect(response.status).toBe(200);
     });
     it(`should get an empty array [] if there is no source with corpusid`, async () => {
-      // add a source inside the corpus 
-       const corpusResponse = await request(app)
+      // add a source inside the corpus
+      const corpusResponse = await request(app)
         .post("/source")
         .field("title", newSource.title)
         .field("description", newSource.description)
         .attach("corpusID", corpusID2);
 
-      const response = await request(app).get(`/source?corpusid=${99}`)
-      expect(response.status).toBe(200)
+      const response = await request(app).get(`/source?corpusid=${99}`);
+      expect(response.status).toBe(200);
     });
     it("should get a single source by ID", async () => {
       const response = await request(app).get(`/source/${sourceId}`);
-      expect(response.status).toBe(200); 
+      expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("id", sourceId);
       expect(response.body.title).toBe(newSource.title);
       expect(response.body.description).toBe(newSource.description);
@@ -185,8 +174,8 @@ describe("CRUD operations for Source", () => {
   describe("DELETE source (id)", () => {
     it("should delete a source by id", async () => {
       const response = await request(app).delete(`/source/${sourceId}`);
-      expect(response.body).toHaveProperty('data')
-      expect(response.body.data).toHaveProperty('id',sourceId)
+      expect(response.body).toHaveProperty("data");
+      expect(response.body.data).toHaveProperty("id", sourceId);
 
       // check if audio still exists
       expect(fs.existsSync(response.body.data.audioUrl)).toBe(false);

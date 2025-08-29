@@ -14,20 +14,22 @@ const prisma = new PrismaClient();
 sourceRouter.get(
   "/source/:id?",
   async (req: Request, res: Response): Promise<any> => {
-    const corpusid = parseInt(req.query.corpusid as string)
+    const corpusid = parseInt(req.query.corpusid as string);
     const id = req.params.id ? parseInt(req.params.id) : undefined;
 
     /**
      * getSources returns sources according to filters
-     * @param corpusid 
-     * @returns 
+     * @param corpusid
+     * @returns
      */
-    const getSources = async (corpusid: number) : Promise<Source[]> =>{
-      return corpusid ? await prisma.source.findMany({where : {corpusID : corpusid}}) : await prisma.source.findMany()
-    }
+    const getSources = async (corpusid: number): Promise<Source[]> => {
+      return corpusid
+        ? await prisma.source.findMany({ where: { corpusID: corpusid } })
+        : await prisma.source.findMany();
+    };
     try {
       if (id === undefined) {
-        const sources:Source[] = await getSources(corpusid)
+        const sources: Source[] = await getSources(corpusid);
         return res.status(200).json(sources);
       } else if (isNaN(id)) {
         return res.status(400).json({ message: "Invalid ID" });
@@ -49,19 +51,19 @@ sourceRouter.get(
 
 /**
  * Configures the storage engine for multer to store uploaded files on disk.
- * 
+ *
  * The storage engine determines the destination and filename for the uploaded files.
- * 
+ *
  * - For files with the fieldname "video", the destination is set to "/app/source/video".
  * - For all other files, the destination is set to "/app/source/audio".
- * 
- * The filename is generated using the current timestamp and a random number, 
+ *
+ * The filename is generated using the current timestamp and a random number,
  * followed by the file's original extension.
- * 
+ *
  * @param {Object} req - The request object.
  * @param {Object} file - The file object containing information about the uploaded file.
  * @param {Function} cb - The callback function to specify the destination or filename.
- * 
+ *
  * @returns {void}
  */
 const storage = multer.diskStorage({
@@ -89,7 +91,7 @@ sourceRouter.post(
       const files =
         (req.files as { [fieldname: string]: Express.Multer.File[] }) || {};
       const { title, description, corpusID } = req.body as Source;
-      if ((!files["video"]) && (!files["audio"])) {
+      if (!files["video"] && !files["audio"]) {
         return res
           .status(400)
           .json({ message: "video or audio files are required" });
@@ -107,7 +109,7 @@ sourceRouter.post(
           description: description,
           videoUrl: files["video"] ? files["video"][0].path : null,
           audioUrl: files["audio"] ? files["audio"][0].path : null,
-          corpusID: Number(corpusID)
+          corpusID: Number(corpusID),
         },
       });
 
