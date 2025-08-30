@@ -12,7 +12,8 @@
     "push:dev": "npx prisma db push --accept-data-loss",
     "push:test": "dotenv -e .env.test -- npx prisma db push --accept-data-loss",
     "seed:dev": "ts-node prisma/seed.ts",
-    "seed:test": "dotenv -e .env.test -- ts-node prisma/seed.ts"
+    "seed:test": "dotenv -e .env.test -- ts-node prisma/seed.ts",
+    "prettier": "npx prettier src --write"
   },
   "keywords": [],
   "author": "",
