@@ -3,7 +3,8 @@ import rootRoute from "./root";
 import CorporaPage from "../pages/CorporaPage";
 import { CorporaProvider } from "../contexts/CorporaContext";
 import CorpusInfosPage from "../pages/CorpusPage";
-import SourcePage from "../pages/SourcePage";
+import SourcesPage from "../pages/SourcesPage.tsx";
+import SourcePage from "../pages/SourcePage.tsx";
 
 export const corporaRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -25,21 +26,28 @@ export const corporaIndexRoute = createRoute({
 // route /corpora/:id displays a specific corpus
 export const corpusInfosRoute = createRoute({
   getParentRoute: () => corporaRoute,
-  path: "$id/infos",
+  path: "$corpusid/infos",
   component: CorpusInfosPage,
 });
 
 // route /corpora/:id displays a specific corpus
 export const corpusSourcesRoute = createRoute({
   getParentRoute: () => corporaRoute,
-  path: "$id/sources",
-  component: SourcePage,
+  path: "$corpusid/sources",
+  component: SourcesPage,
+});
+
+// route /corpora/:id displays a specific corpus
+export const corpusSourceRoute = createRoute({
+    getParentRoute: () => corporaRoute,
+    path: "$corpusid/sources/$sourceid",
+    component: SourcePage,
 });
 
 // route /corpora/:id/edit
 export const corpusEditRoute = createRoute({
   getParentRoute: () => corporaRoute,
-  path: "$id/edit",
+  path: "$corpusid/edit",
   component: () => <p>edit a specific corpus</p>,
 });
 

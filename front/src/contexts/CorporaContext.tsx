@@ -1,9 +1,9 @@
 import React, { useState, createContext, ReactNode } from "react";
-import CorpusType from "../models/corpus";
+import Corpus from "../models/corpus.ts";
 
 interface CorporaContext {
-  corpora: CorpusType[] | [];
-  setCorpora: React.Dispatch<React.SetStateAction<CorpusType[] | []>>;
+  corpora: Corpus[] | [];
+  setCorpora: React.Dispatch<React.SetStateAction<Corpus[] | []>>;
 }
 
 interface CorporaProviderProps {
@@ -16,7 +16,7 @@ export const CorporaContext = createContext<CorporaContext>({
 });
 
 export const CorporaProvider = ({ children }: CorporaProviderProps) => {
-  const [corpora, setCorpora] = useState<CorpusType[] | []>([]);
+  const [corpora, setCorpora] = useState<Corpus[] | []>([]);
 
   return (
     <CorporaContext.Provider value={{ corpora, setCorpora }}>

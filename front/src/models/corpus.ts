@@ -1,18 +1,18 @@
-type CorpusType = {
+type Corpus = {
   id: number;
   title: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;
 };
-export default CorpusType;
+export default Corpus;
 
 export type CorporaProps = {
-  corpora: CorpusType[];
-  onCorpusSelectSelection: (corpusid: number) => void;
+  corpora: Corpus[];
+  onCorpusSelectSelection: (corpus: Corpus) => void;
 };
 
 export type CorpusProps = {
-  corpus: CorpusType;
-  onCorpusSelectSelection: (corpusid: number) => void;
+  corpus: Corpus;
+  onCorpusSelectSelection: (corpus: Corpus) => void;
 };

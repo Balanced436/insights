@@ -1,4 +1,4 @@
-import CorpusType, { CorporaProps } from "../../models/corpus.ts";
+import Corpus, { CorporaProps } from "../../models/corpus.ts";
 import { Stack } from "@mui/material";
 import CorpusCard from "./CorpusCard.tsx";
 
@@ -7,15 +7,15 @@ import CorpusCard from "./CorpusCard.tsx";
  * @param corpora
  * @constructor
  */
-export function CorporaCards({ corpora, onCorpusSelect }: CorporaProps) {
-  const handleCorpusSelection = (corpusid: number) => onCorpusSelect(corpusid);
+export function CorporaCards({ corpora, onCorpusSelectSelection }: CorporaProps) {
+  const handleCorpusSelection = (corpusid: Corpus) => onCorpusSelectSelection(corpusid);
   return (
     <Stack direction={"row"} spacing={3} useFlexGap sx={{ flexWrap: "wrap" }}>
-      {corpora.map((corpus: CorpusType) => (
+      {corpora.map((corpus: Corpus) => (
         <CorpusCard
           key={corpus.id}
           corpus={corpus}
-          onCorpusSelect={(corpusid) => handleCorpusSelection(corpusid)}
+          onCorpusSelectSelection={ handleCorpusSelection}
         />
       ))}
     </Stack>

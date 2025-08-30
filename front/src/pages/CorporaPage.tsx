@@ -4,6 +4,7 @@ import { CorporaContext } from "../contexts/CorporaContext";
 import { Outlet, useNavigate } from "@tanstack/react-router";
 import LeftCorporaNavigation from "../components/nav/LeftNavigation";
 import { Box } from "@mui/material";
+import Corpus from "../models/corpus.ts";
 
 const CorporaPage = () => {
   const { data, isLoading } = useCorpora();
@@ -17,8 +18,8 @@ const CorporaPage = () => {
    * @param corpusid
    * @returns void
    */
-  const handleCorpusSection = (corpusid: number) =>
-    navigate({ to: `/corpora/${corpusid}/sources` });
+  const handleCorpusSection = (corpus: Corpus) =>
+    navigate({ to: `/corpora/${corpus.id}/sources` });
 
   useEffect(() => {
     if (data) {

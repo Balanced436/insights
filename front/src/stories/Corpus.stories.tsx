@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/react";
 import CorpusCard from "../components/corpus/CorpusCard.tsx";
-import CorpusType from "../models/corpus.ts";
+import Corpus from "../models/corpus.ts";
 
 const meta = {
   title: "UI/CorpusUI",
@@ -16,12 +16,12 @@ const Template: StoryFn<typeof CorpusCard> = (args) => (
   </div>
 );
 
-const testCorpus: CorpusType = {
+const testCorpus: Corpus = {
   title: "Journal Antenne Réunion",
   description: `Ce corpus contient les diffusions JT de 19h`,
   createdAt: new Date(),
   updatedAt: new Date(),
-  corpusID: 99,
+  id: 99,
 };
 export const Standard = Template.bind({});
 Standard.args = { corpus: testCorpus };

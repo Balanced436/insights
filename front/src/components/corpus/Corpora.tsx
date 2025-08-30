@@ -1,11 +1,11 @@
-import CorpusType from "../../models/corpus";
+import Corpus from "../../models/corpus.ts";
 import { CorporaCards } from "./CorporaCardsList";
 import CorporaGrid from "./CorporaGrid";
 
 interface CorporaProps {
-  corpora: CorpusType[];
+  corpora: Corpus[];
   display?: "GRID" | "CARDS";
-  onCorpusSelection: (corpusid: number) => void;
+  onCorpusSelection: (corpus: Corpus) => void;
 }
 
 const Corpora = ({
@@ -13,8 +13,8 @@ const Corpora = ({
   display = "GRID",
   onCorpusSelection,
 }: CorporaProps) => {
-  const handleCorpusSelection = (corpusid: number) =>
-    onCorpusSelection(corpusid);
+  const handleCorpusSelection = (corpus: Corpus) =>
+    onCorpusSelection(corpus);
   return (
     <div>
       {display === "GRID" ? (

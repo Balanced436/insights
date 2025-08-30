@@ -1,4 +1,4 @@
-import CorpusType, { CorpusProps } from "../../models/corpus.ts";
+import Corpus, { CorpusProps } from "../../models/corpus.ts";
 import {
   Button,
   Card,
@@ -12,15 +12,15 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
  *
  * A component that renders one corpus
  *
- * @param {CorpusType} corpus - The corpus to display
+ * @param {Corpus} corpus - The corpus to display
  *
  */
 export default function CorpusCard({
   corpus,
   onCorpusSelectSelection,
 }: CorpusProps) {
-  const handleClick = (corpus: CorpusType) => {
-    onCorpusSelectSelection(corpus.id);
+  const handleClick = (corpus: Corpus) => {
+    onCorpusSelectSelection(corpus);
   };
 
   return (
@@ -54,10 +54,10 @@ export default function CorpusCard({
  *
  * A simple corpus header
  *
- * @param {CorpusType} corpus - The corpus to display
+ * @param {Corpus} corpus - The corpus to display
  *
  */
-function CorpusSubheader({ corpus }: { corpus: CorpusType }) {
+function CorpusSubheader({ corpus }: { corpus: Corpus }) {
   return (
     <div>
       <p>{corpus.description}</p>

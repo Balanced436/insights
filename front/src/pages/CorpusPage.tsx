@@ -1,11 +1,11 @@
 import { useParams } from "@tanstack/react-router";
-import CorpusType from "../models/corpus";
+import Corpus from "../models/corpus.ts";
 import { Stack } from "@mui/material";
 import { useCorpus } from "../hooks/useCorpora";
 
 const CorpusInfosPage = () => {
-  const idParam = useParams({ from: "/corpora/$id/infos" }).id;
-  const id = Number(idParam);
+  const corpusidSearchParams = useParams({ from: "/corpora/$corpusid/infos" });
+  const id = Number(corpusidSearchParams);
 
   if (isNaN(id)) {
     throw new Error("ID ERROR");
@@ -22,14 +22,14 @@ const CorpusInfosPage = () => {
   }
 
   if (corpus) {
-    return <Corpus corpus={corpus} />;
+    return <CorpusInfos corpus={corpus} />;
   }
   return <p>no corpus found</p>;
 };
 
 export default CorpusInfosPage;
 
-export const Corpus = ({ corpus }: { corpus: CorpusType }) => {
+export const CorpusInfos = ({ corpus }: { corpus: Corpus }) => {
   return (
     <Stack direction={"column"}>
       <span>Corpus title: {corpus.title}</span>

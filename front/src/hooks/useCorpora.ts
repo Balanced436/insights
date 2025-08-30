@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import CorpusType from "../models/corpus.ts";
+import Corpus from "../models/corpus.ts";
 
 export const useCorpora = () => {
   return useQuery({
@@ -13,7 +13,7 @@ export const useCorpora = () => {
     },
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
-    select: (data: CorpusType[]) => data,
+    select: (data: Corpus[]) => data,
   });
 };
 
@@ -29,6 +29,7 @@ export const useCorpus = (corpusid: number) => {
     },
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
-    select: (data: CorpusType) => data,
-  });
+    select: (data: Corpus) => data,
+  }
+  );
 };

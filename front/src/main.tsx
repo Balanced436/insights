@@ -11,6 +11,7 @@ import corporaRoute, {
   corpusInfosRoute,
   corpusEditRoute,
   corpusSourcesRoute,
+corpusSourceRoute
 } from "./routes/corpora";
 
 const routeTree = rootRoute.addChildren([
@@ -21,6 +22,7 @@ const routeTree = rootRoute.addChildren([
     corpusInfosRoute,
     corpusEditRoute,
     corpusSourcesRoute,
+  corpusSourceRoute
   ]),
 ]);
 

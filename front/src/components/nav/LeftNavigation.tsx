@@ -1,4 +1,4 @@
-import { CorporaProps } from "../../models/corpus";
+import  { CorporaProps } from "../../models/corpus.ts";
 import {
   Box,
   Drawer,
@@ -30,7 +30,12 @@ const LeftCorporaNavigation = ({
           {corpora.map((corpus) => (
             <ListItem key={corpus.id} disablePadding>
               <ListItemButton
-                onClick={() => onCorpusSelectSelection(corpus.id)}
+                onClick={() => {
+                    const selectedCorpus = corpora.find((e) => e.id === corpus.id);
+                    if (selectedCorpus) {
+                        onCorpusSelectSelection(selectedCorpus);
+                    }
+                }}
               >
                 {corpus.title}
               </ListItemButton>

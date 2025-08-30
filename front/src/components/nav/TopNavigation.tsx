@@ -1,4 +1,4 @@
-import {Box, AppBar, Toolbar, Button, Avatar} from "@mui/material";
+import {Box, AppBar, Toolbar, Button} from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";

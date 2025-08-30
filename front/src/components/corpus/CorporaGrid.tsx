@@ -5,7 +5,7 @@ import {
   GridEventListener,
   GridRowParams,
 } from "@mui/x-data-grid";
-import { CorporaProps } from "../../models/corpus";
+import { CorporaProps } from "../../models/corpus.ts";
 
 const CorporaGrid = ({ corpora, onCorpusSelectSelection }: CorporaProps) => {
   const handleRowClick: GridEventListener<"rowClick"> = (

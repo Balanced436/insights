@@ -6,6 +6,7 @@ export default class Source {
   audioUrl: string;
   createdAt: Date;
   updatedAt: Date;
+  corpusid: number
 
   constructor(
     id: number,
@@ -15,6 +16,7 @@ export default class Source {
     audioUrl: string,
     createdAt: Date,
     updatedAt: Date,
+    corpusid: number
   ) {
     this.id = id;
     this.title = title;
@@ -23,6 +25,7 @@ export default class Source {
     this.audioUrl = audioUrl;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.corpusid = corpusid
   }
   tostring() {
     return `${this.title} - ${this.description} - ${this.videoUrl} - ${this.audioUrl} - ${this.createdAt} - ${this.updatedAt}`;

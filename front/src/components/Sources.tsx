@@ -16,22 +16,43 @@ export default function Sources({
   onSourceSelection,
 }: {
   sources: Source[];
-  onSourceSelection: (sourceid: number) => void;
+  onSourceSelection: (source: Source) => void;
 }) {
   const handleRowClick: GridEventListener<"rowClick"> = (
     params: GridRowParams,
   ) => {
-    onSourceSelection(params.row.id);
+      const source: Source | undefined = sources.find((e)=>e.id == params.row.id)
+      if (!source) throw new Error("Source not found");
+
+      /*const source : Source = params.row as Source;*/
+      onSourceSelection(source);
+
   };
 
+  const options: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
   const columns: GridColDef<(typeof sources)[number]>[] = [
-    { field: "id", headerName: "ID", width: 10 },
-    { field: "title", headerName: "title", flex: 1 },
-    { field: "description", headerName: "description", flex: 1 },
-    { field: "videoUrl", headerName: "video url", flex: 1 },
-    { field: "audioUrl", headerName: "audio url", flex: 1 },
-    { field: "createdAt", headerName: "created at", flex: 1 },
-    { field: "updatedAt", headerName: "created at", flex: 1 },
+    { field: "id", headerName: "ID", width: 10 , editable : false},
+    { field: "title", headerName: "title", width: 200 , editable : false},
+    { field: "description", headerName: "description", width: 300 , editable : false},
+    {
+      field: "createdAt",
+      headerName: "created at",
+      width: 200,
+      valueFormatter: (date) => new Date(date).toLocaleString("fr-FR", options),
+    },
+    {
+      field: "updatedAt",
+      headerName: "updated at",
+      width: 200,
+      valueFormatter: (date) => new Date(date).toLocaleString("fr-FR", options),
+    },
   ];
 
   return (
@@ -39,6 +60,13 @@ export default function Sources({
       <DataGrid
         rows={sources}
         columns={columns}
+        initialState={{
+            pagination: {
+                paginationModel: {
+                    pageSize: 5,
+                },
+            },
+        }}
         pageSizeOptions={[5]}
         checkboxSelection={false}
         disableRowSelectionOnClick
