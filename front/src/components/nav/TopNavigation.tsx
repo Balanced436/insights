@@ -1,4 +1,4 @@
-import { Box, AppBar, Toolbar, Button } from "@mui/material";
+import {Box, AppBar, Toolbar, Button, Avatar} from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
@@ -11,16 +11,19 @@ const TopNavigation = () => {
       {/* Make it one step above the drawer */}
       <AppBar position="fixed">
         <Toolbar>
-          <Button color="inherit" component={Link} to="/">
-            Home
-          </Button>
-          <Button color="inherit" component={Link} to="/login">
-            Login
-          </Button>
-          <Button color="inherit" component={Link} to="/corpora">
-            Corpora
-          </Button>
-          <Button color="inherit">{user ? user.email : "Guest"}</Button>
+            <Box sx={{ flexGrow: 1 }}>
+                <Button color="inherit" component={Link} to="/">
+                    Home
+                </Button>
+                <Button color="inherit" component={Link} to="/login">
+                    Login
+                </Button>
+                <Button color="inherit" component={Link} to="/corpora">
+                    Corpora
+                </Button>
+            </Box>
+             <Button color="inherit">{user ? user.email : "Guest"}</Button>
+            {/*<Avatar>GU</Avatar>*/}
         </Toolbar>
       </AppBar>
       <Toolbar />
