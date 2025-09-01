@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import Sources from "../components/Sources";
+import SourcesGrid from "../components/Source/SourcesGrid.tsx";
 import SourcesExemple from "./fixtures/sources.exemple";
 it("Should display no sources ", async () => {
-  render(<Sources sources={[]} />);
+  render(<SourcesGrid sources={[]} />);
   screen.getByText("No sources");
 });
 
 it("Should display all provided sources ", async () => {
-  render(<Sources sources={SourcesExemple} />);
+  render(<SourcesGrid sources={SourcesExemple} />);
   screen.getByText("No sources");
 });

@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "@tanstack/react-router";
-import Sources from "../components/Sources";
+import SourcesGrid from "../components/Source/SourcesGrid.tsx";
 import { useSources } from "../hooks/useSources";
 import Source from "../models/source.ts";
 
@@ -14,7 +14,7 @@ const SourcesPage = () => {
 
     // TODO : Switch to this signature (source: Source) : Promise<void>
   const handleSourceSelection = (source: Source):Promise<void> =>
-        navigate({ to: `/corpora/${source.corpusid}/sources/${source.id}` });
+        navigate({ to: `/corpora/${source.corpusID}/sources/${source.id}` });
 
 
   const { data: sources, isLoading, isError, error } = useSources(corpusidSearchParams);
@@ -30,7 +30,7 @@ const SourcesPage = () => {
   if (sources) {
     return (
       <div>
-        <Sources sources={sources} onSourceSelection={(source: Source)=>handleSourceSelection(source)} />{" "}
+        <SourcesGrid sources={sources} onSourceSelection={(source: Source)=>handleSourceSelection(source)} />{" "}
       </div>
     );
   }

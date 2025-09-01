@@ -1,4 +1,4 @@
-import Source from "../models/source";
+import Source from "../../models/source.ts";
 import { GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -11,7 +11,7 @@ import { GridEventListener } from "@mui/x-data-grid";
  * @param {Function} props.onSourceClick - Callback function to handle source click events.
  *
  */
-export default function Sources({
+export default function SourcesGrid({
   sources,
   onSourceSelection,
 }: {
