@@ -27,7 +27,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 app.use("/", sourceRouter);
-app.use("/", TranscriptionRouter(io));
+app.use("/", TranscriptionRouter(io, logger));
 app.use("/", TaskRouter(io));
 app.use("/", summaryRouter(io));
 app.use("/", loginRouter);

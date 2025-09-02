@@ -14,19 +14,31 @@ import {
   WhisperResponse,
 } from "../models/whisper.model";
 import { WhisperResponseText } from "../utils/whisper.utils";
+import { Logger } from "winston";
 
 const prisma = new PrismaClient();
 
-const TranscriptionRouter = (io: Server) => {
+const TranscriptionRouter = (io: Server, logger: Logger) => {
   const router = Router();
 
   router.get(
     "/transcription/:id?",
     async (req: Request, res: Response): Promise<any> => {
       const id = req.params.id ? parseInt(req.params.id) : undefined;
+      const sourceid = Number(req.query.sourceid);
+      logger.info(`sourceid: ${sourceid}`);
+
+      const getTranscriptions = async (sourceid: number) => {
+        return sourceid
+          ? await prisma.transcription.findMany({
+              where: { sourceId: sourceid },
+            })
+          : await prisma.transcription.findMany();
+      };
+
       try {
         if (id === undefined) {
-          const transcriptions = await prisma.transcription.findMany();
+          const transcriptions = await getTranscriptions(sourceid);
           return res.status(200).json(transcriptions);
         } else if (isNaN(id)) {
           throw new Error("Invalid ID");
