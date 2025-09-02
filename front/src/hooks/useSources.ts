@@ -35,6 +35,8 @@ export const useSources = (corpusid: number | undefined) => {
                     ),
             );
         },
+        staleTime: 1000 * 60 * 5,
+        gcTime: 1000 * 60 * 10,
     });
 };
 
@@ -56,6 +58,9 @@ export const useSource = (sourceid: number) => {
         },
         select: (data: Source) => {
             return data
-        }
+        },
+        staleTime: 1000 * 60 * 5,
+        gcTime: 1000 * 60 * 10,
+
     });
 };
