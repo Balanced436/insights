@@ -16,21 +16,24 @@ const Template: StoryFn<typeof CorporaCards> = (args) => (
 
 const testCorpus = [
   {
-    title: "Journal Antenne Réunion",
+    id: 1,
+    title: "ANTENNE REUNION",
     description: `Ce corpus contient les diffusions JT de 19h`,
     createdAt: new Date(),
     updatedAt: new Date(),
     corpusID: 99,
   },
   {
-    title: "Chaîne youtube BFMTV",
+    id: 2,
+    title: "BFMTV",
     description: `Ce corpus contient les vidéos provenant de la chaine youtube bfmtv`,
     createdAt: new Date(),
     updatedAt: new Date(),
     corpusID: 98,
   },
   {
-    title: "Journal TF1",
+    id: 3,
+    title: "TF1",
     description: `Ce corpus contient les diffusions JT de TF1`,
     createdAt: new Date(),
     updatedAt: new Date(),

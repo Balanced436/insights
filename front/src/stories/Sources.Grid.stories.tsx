@@ -18,7 +18,7 @@ const Template: StoryFn<typeof SourceForm> = (args) => (
     <SourcesGrid
 
         onSourceSelection={function (source: Source): void {
-            throw new Error("Function not implemented.");
+            console.info(source)
         }} sources={sourcesExemple}
         {...args}  />
 );

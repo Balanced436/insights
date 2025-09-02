@@ -17,7 +17,7 @@ const Template: StoryFn<typeof CorpusCard> = (args) => (
 );
 
 const testCorpus: Corpus = {
-  title: "Journal Antenne Réunion",
+  title: "ANTENNE REUNION",
   description: `Ce corpus contient les diffusions JT de 19h`,
   createdAt: new Date(),
   updatedAt: new Date(),
