@@ -5,10 +5,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { GridEventListener } from "@mui/x-data-grid";
 
 /**
- * Component for displaying and managing sources.
+ * SourcesGrid will display all sources using MUI GRID
  *
- * @param {Source[]} props.sources - Array of source objects to display.
- * @param {Function} props.onSourceClick - Callback function to handle source click events.
+ * @param {Source[]} sources - Array of source objects to display.
+ * @param {Function} onSourceSelection - Callback function to handle source click events.
  *
  */
 export default function SourcesGrid({

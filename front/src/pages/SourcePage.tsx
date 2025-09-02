@@ -3,6 +3,7 @@ import {useSource} from "../hooks/useSources.ts";
 import {SourceInfos} from "../components/Source/Source.tsx";
 
 /**
+ * This page will display source in a structured way.
  * @constructor
  */
 const SourcePage = () => {

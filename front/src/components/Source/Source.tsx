@@ -1,6 +1,12 @@
 import Source from "../../models/source.ts";
 import {Stack} from '@mui/material' ;
 import React from "react";
+
+/**
+ * A basic component that display Source information
+ * @param source
+ * @constructor
+ */
 export function SourceInfos({source} : { source : Source }): React.ReactElement {
     return <Stack>
         <span>Source id : {source.id}</span>

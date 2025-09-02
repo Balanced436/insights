@@ -8,6 +8,7 @@ const SourcesExemple: Source[] = [
     "audioUrl1",
     new Date(),
     new Date(),
+      1
   ),
   new Source(
     2,
@@ -17,6 +18,7 @@ const SourcesExemple: Source[] = [
     "audioUrl2",
     new Date(),
     new Date(),
+      1
   ),
 ] as Source[];
 export default SourcesExemple;

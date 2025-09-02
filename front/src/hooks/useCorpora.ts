@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import Corpus from "../models/corpus.ts";
 
+
+/**
+ * useCorpora hook
+ */
 export const useCorpora = () => {
   return useQuery({
     queryKey: ["corpora"],
