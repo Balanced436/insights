@@ -5,6 +5,7 @@ import app from "../app";
 import path from "path";
 const prisma = new PrismaClient();
 import * as fs from "node:fs";
+import { StatusCodes } from "http-status-codes";
 
 describe("CRUD operations for Source", () => {
   const newSource = {
@@ -131,10 +132,15 @@ describe("CRUD operations for Source", () => {
         .field("description", newSource.description)
         .attach("corpusID", corpusID2);
 
-      const response = await request(app).get(`/source?corpusid=${10}`);
+      const response = await request(app).get(`/source?corpusid=${corpusID}`);
       expect(response.status).toBe(200);
     });
-    it(`should get all source according if query is NaN (corpusid)`, async () => {
+
+    it(`should return 202 if there is no source with a corresponding corpusid `, async () => {
+      const response = await request(app).get(`/source?corpusid=${999}`);
+      expect(response.status).toBe(StatusCodes.NO_CONTENT);
+    });
+    it(`should get all source according corpusid is NaN`, async () => {
       // add a source inside the corpus
       const corpusResponse = await request(app)
         .post("/source")
