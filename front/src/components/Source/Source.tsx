@@ -1,22 +1,23 @@
-import Source from "../../models/source.ts";
-import {Stack} from '@mui/material' ;
-import React from "react";
+import Source from '../../models/source.ts';
+import { Stack, Typography } from '@mui/material';
+import React from 'react';
 
 /**
  * A basic component that display Source information
  * @param source
  * @constructor
  */
-export function SourceInfos({source} : { source : Source }): React.ReactElement {
-    return <Stack>
-        <span>Source id : {source.id}</span>
-        <span>Title : {source.title}</span>
-        <span>Description : {source.description}</span>
-        <span>VideoUrl : {source.videoUrl}</span>
-        <span>AudioUrl : {source.audioUrl}</span>
-        <span>Date de création : {source.createdAt.toLocaleString('fr-FR')}</span>
-        <span>Date de mise à jour : {source.updatedAt.toLocaleString('fr-FR')}</span>
-        <span>Corpus : {source.corpusID}</span>
-    </Stack>
-
+export function SourceInfos({ source }: { source: Source }): React.ReactElement {
+	return (
+		<Stack>
+			<Typography>Source id : {source.id}</Typography>
+			<Typography>Title : {source.title}</Typography>
+			<Typography>Description : {source.description}</Typography>
+			<Typography>VideoUrl : {source.videoUrl}</Typography>
+			<Typography>AudioUrl : {source.audioUrl}</Typography>
+			<Typography>Date de création : {source.createdAt.toLocaleString('fr-FR')}</Typography>
+			<Typography>Date de mise à jour : {source.updatedAt.toLocaleString('fr-FR')}</Typography>
+			<Typography>Corpus : {source.corpusID}</Typography>
+		</Stack>
+	);
 }

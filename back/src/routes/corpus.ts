@@ -42,12 +42,10 @@ corpusRouter.post(
   async (req: Request, res: Response): Promise<any> => {
     const { description, title } = req.body;
     if (!title) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({
-          error: ReasonPhrases.BAD_REQUEST,
-          details: "corpus title is required",
-        });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: ReasonPhrases.BAD_REQUEST,
+        details: "corpus title is required",
+      });
     }
     try {
       const corpus: Corpus = await prisma.corpus.create({

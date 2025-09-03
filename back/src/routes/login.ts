@@ -34,14 +34,12 @@ loginRouter.post(
         expiresIn: "1h",
       });
 
-      return res
-        .status(200)
-        .json({
-          token,
-          name: user.name,
-          nickname: user.nickname,
-          email: user.email,
-        });
+      return res.status(200).json({
+        token,
+        name: user.name,
+        nickname: user.nickname,
+        email: user.email,
+      });
     } catch (error: any) {
       return res.status(400).json({ error: error.message });
     }

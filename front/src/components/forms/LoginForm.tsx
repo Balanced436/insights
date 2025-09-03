@@ -1,11 +1,11 @@
-import { Box, Button, Stack, TextField } from "@mui/material";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Box, Button, Stack, TextField } from '@mui/material';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
 type LoginProps = {
-  onSubmit: (event: { email: string; password: string }) => void;
-  variant: "outlined" | "standard" | "filled";
+	onSubmit: (event: { email: string; password: string }) => void;
+	variant: 'outlined' | 'standard' | 'filled';
 };
 
 /**
@@ -16,49 +16,46 @@ type LoginProps = {
  * @param {string} props.variant
  */
 export default function LoginForm({ onSubmit, variant }: LoginProps) {
-  const schema = z.object({
-    email: z
-      .string()
-      .min(1, { message: "Email requis" })
-      .email({ message: "Format d'email invalide" }),
-    password: z.string().min(1, { message: "Mot de passe requis" }),
-  });
+	const schema = z.object({
+		email: z.string().min(1, { message: 'Email requis' }).email({ message: "Format d'email invalide" }),
+		password: z.string().min(1, { message: 'Mot de passe requis' }),
+	});
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(schema) });
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({ resolver: zodResolver(schema) });
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3}>
-        <TextField
-          {...register("email")}
-          label="Email"
-          type="email"
-          id="email"
-          size="small"
-          variant={variant}
-          error={!!errors.email}
-          helperText={errors.email ? errors.email.message : " "}
-        />
-        <TextField
-          {...register("password")}
-          label="Mot de passe"
-          id="password"
-          type="password"
-          size="small"
-          variant={variant}
-          error={!!errors.password}
-          helperText={errors.password ? errors.password.message : " "}
-        />
-        <Stack direction={"row"} justifyContent={"center"}>
-          <Button type="submit" variant="contained">
-            Se connecter
-          </Button>
-        </Stack>
-      </Stack>
-    </form>
-  );
+	return (
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<Stack spacing={3}>
+				<TextField
+					{...register('email')}
+					label="Email"
+					type="email"
+					id="email"
+					size="small"
+					variant={variant}
+					error={!!errors.email}
+					helperText={errors.email ? errors.email.message : ' '}
+				/>
+				<TextField
+					{...register('password')}
+					label="Mot de passe"
+					id="password"
+					type="password"
+					size="small"
+					variant={variant}
+					error={!!errors.password}
+					helperText={errors.password ? errors.password.message : ' '}
+				/>
+				<Stack direction={'row'} justifyContent={'center'}>
+					<Button type="submit" variant="contained">
+						Se connecter
+					</Button>
+				</Stack>
+			</Stack>
+		</form>
+	);
 }
