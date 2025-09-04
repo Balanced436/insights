@@ -89,7 +89,27 @@ describe("CRUD operations for summary", () => {
 
       expect(response.status).toBe(400);
     });
+
+    it("should returns summaries by transcriptionid when search param transcriptionid is provided", async ()=>{
+      // Create a basic summary
+
+      const summary = await prisma.summary.create({data : {
+          content : "test summary",
+          transcriptionId : transcription.body.task.transcriptionId,
+        }})
+
+      const response1 = await request(app).get(`/summary?transcriptionid=${summary?.id}`);
+
+      expect(response1.status).toBe(response1.body);
+      expect(response1.body.data).toBeDefined();
+      expect(response1.body.data).toBeInstanceOf(Array);
+      expect(response1.body.data.length).toBe(1); // there is one summary that matches this critera
+      expect(response1.body.data[0].content).toBe("test summary");
+
+    })
   });
+
+
 
   describe("DELETE summary (id)", () => {
     it("should delete a summary and return 201 when transcriptionId is provided", async () => {

@@ -25,9 +25,14 @@ const summaryRouter = (io: Server) => {
     "/summary/:id?",
     async (req: Request, res: Response): Promise<any> => {
       const id = req.params.id ? parseInt(req.params.id) : undefined;
+      const transcriptionid = req.query.transcription ? parseInt(req.query.transcriptionid as string) : undefined;
+
+      const getSummaries = async (transcriptionid : number | undefined ) => {
+        return transcriptionid ? await prisma.summary.findMany({ where: { transcriptionId : transcriptionid } }) : await prisma.source.findMany();
+      }
       try {
         if (id === undefined) {
-          const summaries = await prisma.summary.findMany();
+          const summaries = await getSummaries(transcriptionid)
           res.status(200).json({ data: summaries });
         } else if (isNaN(id)) {
           return res.status(400).json({ message: "Invalid ID" });
