@@ -1,16 +1,16 @@
 import { StoryFn } from '@storybook/react';
 
-import { CorporaCards } from '../components/corpus/CorporaCardsList.tsx';
+import { CorpusCardList } from '../components/corpus/CorpusCardList.tsx';
 
 const meta = {
 	title: 'UI/CorpusesUI',
-	component: CorporaCards,
+	component: CorpusCardList,
 	tags: ['autodocs'],
 };
 
 export default meta;
 
-const Template: StoryFn<typeof CorporaCards> = (args) => <CorporaCards {...args} />;
+const Template: StoryFn<typeof CorpusCardList> = (args) => <CorpusCardList {...args} />;
 
 const testCorpus = [
 	{

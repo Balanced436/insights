@@ -1,6 +1,6 @@
 import { useCorpora } from '../hooks/useCorpora';
 import { Outlet, useNavigate } from '@tanstack/react-router';
-import LeftCorporaNavigation from '../components/nav/LeftNavigation';
+import SideBarNavigation from '../components/nav/SideBarNavigation.tsx';
 import { Box } from '@mui/material';
 import Corpus from '../models/corpus.ts';
 
@@ -21,7 +21,7 @@ const CorporaPage = () => {
 	if (data)
 		return (
 			<Box sx={{ display: 'flex' }}>
-				<LeftCorporaNavigation corpora={data} onCorpusSelectSelection={handleCorpusSection} />
+				<SideBarNavigation corpora={data} onCorpusSelectSelection={handleCorpusSection} />
 				<Box component="main" sx={{ flexGrow: 1, p: 3, minWidth: '300px', height: '100%' }}>
 					<Outlet />
 				</Box>

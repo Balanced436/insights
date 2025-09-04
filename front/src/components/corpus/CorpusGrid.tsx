@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { DataGrid, GridColDef, GridEventListener, GridRowParams } from '@mui/x-data-grid';
 import { CorporaProps } from '../../models/corpus.ts';
 
-const CorporaGrid = ({ corpora, onCorpusSelectSelection }: CorporaProps) => {
+const CorpusGrid = ({ corpora, onCorpusSelectSelection }: CorporaProps) => {
 	const handleRowClick: GridEventListener<'rowClick'> = (params: GridRowParams) => {
 		onCorpusSelectSelection(params.row.id);
 	};
@@ -57,4 +57,4 @@ const CorporaGrid = ({ corpora, onCorpusSelectSelection }: CorporaProps) => {
 	);
 };
 
-export default CorporaGrid;
+export default CorpusGrid;

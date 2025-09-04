@@ -12,7 +12,7 @@ type sourceProps = {
  * @param {function} props.onSubmit - fonction déclencher lorsque l'utilise valide le formulaire
  * @param {}
  */
-function SourceForm({ onSubmit }: sourceProps) {
+function SourceNewForm({ onSubmit }: sourceProps) {
 	const schema = z.object({
 		title: z.string().min(1, { message: 'Le titre est requis' }),
 		description: z.string().min(1, { message: 'La description est requise ' }),
@@ -47,4 +47,4 @@ function SourceForm({ onSubmit }: sourceProps) {
 	);
 }
 
-export default SourceForm;
+export default SourceNewForm;

@@ -3,11 +3,11 @@ import { Stack, Typography } from '@mui/material';
 import React from 'react';
 
 /**
- * A basic component that display Source information
+ * A basic component that display source information
  * @param source
  * @constructor
  */
-export function SourceInfos({ source }: { source: Source }): React.ReactElement {
+export function SourceItem({ source }: { source: Source }): React.ReactElement {
 	return (
 		<Stack>
 			<Typography>Source id : {source.id}</Typography>

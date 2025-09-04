@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 
-const TopNavigation = () => {
+const HeaderNavigation = () => {
 	const { user } = useContext(UserContext);
 
 	return (
@@ -30,4 +30,4 @@ const TopNavigation = () => {
 		</Box>
 	);
 };
-export default TopNavigation;
+export default HeaderNavigation;

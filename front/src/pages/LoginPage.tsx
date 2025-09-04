@@ -1,5 +1,5 @@
 import { Box, Stack } from '@mui/material';
-import LoginForm from '../components/forms/LoginForm';
+import UserLoginForm from '../components/user/UserLoginForm.tsx';
 import { useAuthentification } from '../hooks/useLogin';
 import { UserContext } from '../contexts/UserContext';
 import { useContext } from 'react';
@@ -25,7 +25,7 @@ const LoginPage = () => {
 	return (
 		<Stack sx={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}>
 			<Box width={'500px'}>
-				<LoginForm onSubmit={handleLogin} variant={'filled'} />
+				<UserLoginForm onSubmit={handleLogin} variant={'filled'} />
 			</Box>
 		</Stack>
 	);

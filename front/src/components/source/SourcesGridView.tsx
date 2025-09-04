@@ -5,18 +5,18 @@ import { DataGrid } from '@mui/x-data-grid';
 import { GridEventListener } from '@mui/x-data-grid';
 
 /**
- * SourcesGrid will display all sources using MUI GRID
+ * SourcesGridView will display all sources using MUI GRID
  *
  * @param {Source[]} sources - Array of source objects to display.
  * @param {Function} onSourceSelection - Callback function to handle source click events.
  *
  */
-export default function SourcesGrid({ sources, onSourceSelection }: { sources: Source[]; onSourceSelection: (source: Source) => void }) {
+export default function SourcesGridView({ sources, onSourceSelection }: { sources: Source[]; onSourceSelection: (source: Source) => void }) {
 	const handleRowClick: GridEventListener<'rowClick'> = (params: GridRowParams) => {
 		const source: Source | undefined = sources.find((e) => e.id == params.row.id);
-		if (!source) throw new Error('Source not found');
+		if (!source) throw new Error('source not found');
 
-		/*const source : Source = params.row as Source;*/
+		/*const source : source = params.row as source;*/
 		onSourceSelection(source);
 	};
 

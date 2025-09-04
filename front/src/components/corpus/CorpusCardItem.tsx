@@ -9,7 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
  * @param {Corpus} corpus - The corpus to display
  *
  */
-export default function CorpusCard({ corpus, onCorpusSelectSelection }: CorpusProps) {
+export default function CorpusCardItem({ corpus, onCorpusSelectSelection }: CorpusProps) {
 	const handleClick = (corpus: Corpus) => {
 		onCorpusSelectSelection(corpus);
 	};

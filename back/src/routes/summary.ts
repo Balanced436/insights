@@ -38,7 +38,7 @@ const summaryRouter = (io: Server) => {
           if (summary) {
             res.status(200).json(summary);
           } else {
-            return res.status(404).json({ message: "Source not found" });
+            return res.status(404).json({ message: "source not found" });
           }
         }
       } catch (error: any) {

@@ -74,7 +74,7 @@ const TranscriptionRouter = (io: Server, logger: Logger) => {
           where: { id: sourceId },
         });
         if (!source) {
-          throw Error("Source not found");
+          throw Error("source not found");
         }
 
         const audioFile: string | null = source.audioUrl;

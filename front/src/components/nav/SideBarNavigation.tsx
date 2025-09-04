@@ -2,7 +2,7 @@ import { CorporaProps } from '../../models/corpus.ts';
 import { Box, Drawer, List, ListItem, ListItemButton, Toolbar } from '@mui/material';
 
 const DRAWER_WIDTH = 200;
-const LeftCorporaNavigation = ({ corpora, onCorpusSelectSelection }: CorporaProps) => {
+const SideBarNavigation = ({ corpora, onCorpusSelectSelection }: CorporaProps) => {
 	return (
 		<Drawer
 			variant="permanent"
@@ -37,4 +37,4 @@ const LeftCorporaNavigation = ({ corpora, onCorpusSelectSelection }: CorporaProp
 	);
 };
 
-export default LeftCorporaNavigation;
+export default SideBarNavigation;

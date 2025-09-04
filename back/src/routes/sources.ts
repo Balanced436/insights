@@ -38,7 +38,7 @@ sourceRouter.get(
         if (source) {
           return res.status(200).json(source);
         } else {
-          return res.status(404).json({ message: "Source not found" });
+          return res.status(404).json({ message: "source not found" });
         }
       }
     } catch (error: any) {
@@ -115,7 +115,7 @@ sourceRouter.post(
 
       return res
         .status(201)
-        .json({ message: "Source created successfully", data: source });
+        .json({ message: "source created successfully", data: source });
     } catch (error: any) {
       return res
         .status(500)
@@ -186,7 +186,7 @@ sourceRouter.put(
 
       return res
         .status(200)
-        .json({ message: "Source updated successfully", updatedSource });
+        .json({ message: "source updated successfully", updatedSource });
     } catch (error: any) {
       console.error(error);
       return res
@@ -211,7 +211,7 @@ sourceRouter.delete(
 
       return res
         .status(200)
-        .json({ message: "Source deleted successfully", data: deletedSource });
+        .json({ message: "source deleted successfully", data: deletedSource });
     } catch (error: any) {
       console.error(error);
       return res

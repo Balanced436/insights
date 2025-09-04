@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 import * as fs from "node:fs";
 import { StatusCodes } from "http-status-codes";
 
-describe("CRUD operations for Source", () => {
+describe("CRUD operations for source", () => {
   const newSource = {
     title: "JT 5-11-2024-19h",
     description: "Description of JT 5-11-2024-19h",
@@ -51,7 +51,7 @@ describe("CRUD operations for Source", () => {
 
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty("message");
-      expect(response.body.message).toBe("Source created successfully");
+      expect(response.body.message).toBe("source created successfully");
       expect(response.body.data.title).toBe(newSource.title);
       expect(response.body.data.description).toBe(newSource.description);
       expect(response.body.data.audioUrl).toBeDefined();
@@ -74,7 +74,7 @@ describe("CRUD operations for Source", () => {
 
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty("message");
-      expect(response.body.message).toBe("Source created successfully");
+      expect(response.body.message).toBe("source created successfully");
       expect(response.body.data.title).toBe(newSource.title);
       expect(response.body.data.description).toBe(newSource.description);
       expect(response.body.data.audioUrl).toBeDefined();
@@ -94,7 +94,7 @@ describe("CRUD operations for Source", () => {
 
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty("message");
-      expect(response.body.message).toBe("Source created successfully");
+      expect(response.body.message).toBe("source created successfully");
       expect(response.body.data.title).toBe(newSource.title);
       expect(response.body.data.description).toBe(newSource.description);
       expect(response.body.data.audioUrl).toBeNull();

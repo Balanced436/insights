@@ -12,7 +12,7 @@ type CorpusProps = {
  * Composant permettant de créer un corpus
  * @param {function} props.onSubmit - Fonction appelée lors de la soumission du formulaire
  */
-function CorpusForm({ onSubmit }: CorpusProps) {
+function CorpusNewForm({ onSubmit }: CorpusProps) {
 	const schema = z.object({
 		title: z.string().min(1, { message: 'Title is required' }),
 		description: z.string(),
@@ -53,4 +53,4 @@ function CorpusForm({ onSubmit }: CorpusProps) {
 	);
 }
 
-export default CorpusForm;
+export default CorpusNewForm;

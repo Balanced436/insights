@@ -1,7 +1,7 @@
 import { createRoute } from '@tanstack/react-router';
 import rootRoute from './root';
 import CorporaPage from '../pages/CorporaPage';
-import { CorporaProvider } from '../contexts/CorporaContext';
+import { CorporaProvider } from '../contexts/CorpusContext.tsx';
 import CorpusInfosPage from '../pages/CorpusPage';
 import SourcesPage from '../pages/SourcesPage.tsx';
 import SourcePage from '../pages/SourcePage.tsx';
