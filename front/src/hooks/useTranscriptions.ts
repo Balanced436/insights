@@ -21,5 +21,7 @@ export const useTranscriptions = (sourceid: number | undefined) => {
 					new Transcription(transcription.id, transcription.content, transcription.createdAt, transcription.updatedAt, transcription.sourceId)
 			);
 		},
+		staleTime: 1000 * 60 * 5,
+		gcTime: 1000 * 60 * 10,
 	});
 };
