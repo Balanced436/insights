@@ -80,7 +80,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./models:/app/models
+      - ./whisper/models:/app/models
     command: /app/whisper_http_server_base_httplib -m /app/models/whisper-large-v3-french-distil-dec8/ggml-model-q5_0.bin
 
 

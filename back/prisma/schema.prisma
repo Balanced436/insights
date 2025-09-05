@@ -48,7 +48,7 @@ model Task {
   finishedAt      DateTime?
   status          Status        @default(PENDING)
   transcriptionId Int
-  transcription   Transcription @relation(fields: [transcriptionId], references: [id])
+  transcription   Transcription @relation(fields: [transcriptionId], references: [id], onDelete: Cascade)
 }
 
 enum TaskType {

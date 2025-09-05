@@ -133,7 +133,6 @@ const TranscriptionRouter = (io: Server, logger: Logger) => {
                 data: { status: Status.ERROR, finishedAt: new Date() },
               });
               io.emit("task", taskstatus);
-              throw error;
             }
           };
           processTranscription();
