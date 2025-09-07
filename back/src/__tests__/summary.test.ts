@@ -102,6 +102,21 @@ describe('CRUD operations for summary', () => {
 			expect(response1.body.data.length).toBe(s.length); // there is one summary that matches this critera
 		});
 
+		it('should returns summaries by sourceid when search param sourceid is provided', async () => {
+			// Create a basic summary
+
+			const s = await prisma.summary.findMany({
+				where: { transcription: { sourceId: source.body.data.id } },
+			});
+
+			const response1 = await request(app).get(`/summary?sourceid=${source.body.data.id}`);
+
+			expect(response1.status).toBe(200);
+			expect(response1.body.data).toBeDefined();
+			expect(response1.body.data).toBeInstanceOf(Array);
+			expect(response1.body.data.length).toBe(s.length); // there is one summary that matches this critera
+		});
+
 		it(`should returns no summaries when search param transcription is used and there is no
      summaries with associated with it 202`, async () => {
 			// Create a basic summary

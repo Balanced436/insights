@@ -15,20 +15,24 @@ const summaryRouter = (io: Server, logger: Logger) => {
 	router.get('/summary/:id?', async (req: Request, res: Response): Promise<any> => {
 		const id = req.params.id ? parseInt(req.params.id) : undefined;
 		const transcriptionid = req.query.transcriptionid ? parseInt(req.query.transcriptionid as string) : undefined;
-		logger.info(`id ${id} - transcription id ${transcriptionid}`);
-		const getSummaries = async (transcriptionid: number | undefined) => {
-			return transcriptionid
-				? await prisma.summary.findMany({
-						where: { transcriptionId: transcriptionid },
-					})
-				: await prisma.summary.findMany();
+		const sourceid = req.query.sourceid ? parseInt(req.query.sourceid as string) : undefined;
+		logger.info(`id ${id} - transcription id ${transcriptionid} - sourceid ${sourceid}`);
+		const getSummaries = async (transcriptionid: number | undefined, sourceid: number | undefined) => {
+			if (transcriptionid) {
+				return prisma.summary.findMany({
+					where: { transcriptionId: transcriptionid },
+				});
+			} else if (sourceid) {
+				return prisma.summary.findMany({
+					where: { transcription: { sourceId: sourceid } },
+				});
+			} else {
+				return prisma.summary.findMany();
+			}
 		};
 		try {
 			if (id === undefined) {
-				const summaries = await getSummaries(transcriptionid);
-				if (summaries.length == 0) {
-					return res.status(StatusCodes.NO_CONTENT).json({ message: 'source not found' });
-				}
+				const summaries = await getSummaries(transcriptionid, sourceid);
 				res.status(200).json({ data: summaries });
 			} else if (isNaN(id)) {
 				return res.status(400).json({ message: 'Invalid ID' });
