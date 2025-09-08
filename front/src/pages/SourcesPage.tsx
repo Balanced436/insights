@@ -2,7 +2,11 @@ import { useNavigate, useParams } from '@tanstack/react-router';
 import SourcesGridView from '../components/source/SourcesGridView.tsx';
 import { useSources } from '../hooks/useSources';
 import Source from '../models/source.ts';
-
+import { useCorpus } from '../hooks/useCorpora.ts';
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 /**
  * SourcePage will display all sources inside a corpus
  * @constructor
@@ -12,10 +16,10 @@ const SourcesPage = () => {
 	const corpusidSearchParams = Number(corpusid);
 	const navigate = useNavigate();
 
-	// TODO : Switch to this signature (source: source) : Promise<void>
 	const handleSourceSelection = (source: Source): Promise<void> => navigate({ to: `/corpora/${source.corpusID}/sources/${source.id}` });
 
 	const { data: sources, isLoading, isError, error } = useSources(corpusidSearchParams);
+	const { data: corpusData, isLoading: isCorpusDataLoading, isError: isCorpusError, error: corpusError } = useCorpus(corpusidSearchParams);
 
 	if (isLoading) {
 		return <p>corpus is loading</p>;
@@ -25,11 +29,31 @@ const SourcesPage = () => {
 		return <p>{error?.message}</p>;
 	}
 
-	if (sources) {
+	if (sources && corpusData) {
 		return (
-			<div>
-				<SourcesGridView sources={sources} onSourceSelection={(source: Source) => handleSourceSelection(source)} />{' '}
-			</div>
+			<Box>
+				<Stack direction={'row'} justifyContent={'space-between'}>
+					<Stack>
+						<Typography variant={'h5'}>Overview</Typography>
+						<Typography>{corpusData.title}</Typography>
+					</Stack>
+
+					<Box>
+						<IconButton aria-label="AddIcon">
+							<AddIcon />
+						</IconButton>
+						<IconButton aria-label="DeleteIcon">
+							<DeleteIcon />
+						</IconButton>
+						<IconButton aria-label="EditIcon">
+							<EditIcon />
+						</IconButton>
+					</Box>
+				</Stack>
+				<Stack sx={{ paddingTop: 5 }}>
+					<SourcesGridView sources={sources} onSourceSelection={(source: Source) => handleSourceSelection(source)} />{' '}
+				</Stack>
+			</Box>
 		);
 	}
 
