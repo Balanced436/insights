@@ -32,10 +32,11 @@ const SourcesPage = () => {
 	if (sources && corpusData) {
 		return (
 			<Box>
-				<Stack direction={'row'} justifyContent={'space-between'}>
+				<Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
 					<Stack>
-						<Typography variant={'h5'}>Overview</Typography>
-						<Typography>{corpusData.title}</Typography>
+						<Typography variant={'h5'}>Corpus overview</Typography>
+						<Typography>Title: {corpusData.title}</Typography>
+						<Typography>Corpus id: {corpusData.id}</Typography>
 					</Stack>
 
 					<Box>
