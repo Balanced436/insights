@@ -12,6 +12,6 @@ const meta = {
 
 export default meta;
 
-const Template: StoryFn<typeof SourceItem> = () => <SourceItem source={sourcesExemple[0]}  />;
+const Template: StoryFn<typeof SourceItem> = () => <SourceItem source={sourcesExemple[0]} />;
 
 export const Standard = Template.bind({});
