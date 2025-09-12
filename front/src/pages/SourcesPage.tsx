@@ -1,12 +1,10 @@
-import { useNavigate, useParams } from '@tanstack/react-router';
-import SourcesGridView from '../components/source/SourcesGridView.tsx';
+import { Outlet, useNavigate, useParams } from '@tanstack/react-router';
 import { useSources } from '../hooks/useSources';
 import Source from '../models/source.ts';
 import { useCorpus } from '../hooks/useCorpora.ts';
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
+import { Box } from '@mui/material';
+import CorpusSideBarNavigation from '../components/corpus/CorpusSideBarNavitation.tsx';
+
 /**
  * SourcePage will display all sources inside a corpus
  * @constructor
@@ -31,29 +29,10 @@ const SourcesPage = () => {
 
 	if (sources && corpusData) {
 		return (
-			<Box>
-				<Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-					<Stack>
-						<Typography variant={'h5'}>Corpus overview</Typography>
-						<Typography>Title: {corpusData.title}</Typography>
-						<Typography>Corpus id: {corpusData.id}</Typography>
-					</Stack>
-
-					<Box>
-						<IconButton aria-label="AddIcon">
-							<AddIcon />
-						</IconButton>
-						<IconButton aria-label="DeleteIcon">
-							<DeleteIcon />
-						</IconButton>
-						<IconButton aria-label="EditIcon">
-							<EditIcon />
-						</IconButton>
-					</Box>
-				</Stack>
-				<Stack sx={{ paddingTop: 5 }}>
-					<SourcesGridView sources={sources} onSourceSelection={(source: Source) => handleSourceSelection(source)} />{' '}
-				</Stack>
+			<Box display={'flex'}>
+				{/* replace this with a specific navigation for corpus */}
+				<CorpusSideBarNavigation corpus={corpusData} />
+				<Outlet />
 			</Box>
 		);
 	}

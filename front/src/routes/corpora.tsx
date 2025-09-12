@@ -1,54 +1,50 @@
-import { createRoute } from '@tanstack/react-router';
+import { createRoute, Outlet } from '@tanstack/react-router';
 import rootRoute from './root';
 import CorporaPage from '../pages/CorporaPage';
-import { CorporaProvider } from '../contexts/CorpusContext.tsx';
 import CorpusInfosPage from '../pages/CorpusPage';
 import SourcesPage from '../pages/SourcesPage.tsx';
 import SourcePage from '../pages/SourcePage.tsx';
 
-export const corporaRoute = createRoute({
+//TODO: Find a better naming convention for routes
+export const corporaRootRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: '/corpora',
-	component: () => (
-		<CorporaProvider>
-			<CorporaPage />
-		</CorporaProvider>
-	),
+	component: () => <Outlet />,
 });
 
 // route /corpora displays corpora
-export const corporaIndexRoute = createRoute({
-	getParentRoute: () => corporaRoute,
+export const corporaListRoute = createRoute({
+	getParentRoute: () => corporaRootRoute,
 	path: '/',
-	component: () => <p>Corpora index</p>,
-});
-
-// route /corpora/:id displays a specific corpus
-export const corpusInfosRoute = createRoute({
-	getParentRoute: () => corporaRoute,
-	path: '$corpusid/infos',
-	component: CorpusInfosPage,
+	component: CorporaPage,
 });
 
 // route /corpora/:id displays a specific corpus
 export const corpusSourcesRoute = createRoute({
-	getParentRoute: () => corporaRoute,
+	getParentRoute: () => corporaRootRoute,
 	path: '$corpusid/sources',
 	component: SourcesPage,
 });
 
-// route /corpora/:id displays a specific corpus
+// List all sources related to a specific corpus
+export const corpusSourcesRootRoute = createRoute({
+	getParentRoute: () => corpusSourcesRoute,
+	path: '/',
+	component: CorpusInfosPage,
+});
+
+// Display a specific source inside of a corpus
 export const corpusSourceRoute = createRoute({
-	getParentRoute: () => corporaRoute,
+	getParentRoute: () => corporaRootRoute,
 	path: '$corpusid/sources/$sourceid',
 	component: SourcePage,
 });
 
 // route /corpora/:id/edit
 export const corpusEditRoute = createRoute({
-	getParentRoute: () => corporaRoute,
+	getParentRoute: () => corporaRootRoute,
 	path: '$corpusid/edit',
 	component: () => <p>edit a specific corpus</p>,
 });
 
-export default corporaRoute;
+export default corporaRootRoute;

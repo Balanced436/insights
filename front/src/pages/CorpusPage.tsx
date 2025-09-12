@@ -1,17 +1,16 @@
 import { useParams } from '@tanstack/react-router';
-import Corpus from '../models/corpus.ts';
-import { Stack } from '@mui/material';
-import { useCorpus } from '../hooks/useCorpora';
+import { useSources } from '../hooks/useSources.ts';
+import SourcesGridView from '../components/source/SourcesGridView.tsx';
+import Source from '../models/source.ts';
 
 const CorpusInfosPage = () => {
-	const corpusidSearchParams = useParams({ from: '/corpora/$corpusid/infos' });
-	const id = Number(corpusidSearchParams);
+	const { corpusid } = useParams({ from: '/corpora/$corpusid/sources' });
+	const id = Number(corpusid);
 
 	if (isNaN(id)) {
 		throw new Error('ID ERROR');
 	}
-
-	const { data: corpus, isLoading, isError, error } = useCorpus(id);
+	const { data: sources, isLoading, isError, error } = useSources(id);
 
 	if (isLoading) {
 		return <p>corpus is loading</p>;
@@ -21,20 +20,17 @@ const CorpusInfosPage = () => {
 		return <p>{error?.message}</p>;
 	}
 
-	if (corpus) {
-		return <CorpusInfos corpus={corpus} />;
+	if (sources) {
+		return (
+			<SourcesGridView
+				sources={sources}
+				onSourceSelection={function (source: Source): void {
+					throw new Error('Function not implemented.');
+				}}
+			/>
+		);
 	}
 	return <p>no corpus found</p>;
 };
 
 export default CorpusInfosPage;
-
-export const CorpusInfos = ({ corpus }: { corpus: Corpus }) => {
-	return (
-		<Stack direction={'column'}>
-			<span>Corpus title: {corpus.title}</span>
-			<span>Corpus ID {corpus.id}</span>
-			<span>Created at {corpus.createdAt.toString()}</span>
-		</Stack>
-	);
-};

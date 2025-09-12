@@ -1,4 +1,3 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import './index.css';
@@ -6,12 +5,12 @@ import indexRoute from './routes';
 import loginRoute from './routes/login';
 import rootRoute from './routes/root';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import corporaRoute, { corporaIndexRoute, corpusInfosRoute, corpusEditRoute, corpusSourcesRoute, corpusSourceRoute } from './routes/corpora';
+import corporaRootRoute, { corporaListRoute, corpusEditRoute, corpusSourcesRoute, corpusSourceRoute, corpusSourcesRootRoute } from './routes/corpora';
 
 const routeTree = rootRoute.addChildren([
 	indexRoute,
 	loginRoute,
-	corporaRoute.addChildren([corporaIndexRoute, corpusInfosRoute, corpusEditRoute, corpusSourcesRoute, corpusSourceRoute]),
+	corporaRootRoute.addChildren([corporaListRoute, corpusEditRoute, corpusSourcesRoute.addChildren([corpusSourcesRootRoute]), corpusSourceRoute]),
 ]);
 
 const queryClient = new QueryClient();

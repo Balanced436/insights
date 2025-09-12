@@ -1,8 +1,9 @@
 import { useCorpora } from '../hooks/useCorpora';
-import { Outlet, useNavigate } from '@tanstack/react-router';
-import SideBarNavigation from '../components/nav/SideBarNavigation.tsx';
-import { Box } from '@mui/material';
+import { useNavigate } from '@tanstack/react-router';
+import { Box, Stack } from '@mui/material';
 import Corpus from '../models/corpus.ts';
+import CorpusView from '../components/corpus/CorpusView.tsx';
+import { Typography } from '@mui/material';
 
 const CorporaPage = () => {
 	const { data, isLoading } = useCorpora();
@@ -20,12 +21,19 @@ const CorporaPage = () => {
 	if (isLoading) return <p>corpora is loading</p>;
 	if (data)
 		return (
-			<Box sx={{ display: 'flex' }}>
-				<SideBarNavigation corpora={data} onCorpusSelectSelection={handleCorpusSection} />
-				<Box component="main" sx={{ flexGrow: 1, p: 3, minWidth: '300px', height: '100%' }}>
-					<Outlet />
-				</Box>
-			</Box>
+			<Stack justifyContent="center" direction={'row'} height={'100%'}>
+				<Stack sx={{ width: '60%', border: '' }}>
+					<Stack direction="row" justifyContent={'space-between'} marginTop={'1em'}>
+						<Stack>
+							<Typography variant={'h5'}>Corpus overview</Typography>
+							<Typography>Your corpus</Typography>
+						</Stack>
+					</Stack>
+					<Box marginTop={'20px'}>
+						<CorpusView corpora={data} onCorpusSelection={handleCorpusSection} display={'CARDS'} />
+					</Box>
+				</Stack>
+			</Stack>
 		);
 	return <p>no corpora found</p>;
 };

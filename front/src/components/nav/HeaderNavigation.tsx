@@ -1,4 +1,4 @@
-import { Box, AppBar, Toolbar, Button } from '@mui/material';
+import { Box, AppBar, Toolbar, Button, Typography } from '@mui/material';
 import { Link } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
@@ -13,13 +13,13 @@ const HeaderNavigation = () => {
 				<Toolbar>
 					<Box sx={{ flexGrow: 1 }}>
 						<Button color="inherit" component={Link} to="/">
-							Home
+							<Typography variant={'overline'}>Home</Typography>
 						</Button>
 						<Button color="inherit" component={Link} to="/login">
-							Login
+							<Typography variant={'overline'}>Login</Typography>
 						</Button>
 						<Button color="inherit" component={Link} to="/corpora">
-							Corpora
+							<Typography variant={'overline'}>Corpora</Typography>
 						</Button>
 					</Box>
 					<Button color="inherit">{user ? user.email : 'Guest'}</Button>
