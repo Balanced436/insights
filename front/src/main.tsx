@@ -10,7 +10,7 @@ import corporaRootRoute, { corporaListRoute, corpusEditRoute, corpusSourcesRoute
 const routeTree = rootRoute.addChildren([
 	indexRoute,
 	loginRoute,
-	corporaRootRoute.addChildren([corporaListRoute, corpusEditRoute, corpusSourcesRoute.addChildren([corpusSourcesRootRoute]), corpusSourceRoute]),
+	corporaRootRoute.addChildren([corporaListRoute, corpusEditRoute, corpusSourcesRoute.addChildren([corpusSourcesRootRoute, corpusSourceRoute])]),
 ]);
 
 const queryClient = new QueryClient();

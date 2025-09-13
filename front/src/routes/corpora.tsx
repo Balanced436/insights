@@ -35,8 +35,8 @@ export const corpusSourcesRootRoute = createRoute({
 
 // Display a specific source inside of a corpus
 export const corpusSourceRoute = createRoute({
-	getParentRoute: () => corporaRootRoute,
-	path: '$corpusid/sources/$sourceid',
+	getParentRoute: () => corpusSourcesRoute,
+	path: '$sourceid',
 	component: SourcePage,
 });
 
