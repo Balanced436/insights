@@ -31,3 +31,13 @@ export default class Source {
 		return `${this.title} - ${this.description} - ${this.videoUrl} - ${this.audioUrl} - ${this.createdAt} - ${this.updatedAt}`;
 	}
 }
+
+/**
+ * Represents the structure of data submitted through the "New Source" form.
+ */
+export type NewSource = {
+	title: string;
+	description: string;
+	video: File;
+	audio: File;
+};

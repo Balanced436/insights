@@ -4,6 +4,7 @@ import CorporaPage from '../pages/CorporaPage';
 import CorpusInfosPage from '../pages/CorpusPage';
 import SourcesPage from '../pages/SourcesPage.tsx';
 import SourcePage from '../pages/SourcePage.tsx';
+import AddSource from '../pages/AddSource.tsx';
 
 //TODO: Find a better naming convention for routes
 export const corporaRootRoute = createRoute({
@@ -31,6 +32,13 @@ export const corpusSourcesRootRoute = createRoute({
 	getParentRoute: () => corpusSourcesRoute,
 	path: '/',
 	component: CorpusInfosPage,
+});
+
+// Create a new source
+export const corpusNewSourceRoute = createRoute({
+	getParentRoute: () => corpusSourcesRoute,
+	path: '/add',
+	component: AddSource,
 });
 
 // Display a specific source inside of a corpus

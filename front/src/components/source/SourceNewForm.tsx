@@ -2,8 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { Button, Stack, TextField } from '@mui/material';
+import { NewSource } from '../../models/source.ts';
 type sourceProps = {
-	onSubmit: (event: any) => void;
+	onSubmit: (event: NewSource) => void;
 };
 
 function SourceNewForm({ onSubmit }: sourceProps) {
