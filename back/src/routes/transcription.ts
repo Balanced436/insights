@@ -8,6 +8,13 @@ import { Logger } from 'winston';
 
 const prisma = new PrismaClient();
 
+const TRANSCRIPTION_PLACEHOLDER = `La Réunion est une île volcanique située dans l'ouest de l'océan Indien, à l'est de l'Afrique, dans l'hémisphère sud. 
+									Elle constitue à la fois un département et une région d'outre-mer français (DROM).
+									D'une superficie de 2 512 km2, l'île de La Réunion est située dans l'archipel des Mascareignes à 172 km à l'ouest-sud-ouest de l'île Maurice et à 679 km à l'est-sud-est de Madagascar. 
+									Il s'agit d'une île volcanique créée par un point chaud. Le point culminant est le piton des Neiges[3] avec une altitude de 3 070 mètres. L'île présente un relief escarpé travaillé par une érosion très marquée.
+									Le piton de la Fournaise (2 632 mètres), situé dans le sud-est de l'île, est un des volcans les plus actifs du monde. Bénéficiant d'un climat tropical d'alizé maritime et située sur la route des cyclones, 
+									La Réunion abrite un endémisme exceptionnel.`
+
 const TranscriptionRouter = (io: Server, logger: Logger) => {
 	const router = Router();
 
@@ -126,7 +133,7 @@ const TranscriptionRouter = (io: Server, logger: Logger) => {
           console.info("task.id", task.id); */
 					await prisma.transcription.update({
 						where: { id: transcription.id },
-						data: { content: 'The flag skip transcription is set to true' },
+						data: { content: TRANSCRIPTION_PLACEHOLDER },
 					});
 					const taskstatus = await prisma.task.update({
 						where: { id: task.id },
