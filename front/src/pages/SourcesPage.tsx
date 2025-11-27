@@ -13,11 +13,10 @@ const SourcesPage = () => {
 	const { corpusid } = useParams({ from: '/corpora/$corpusid/sources' });
 	const corpusidSearchParams = Number(corpusid);
 	const navigate = useNavigate();
-    /**
-     * TODO: Define available navigations items : Dashboard, Tasks, Corpus Settings maybe using composite components
-     * or juste use the corpusData props to know where to navigate
-     */
-
+	/**
+	 * TODO: Define available navigations items : Dashboard, Tasks, Corpus Settings maybe using composite components
+	 * or juste use the corpusData props to know where to navigate
+	 */
 
 	const { data: sources, isLoading, isError, error } = useSources(corpusidSearchParams);
 	const { data: corpusData, isLoading: isCorpusDataLoading, isError: isCorpusError, error: corpusError } = useCorpus(corpusidSearchParams);
@@ -35,9 +34,9 @@ const SourcesPage = () => {
 			<Box display={'flex'}>
 				{/* replace this with a specific navigation for corpus */}
 				<CorpusSideBarNavigation corpus={corpusData} />
-                <Box component="main" sx={{ flexGrow: 1, minWidth: '300px'}}>
-				    <Outlet />
-                </Box>
+				<Box component="main" sx={{ flexGrow: 1, minWidth: '300px' }}>
+					<Outlet />
+				</Box>
 			</Box>
 		);
 	}

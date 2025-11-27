@@ -12,17 +12,16 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
  *
  */
 export default function SourcesGridView({ sources, onSourceSelection }: { sources: Source[]; onSourceSelection: (source: Source) => void }) {
-
-    // TODO: Find a better theme for datagrid
-    const theme = createTheme({
-        palette: {
-            DataGrid: {
-                bg: 'white',
-                pinnedBg: 'white',
-                headerBg: 'white',
-            },
-        },
-    });
+	// TODO: Find a better theme for datagrid
+	const theme = createTheme({
+		palette: {
+			DataGrid: {
+				bg: 'white',
+				pinnedBg: 'white',
+				headerBg: 'white',
+			},
+		},
+	});
 	const handleRowClick: GridEventListener<'rowClick'> = (params: GridRowParams) => {
 		const source: Source | undefined = sources.find((e) => e.id == params.row.id);
 		if (!source) throw new Error('source not found');
@@ -64,24 +63,23 @@ export default function SourcesGridView({ sources, onSourceSelection }: { source
 
 	return (
 		<Box sx={{ height: '100%' }}>
-            <ThemeProvider theme={theme}>
-                <DataGrid
-                    rows={sources}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: {
-                                pageSize: 5,
-                            },
-                        },
-                    }}
-                    pageSizeOptions={[5]}
-                    checkboxSelection={false}
-                    disableRowSelectionOnClick
-                    onRowClick={handleRowClick}
-                />
-            </ThemeProvider>
-
+			<ThemeProvider theme={theme}>
+				<DataGrid
+					rows={sources}
+					columns={columns}
+					initialState={{
+						pagination: {
+							paginationModel: {
+								pageSize: 5,
+							},
+						},
+					}}
+					pageSizeOptions={[5]}
+					checkboxSelection={false}
+					disableRowSelectionOnClick
+					onRowClick={handleRowClick}
+				/>
+			</ThemeProvider>
 		</Box>
 	);
 }

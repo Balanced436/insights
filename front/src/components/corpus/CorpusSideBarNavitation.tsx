@@ -3,13 +3,13 @@ import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ListAltIcon from '@mui/icons-material/ListAlt';
-import {useNavigate} from "@tanstack/react-router";
+import { useNavigate } from '@tanstack/react-router';
 interface CorpusSideBarNavigationProps {
 	corpus: Corpus;
 }
 
 const CorpusSideBarNavigation = ({ corpus }: CorpusSideBarNavigationProps) => {
-    const navigate = useNavigate()
+	const navigate = useNavigate();
 	return (
 		<Drawer
 			variant="permanent"
@@ -32,7 +32,7 @@ const CorpusSideBarNavigation = ({ corpus }: CorpusSideBarNavigationProps) => {
 
 			<Box sx={{ overflow: 'auto' }}>
 				<ListItem disablePadding>
-					<ListItemButton onClick={()=>navigate({"to" : `/corpora/${corpus.id}/sources` })}>
+					<ListItemButton onClick={() => navigate({ to: `/corpora/${corpus.id}/sources` })}>
 						<ListItemIcon>
 							<DashboardIcon />
 						</ListItemIcon>
