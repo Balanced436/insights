@@ -1,8 +1,7 @@
 import { Server } from 'socket.io';
 import { Request, Response, Router } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../lib/prisma';
 
-const prisma = new PrismaClient();
 
 const TaskRouter = (io: Server) => {
 	const router = Router();

@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import { Request, Response, Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { prisma } from '../lib/prisma';
 
 const loginRouter = Router();
-const prisma = new PrismaClient();
 const SECRET_KEY = 'PSEUDOKEY';
 
 // Implement authentication

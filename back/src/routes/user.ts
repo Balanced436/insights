@@ -1,11 +1,11 @@
-import { PrismaClient, User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { error } from 'console';
 import { Router, Request, Response } from 'express';
 const SALT = 13;
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { prisma } from '../lib/prisma';
+import { User } from '../lib/prisma/client';
 
-const prsima = new PrismaClient();
 
 const userRouter = Router();
 
@@ -19,12 +19,12 @@ userRouter.post('/user', async (req: Request, res: Response): Promise<any> => {
 
 		// checks if the user already exists
 
-		const exists = (await prsima.user.findUnique({ where: { email: email } })) !== null;
+		const exists = (await prisma.user.findUnique({ where: { email: email } })) !== null;
 
 		if (exists) {
 			throw Error('this email is not available');
 		}
-		const newUser: User | null = await prsima.user.create({
+		const newUser: User | null = await prisma.user.create({
 			data: {
 				email: email,
 				password: bcrypt.hashSync(password, SALT),

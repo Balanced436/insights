@@ -1,13 +1,12 @@
-FROM node:19
+FROM node:24
 WORKDIR /app
 COPY back/ .
-RUN npx prisma generate
-RUN npx dotenv -e .env.test prisma generate
 
-RUN npm run build
 COPY back/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
+RUN npm install
+RUN npx prisma generate
 RUN mkdir -p source/audio source/video
 RUN mkdir -p var/log
 

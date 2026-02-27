@@ -1,12 +1,12 @@
-import { PrismaClient, Summary, TaskType, Task, Status, Transcription } from '@prisma/client';
 import { error } from 'console';
 import { Router, Request, Response } from 'express';
 import { Server } from 'socket.io';
 import { OR_COMPLETION_ENDPOINT, OR_DEFAULT_MODEL, OR_DEFAULT_SUMMARIZATION_PROMPT, OpenRouterResponse } from '../models/openrouter.model';
 import { StatusCodes } from 'http-status-codes';
 import { Logger } from 'winston';
+import { prisma } from '../lib/prisma';
+import { Status, Summary, TaskType, Transcription } from '../lib/prisma/client';
 
-const prisma = new PrismaClient();
 
 const OPEN_ROUTER_API_KEY = process.env.OPEN_ROUTER_API_KEY || '';
 

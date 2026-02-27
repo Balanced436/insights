@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# clear .env and .env.test since DATABASE_URL
+echo "" > .env
+echo "" > .env.test
+
 POSTGRES_USER=$(cat /run/secrets/postgres_user)
 POSTGRES_PASSWORD=$(cat /run/secrets/postgres_password)
 POSTGRES_DB=$(cat /run/secrets/postgres_db)
@@ -18,6 +22,7 @@ DATABASE_URL_TEST="postgresql://${POSTGRES_USER_TEST}:${POSTGRES_PASSWORD_TEST}@
 echo "DATABASE_URL=$DATABASE_URL_TEST" >> .env.test
 echo "NODE_ENV=test" >> .env.test
 
+npx prisma migrate dev --name init
 if [ "$NODE_ENV" != "prod" ]; then
     echo "Lancement de prisma en mode dev"
     npm run reset:dev

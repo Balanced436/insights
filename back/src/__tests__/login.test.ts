@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
 import request from 'supertest';
 import app from '../app';
 import { StatusCodes } from 'http-status-codes';
+import { prisma } from '../lib/prisma';
 
-const prisma = new PrismaClient();
 describe('CRUD operations for User', () => {
 	afterAll(async () => {
 		await prisma.$disconnect();

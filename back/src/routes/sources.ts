@@ -1,10 +1,10 @@
-import { PrismaClient, Source } from '@prisma/client';
 import { Router, Request, Response } from 'express';
 import multer from 'multer';
 import fs from 'fs';
+import { prisma } from '../lib/prisma';
+import { Source } from '../lib/prisma/client';
 
 export const sourceRouter = Router();
-const prisma = new PrismaClient();
 
 /**
  * Retrieves source or source from the database based on the provided ID.

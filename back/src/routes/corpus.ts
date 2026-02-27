@@ -1,9 +1,9 @@
-import { Corpus, PrismaClient } from '@prisma/client';
 import { Router } from 'express';
 import { Request, Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { prisma } from '../lib/prisma';
+import { Corpus } from '../lib/prisma/client';
 export const sourceRouter = Router();
-const prisma = new PrismaClient();
 
 const corpusRouter = Router();
 

@@ -1,8 +1,8 @@
 import request from 'supertest';
 import app from '../app';
 import path from 'path';
-import { PrismaClient, Status } from '@prisma/client';
-const prisma = new PrismaClient();
+import { prisma } from '../lib/prisma';
+import { Status } from '../lib/prisma/enums';
 
 describe('CRUD operations for Transcriptions', () => {
 	const newSource = {

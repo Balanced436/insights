@@ -1,11 +1,10 @@
 import request from 'supertest';
-import { PrismaClient } from '@prisma/client';
 
 import app from '../app';
 import path from 'path';
-const prisma = new PrismaClient();
 import * as fs from 'node:fs';
 import { StatusCodes } from 'http-status-codes';
+import { prisma } from '../lib/prisma';
 
 describe('CRUD operations for source', () => {
 	const newSource = {

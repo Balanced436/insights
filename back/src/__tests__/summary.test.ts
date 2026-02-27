@@ -1,11 +1,11 @@
 import path from 'path';
 import request from 'supertest';
 import app from '../app';
-import { PrismaClient, Summary } from '@prisma/client';
 import StatusCode from 'http-status-codes';
+import { prisma } from '../lib/prisma';
+import { Summary } from '../lib/prisma/client';
 
 describe('CRUD operations for summary', () => {
-	const prisma = new PrismaClient();
 
 	let source: request.Response, transcription: request.Response, corpus;
 

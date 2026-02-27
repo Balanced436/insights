@@ -1,12 +1,12 @@
-import { PrismaClient, Source, Status, Task, TaskType, Transcription } from '@prisma/client';
 import { Request, Response, Router } from 'express';
 import fs from 'fs';
 import { Server } from 'socket.io';
 import { WHISPER_INFERENCE_ENDPOINT, WhisperResponse } from '../models/whisper.model';
 import { WhisperResponseText } from '../utils/whisper.utils';
 import { Logger } from 'winston';
+import { prisma } from '../lib/prisma';
+import { Source, Status, Task, TaskType, Transcription } from '../lib/prisma/client';
 
-const prisma = new PrismaClient();
 
 const TRANSCRIPTION_PLACEHOLDER = `La Réunion est une île volcanique située dans l'ouest de l'océan Indien, à l'est de l'Afrique, dans l'hémisphère sud. 
 									Elle constitue à la fois un département et une région d'outre-mer français (DROM).
